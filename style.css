@@ -20,10 +20,15 @@ header.hero {
 
     padding: 2em;
 
-    color: white;
+    
+    background-image: url('./oau.jpeg');
+  width: 100%;
+  background-size: 100% 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  color: black;
+        font-weight: bold;
 
-    background: linear-gradient(45deg, #ff9f43, #ff6b6b);
-
+    
 }
 
 header h1 {
