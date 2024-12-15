@@ -6,8 +6,8 @@ body {
 
     padding: 0;
 
-    color: #333;
-    background-image: url('./examguide_bg1.webp');
+    color: black;
+    background-image: url('./navy-blue-tartan-frame_53876-118234.jpg');
   width: 100%;
   background-size: 100% 100%;
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
@@ -16,16 +16,12 @@ body {
 
 header.hero {
 
-    text-align: center;
-
-    padding: 2em;
-
-    
-    background-image: url('./oau.jpeg');
+    text-align: center;  
+  background-image: url('./search-bar-icon-search-3d-render-minimal-design-blue-background_41204-14844.jpg');
   width: 100%;
   background-size: 100% 100%;
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
-  color: black;
+  color: white;
         font-weight: bold;
 
     
