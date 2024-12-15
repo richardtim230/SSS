@@ -80,8 +80,9 @@ header h2 {
 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
-    width: 200px;
-
+    width: 90%;
+  top: 50%;
+    bottom: 50%;
     text-align: center;
 
     padding: 1em;
@@ -99,7 +100,7 @@ header h2 {
 .feature-card img {
 
     width: 100%;
-
+    height: auto;
     border-radius: 8px;
 
 }
