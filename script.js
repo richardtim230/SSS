@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
     const notifications = document.querySelectorAll(".notification");
-    const notificationContainer = document.getElementById("notification-container");
     let currentNotificationIndex = 0;
 
     // Function to show the next notification
@@ -21,11 +20,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Show notifications in intervals (e.g., every 5 seconds)
-    setInterval(showNextNotification, 15000);
+    const interval = setInterval(showNextNotification, 15000);
 
     // Show the first notification immediately
     showNextNotification();
+
+    // Close button functionality
+    const closeButtons = document.querySelectorAll(".notification-close");
+    closeButtons.forEach((button, index) => {
+        button.addEventListener("click", () => {
+            notifications[index].classList.remove("show");
+
+            // If all notifications are closed, clear the interval
+            if (!Array.from(notifications).some((n) => n.classList.contains("show"))) {
+                clearInterval(interval);
+            }
+        });
+    });
 });
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
