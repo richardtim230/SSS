@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Show notifications in intervals
-    setInterval(showNextNotification, 15000);
+    setInterval(showNextNotification, 8000);
 
     // Show the first notification immediately
     showNextNotification();
