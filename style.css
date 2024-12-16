@@ -285,6 +285,80 @@ header h2 {
   position: center;
     }
 
+/* Notification Container */
+.notification-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 350px;
+    overflow: hidden; /* Hide off-screen notifications */
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 12px;
+    z-index: 1001;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Notification Individual */
+.notification {
+    display: flex;
+    align-items: center;
+    padding: 1em;
+    background: linear-gradient(135deg, #ff6b6b, #ff9f43);
+    color: white;
+    width: 100%;
+    min-height: 100px;
+    transform: translateX(100%); /* Start off-screen to the right */
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Visible Notification */
+.notification.show {
+    transform: translateX(0); /* Slide into view */
+}
+
+/* Notification Content */
+.notification-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* Notification Image */
+.notification-image {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-right: 1em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Notification Text */
+.notification-text h3 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.notification-text p {
+    margin: 0.5em 0;
+    font-size: 0.9em;
+}
+
+/* Notification Button */
+.notification-button {
+    text-decoration: none;
+    background: #feca57;
+    color: #333;
+    padding: 0.5em 1em;
+    border-radius: 8px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 0.5em;
+    transition: background 0.3s ease;
+}
+
+.notification-button:hover {
+    background: #ffd700;
+}
 
 @keyframes popup-slide-in {
     from {
