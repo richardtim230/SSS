@@ -268,6 +268,24 @@ header h2 {
     background: #d9534f; /* Darker red for hover */
 }
 
+
+
+/*Logo*/
+
+.content {
+  text-align: center;
+  font-family: Arial, sans-serif;
+    }
+
+.logo {
+  width: 120px;
+  height: auto;
+  margin-top: 1rem;
+  top: 50px;
+  position: center;
+    }
+
+
 @keyframes popup-slide-in {
     from {
         transform: translateY(-20px);
