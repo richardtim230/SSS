@@ -291,7 +291,7 @@ header h2 {
     top: 50%; /* Center vertically */
     left: 50%; /* Center horizontally */
     transform: translate(-50%, -50%); /* Align to center */
-    width: 95%; /* Fixed width */
+    width: 97%; /* Fixed width */
     overflow: hidden; /* Hide off-screen notifications */
     background: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
     border-radius: 12px;
