@@ -291,7 +291,7 @@ header h2 {
   display: inline-block;
   animation: scrollMessage 20s linear infinite;
   white-space: nowrap; /* Prevent the message from wrapping */
-  margin: 0; /* Remove extra spacing */
+  margin: -5; /* Remove extra spacing */
 }
 
 @keyframes scrollMessage {
@@ -299,7 +299,7 @@ header h2 {
     transform: translateX(100%); /* Start off-screen on the right */
   }
   100% {
-    transform: translateX(-90%); /* Move completely off-screen on the left */
+    transform: translateX(-100%); /* Move completely off-screen on the left */
   }
 }
 
