@@ -1,4 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const notificationWidget = document.getElementById("notificationWidget");
+
+  // Display message dynamically
+  const message = "Welcome to the Obafemi Awolowo University Students Support System, a platform where all your academic questions are answered with maximum supports given!.";
+  notificationWidget.querySelector("p").textContent = message;
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
     const notifications = document.querySelectorAll(".notification");
     const notificationContainer = document.getElementById("notification-container");
     const closeAllButton = document.getElementById("close-all");
