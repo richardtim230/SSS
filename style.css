@@ -287,7 +287,7 @@ header h2 {
 /* Scrolling Animation */
 .notification-widget p {
   display: inline-block;
-  animation: scrollMessage 10s linear infinite;
+  animation: scrollMessage 20s linear infinite;
   white-space: nowrap; /* Prevent the message from wrapping */
   margin: 0; /* Remove extra spacing */
 }
@@ -297,7 +297,7 @@ header h2 {
     transform: translateX(100%); /* Start off-screen on the right */
   }
   100% {
-    transform: translateX(-100%); /* Move completely off-screen on the left */
+    transform: translateX(-95%); /* Move completely off-screen on the left */
   }
 }
 
@@ -419,7 +419,7 @@ header h2 {
     cursor: pointer;
     padding: 0;
     line-height: 1;
-    z-index: 100;
+    z-index: 1000;
     transition: color 0.3s ease;
 }
 
