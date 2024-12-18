@@ -291,7 +291,7 @@ header h2 {
   display: inline-block;
   animation: scrollMessage 20s linear infinite;
   white-space: nowrap; /* Prevent the message from wrapping */
-  margin: 0; /* Remove extra spacing */
+  margin: -5; /* Remove extra spacing */
 }
 
 @keyframes scrollMessage {
