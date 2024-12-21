@@ -44,40 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-document.addEventListener("DOMContentLoaded", () => {
-    const notifications = document.querySelectorAll(".notification");
-    const notificationContainer = document.getElementById("notification-container");
-    const closeAllButton = document.getElementById("close-all");
-    let currentNotificationIndex = 0;
-
-    // Function to show the next notification
-    function showNextNotification() {
-        notifications.forEach((notification) => {
-            notification.classList.remove("show");
-        });
-
-        notifications[currentNotificationIndex].classList.add("show");
-
-        currentNotificationIndex++;
-        if (currentNotificationIndex >= notifications.length) {
-            currentNotificationIndex = 0;
-        }
-    }
-
-    // Show notifications in intervals
-    setInterval(showNextNotification, 5000);
-
-    // Show the first notification immediately
-    showNextNotification();
-
-    // Close all notifications
-    closeAllButton.addEventListener("click", () => {
-        notificationContainer.style.display = "none"; // Hide the entire container
-    });
-});
-
-
-
 
 document.addEventListener("DOMContentLoaded", () => {
 
