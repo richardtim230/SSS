@@ -539,30 +539,28 @@ body.modal-active {
   z-index: 1000;
   overflow: hidden;
   border: 1px solid #ccc;
-  box-sizing: border-box; /* Ensure padding is included in width/height */
+  box-sizing: border-box; /* Include padding in width/height */
+  display: flex;
+  flex-direction: column;
 }
 
-/* Browser Controls */
-.browser-controls {
+/* Top Controls */
+.top-controls {
   display: flex;
-  flex-wrap: wrap; /* Ensure buttons wrap on smaller screens */
   gap: 5px;
   padding: 10px;
   background: #ddd;
   border-bottom: 1px solid #ccc;
-  box-sizing: border-box; /* Include padding in height calculation */
 }
 
-.browser-controls input {
+.top-controls input {
   flex: 1; /* Input field grows to fill available space */
-  min-width: 150px;
   padding: 5px;
   border: 1px solid #aaa;
   border-radius: 5px;
 }
 
-.browser-controls button {
-  flex: none; /* Prevent buttons from stretching */
+.top-controls button {
   padding: 5px 10px;
   background: #4caf50;
   color: white;
@@ -571,17 +569,40 @@ body.modal-active {
   cursor: pointer;
 }
 
-.browser-controls button:hover {
+.top-controls button:hover {
   background: #45a049;
 }
 
 /* iFrame */
 #browserFrame {
+  flex: 1; /* Take up all remaining space */
   width: 100%;
-  height: calc(100% - 60px); /* Subtract height of controls to fit screen */
   border: none;
-  box-sizing: border-box; /* Ensure iframe respects the boundaries */
 }
+
+/* Bottom Controls (Footer) */
+.bottom-controls {
+  display: flex;
+  gap: 5px;
+  padding: 10px;
+  background: #ddd;
+  border-top: 1px solid #ccc;
+  justify-content: center; /* Center the buttons */
+}
+
+.bottom-controls button {
+  padding: 5px 10px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.bottom-controls button:hover {
+  background: #45a049;
+}
+
 
 
   </style>
@@ -603,25 +624,34 @@ body.modal-active {
   </div>
 </div>
 
+
   <!-- Browser Icon -->
   <button id="browserIcon" onclick="toggleMiniBrowser()">
-    🌐 Browser
+    🌐 Open Browser
   </button>
 
   <!-- Mini Browser -->
   <div id="miniBrowser">
-    <div class="browser-controls">
-      <button onclick="goBack()">Back</button>
-      <button onclick="goForward()">Forward</button>
+    <!-- Top Controls -->
+    <div class="browser-controls top-controls">
       <input
         type="text"
         id="browserUrl"
         placeholder="Enter URL (e.g., https://www.google.com)"
       />
       <button onclick="navigateBrowser()">Go</button>
-      <button onclick="reloadBrowser()">Reload</button>
     </div>
+
+    <!-- Browser Content -->
     <iframe id="browserFrame" src="https://www.wikipedia.org"></iframe>
+
+    <!-- Footer Controls -->
+    <div class="browser-controls bottom-controls">
+      <button onclick="goBack()">Back</button>
+      <button onclick="goForward()">Forward</button>
+      <button onclick="reloadBrowser()">Reload</button>
+      <button onclick="goHome()">Home</button>
+    </div>
   </div>
 </div>
 
@@ -1661,6 +1691,8 @@ function showCustomPrompt(title, callback) {
 }
     //Mini Browser
 
+const homepage = "https://www.wikipedia.org";
+
 function toggleMiniBrowser() {
   const miniBrowser = document.getElementById("miniBrowser");
   const browserIcon = document.getElementById("browserIcon");
@@ -1710,6 +1742,12 @@ function goForward() {
     alert("No forward history available.");
   }
 }
+
+function goHome() {
+  const iframe = document.getElementById("browserFrame");
+  iframe.src = homepage; // Set iframe source to homepage
+}
+
 
 
 
