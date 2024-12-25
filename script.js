@@ -1,3 +1,30 @@
+
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function(OneSignal) {
+      await OneSignal.init({
+        appId: "85c1ffaa-abcf-4acb-be6b-79bde698bdc0",
+        promptOptions: {
+          slidedown: {
+            enabled: true,
+            autoPrompt: true,
+            actionMessage: "We'd like to send you notifications!",
+            acceptButtonText: "Allow",
+            cancelButtonText: "No Thanks",
+          },
+        },
+      });
+
+      // Log subscription state
+      const isSubscribed = await OneSignal.isPushNotificationsEnabled();
+      console.log("Is the user subscribed?", isSubscribed);
+    });
+
+    document.getElementById('subscribe-btn').addEventListener('click', async () => {
+      const permission = await OneSignal.pushManager.subscribe();
+      console.log("Notification permission granted:", permission);
+    });
+  
+
 // Use debounce to limit frequent state updates
 function debounce(func, delay) {
   let timeout;
