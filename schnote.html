@@ -344,6 +344,7 @@ ul li {
   z-index: 9999;
   flex-direction: column;
 }
+    
 /* Prevent scrolling of the body when a notification is active */
 body.modal-active {
   overflow: hidden;
@@ -371,7 +372,7 @@ body.modal-active {
   max-width: 600px;
   width: 90%;
   height: 95%;
-  text-align: left;
+  text-align: flex;
   overflow-y: auto;
   max-height: 80%;
   flex: 1;
@@ -430,7 +431,13 @@ body.modal-active {
   color: white;
   font-weight: bold;
 }
-
+/* Prevent scrolling of the body when a notification is active */
+body.modal-active {
+  overflow: hidden;
+  }
+    .hidden {
+  display: none;
+    }
   </style>
 </head>
 <body>
@@ -753,7 +760,7 @@ const departmentSchedules = {
   { time: '5:00 PM', Mon: '-', Tues: '-', Wed: '-', Thur: '-', Fri: '-' }
 ], 
 
- "ZOO/PT2": [
+ "ZOO/PT21": [
   { time: '8:00 AM', Mon: 'MTH105 ODLT 2', Tues: 'ZOO207 Z0.01', Wed: 'ZOO203 G.23', Thur: 'ZOO207 Z0.01', Fri: '-' },
 
   { time: '9:00 AM', Mon: 'ZOO203 BOO C', Tues: 'BOT202 G.23', Wed: 'ZOO203 BOO B', Thur: '-', Fri: 'ZOO203 BOO C' },
