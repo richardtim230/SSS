@@ -504,7 +504,8 @@ body.modal-active {
   display: none;
     }
 
-    /* Browser Icon */
+
+/* Browser Icon */
 #browserIcon {
   position: fixed;
   bottom: 20px;
@@ -538,26 +539,31 @@ body.modal-active {
   z-index: 1000;
   overflow: hidden;
   border: 1px solid #ccc;
+  box-sizing: border-box; /* Ensure padding is included in width/height */
 }
 
 /* Browser Controls */
 .browser-controls {
   display: flex;
-  gap: 7px;
-  padding: 8px;
+  flex-wrap: wrap; /* Ensure buttons wrap on smaller screens */
+  gap: 5px;
+  padding: 10px;
   background: #ddd;
   border-bottom: 1px solid #ccc;
+  box-sizing: border-box; /* Include padding in height calculation */
 }
 
 .browser-controls input {
-  flex: 1;
+  flex: 1; /* Input field grows to fill available space */
+  min-width: 150px;
   padding: 5px;
   border: 1px solid #aaa;
   border-radius: 5px;
 }
 
 .browser-controls button {
-  padding: 3px 6px;
+  flex: none; /* Prevent buttons from stretching */
+  padding: 5px 10px;
   background: #4caf50;
   color: white;
   border: none;
@@ -571,10 +577,12 @@ body.modal-active {
 
 /* iFrame */
 #browserFrame {
-  width: 90%;
-  height: calc(100% - 50px); /* Leave room for controls */
+  width: 100%;
+  height: calc(100% - 60px); /* Subtract height of controls to fit screen */
   border: none;
+  box-sizing: border-box; /* Ensure iframe respects the boundaries */
 }
+
 
   </style>
 </head>
