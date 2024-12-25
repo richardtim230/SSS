@@ -1791,6 +1791,19 @@ function goHome() {
         alert('Incorrect secret code. Please try again.');
       }
   }
+
+function toggleAuthScreen(show) {
+      const authScreen = document.querySelector(".auth-screen");
+
+      if (show) {
+        authScreen.style.display = "flex"; // Show the authentication screen
+        document.body.style.overflow = "hidden"; // Disable scrolling
+      } else {
+        authScreen.style.display = "none"; // Hide the authentication screen
+        document.body.style.overflow = "auto"; // Enable scrolling
+      }
+    }
+
   
   document.addEventListener('DOMContentLoaded', () => {
     // Request Notification Permission
