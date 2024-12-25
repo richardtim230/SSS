@@ -1,31 +1,4 @@
 importScripts('https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js');
-
-    window.OneSignalDeferred = window.OneSignalDeferred || [];
-    OneSignalDeferred.push(async function (OneSignal) {
-      await OneSignal.init({
-        appId: "85c1ffaa-abcf-4acb-be6b-79bde698bdc0", // Replace with your App ID
-        promptOptions: {
-          slidedown: {
-            enabled: false, // Disable automatic prompt
-          },
-        },
-      });
-
-      // Check if the user has already been prompted
-      const hasPrompted = localStorage.getItem('hasPromptedForNotifications');
-
-      if (!hasPrompted) {
-        // Ask for permission
-        const permission = await OneSignal.pushManager.subscribe();
-        console.log('Notification permission:', permission);
-
-        // Mark as prompted
-        if (permission) {
-          localStorage.setItem('hasPromptedForNotifications', 'true');
-        }
-      }
-    });
-
  setTimeout(async () => {
   if (!hasPrompted) {
     const permission = await OneSignal.pushManager.subscribe();
