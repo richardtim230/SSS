@@ -1,16 +1,3 @@
-
-
-      // Log subscription state
-      const isSubscribed = await OneSignal.isPushNotificationsEnabled();
-      console.log("Is the user subscribed?", isSubscribed);
-    });
-
-    document.getElementById('subscribe-btn').addEventListener('click', async () => {
-      const permission = await OneSignal.pushManager.subscribe();
-      console.log("Notification permission granted:", permission);
-    });
-  
-
 // Use debounce to limit frequent state updates
 function debounce(func, delay) {
   let timeout;
