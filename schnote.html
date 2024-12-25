@@ -1705,13 +1705,15 @@ function toggleMiniBrowser() {
   if (miniBrowser.classList.contains("hidden")) {
     // Show the browser
     miniBrowser.classList.remove("hidden");
-    browserIcon.textContent = "❌ Close";
+    browserIcon.textContent = "❌";
+    document.body.style.overflow = "hidden"; // Disable scrolling
   } else {
     // Hide the browser
     miniBrowser.classList.add("hidden");
-    browserIcon.textContent = "🌐 Open";
+    browserIcon.textContent = "🌐";
+    document.body.style.overflow = "auto"; // Enable scrolling
+    }
   }
-}
 
 function navigateBrowser() {
   const urlInput = document.getElementById("browserUrl");
