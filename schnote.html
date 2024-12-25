@@ -543,8 +543,8 @@ body.modal-active {
 /* Browser Controls */
 .browser-controls {
   display: flex;
-  gap: 8px;
-  padding: 5px;
+  gap: 7px;
+  padding: 8px;
   background: #ddd;
   border-bottom: 1px solid #ccc;
 }
@@ -1664,8 +1664,10 @@ function toggleMiniBrowser() {
   } else {
     // Show the browser
     miniBrowser.style.display = "block";
-    browserIcon.textContent = "❌ Close"
-  
+    browserIcon.textContent = "❌ Close";
+  }
+}
+
 function navigateBrowser() {
   const urlInput = document.getElementById("browserUrl");
   const iframe = document.getElementById("browserFrame");
