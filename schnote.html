@@ -344,7 +344,10 @@ ul li {
   z-index: 9999;
   flex-direction: column;
 }
-
+/* Prevent scrolling of the body when a notification is active */
+body.modal-active {
+  overflow: hidden;
+  }
 
   .welcomePopup-content {
   background: white;
