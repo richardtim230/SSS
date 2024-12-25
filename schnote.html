@@ -503,6 +503,79 @@ body.modal-active {
     .hidden {
   display: none;
     }
+
+    /* Browser Icon */
+#browserIcon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1001;
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#browserIcon:hover {
+  background: #45a049;
+}
+
+/* Mini Browser Overlay */
+#miniBrowser {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 5%;
+  left: 5%;
+  width: 90%;
+  height: 90%;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  overflow: hidden;
+  border: 1px solid #ccc;
+}
+
+/* Browser Controls */
+.browser-controls {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  background: #ddd;
+  border-bottom: 1px solid #ccc;
+}
+
+.browser-controls input {
+  flex: 1;
+  padding: 5px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+
+.browser-controls button {
+  padding: 5px 10px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.browser-controls button:hover {
+  background: #45a049;
+}
+
+/* iFrame */
+#browserFrame {
+  width: 100%;
+  height: calc(100% - 50px); /* Leave room for controls */
+  border: none;
+}
+
   </style>
 </head>
 <body>
@@ -519,6 +592,32 @@ body.modal-active {
       <button id="promptOk">OK</button>
       <button id="promptCancel">Cancel</button>
     </div>
+  </div>
+</div>
+<div id="app">
+  <h1>Note Taking App</h1>
+  <textarea id="noteEditor" style="width: 100%; height: 200px;"></textarea>
+  <button onclick="saveNote()">Save Note</button>
+
+  <!-- Browser Icon -->
+  <button id="browserIcon" onclick="toggleMiniBrowser()">
+    🌐 Open Browser
+  </button>
+
+  <!-- Mini Browser -->
+  <div id="miniBrowser">
+    <div class="browser-controls">
+      <button onclick="goBack()">Back</button>
+      <button onclick="goForward()">Forward</button>
+      <input
+        type="text"
+        id="browserUrl"
+        placeholder="Enter URL (e.g., https://www.google.com)"
+      />
+      <button onclick="navigateBrowser()">Go</button>
+      <button onclick="reloadBrowser()">Reload</button>
+    </div>
+    <iframe id="browserFrame" src="https://www.wikipedia.org"></iframe>
   </div>
 </div>
 
@@ -1556,33 +1655,58 @@ function showCustomPrompt(title, callback) {
     if (callback) callback(null); // Return null on cancel
   };
 }
+    //Mini Browser
 
-    // Toggle the visibility of the mini-browser
-function toggleBrowser() {
-  const browser = document.getElementById("mini-browser");
-  browser.style.display = browser.style.display === "flex" ? "none" : "flex";
+function toggleMiniBrowser() {
+  const miniBrowser = document.getElementById("miniBrowser");
+  const browserIcon = document.getElementById("browserIcon");
+
+  if (miniBrowser.style.display === "block") {
+    // Hide the browser
+    miniBrowser.style.display = "none";
+    browserIcon.textContent = "🌐 Open Browser";
+  } else {
+    // Show the browser
+    miniBrowser.style.display = "block";
+    browserIcon.textContent = "❌ Close Browser";
+  }
 }
 
-// Load the home URL into the iframe
-function goHome() {
-  const homeURL = "https://en.wikipedia.org/wiki/Web_browser";
-  const proxy = "https://api.allorigins.win/get?url=";
+function navigateBrowser() {
+  const urlInput = document.getElementById("browserUrl");
+  const iframe = document.getElementById("browserFrame");
 
-  fetch(proxy + encodeURIComponent(homeURL))
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.contents) {
-        const blob = new Blob([data.contents], { type: "text/html" });
-        const blobURL = URL.createObjectURL(blob);
-        document.getElementById("browser-frame").src = blobURL;
-        document.getElementById("url-input").value = homeURL;
-        localStorage.setItem("lastVisited", homeURL);
-      }
-    })
-    .catch(() => {
-      alert("Failed to load the home page.");
-    });
+  let url = urlInput.value.trim();
+  if (!url.startsWith("http://") && !url.startsWith("https://")) {
+    url = "https://" + url; // Default to HTTPS if no protocol is provided
+  }
+
+  iframe.src = url;
 }
+
+function reloadBrowser() {
+  const iframe = document.getElementById("browserFrame");
+  iframe.contentWindow.location.reload(); // Reload iframe content
+}
+
+function goBack() {
+  const iframe = document.getElementById("browserFrame");
+  try {
+    iframe.contentWindow.history.back(); // Navigate back
+  } catch (e) {
+    alert("No back history available.");
+  }
+}
+
+function goForward() {
+  const iframe = document.getElementById("browserFrame");
+  try {
+    iframe.contentWindow.history.forward(); // Navigate forward
+  } catch (e) {
+    alert("No forward history available.");
+  }
+}
+
 
 
     // Authentication Logic
