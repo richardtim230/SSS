@@ -562,19 +562,19 @@ body.modal-active {
         <button onclick="showCategory('Miscellaneous')">Miscellaneous</button>
         <button onclick="addCategory()">Add Category</button>
       </div>
-      <div id="noteEditor" style="height: 300px;"></div> 
+      <div id="noteEditor" contenteditable="true" style="height: 300px;"></div> 
+        
       <input type="file" id="noteMedia" accept="image/*">
       <button onclick="saveNote()">Save Note</button>
     </div>
     <ul id="notesList"></ul>
-
   
 <!-- Note Popup -->
 <div id="notePopup" class="popup">
   <div class="popup-content" id="popupContent">
     <h3 id="noteTitle"></h3>
-    <div id="noteContent" style="position: relative;"></div>
-    <canvas id="drawingCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none;"></canvas>
+    <div id="noteContent" contenteditable="false" style="position: relative;"></div>
+    <canvas id="drawingCanvas" style="white-space: pre-wrap; position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none;"></canvas>
     <img id="noteMediaPreview" alt="" style="max-width: 100%; display: none;">
   </div>
   <div class="popup-footer">
@@ -764,7 +764,7 @@ const departmentSchedules = {
   { time: '5:00 PM', Mon: '-', Tues: '-', Wed: '-', Thur: '-', Fri: '-' }
 ], 
 
- "ZOO/PT21": [
+ "ZOO/PT2": [
   { time: '8:00 AM', Mon: 'MTH105 ODLT 2', Tues: 'ZOO207 Z0.01', Wed: 'ZOO203 G.23', Thur: 'ZOO207 Z0.01', Fri: '-' },
 
   { time: '9:00 AM', Mon: 'ZOO203 BOO C', Tues: 'BOT202 G.23', Wed: 'ZOO203 BOO B', Thur: '-', Fri: 'ZOO203 BOO C' },
@@ -1173,7 +1173,7 @@ function saveNote() {
   const mediaInput = document.getElementById('noteMedia').files[0];
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
   const reader = new FileReader();
-
+  
   reader.onload = () => {
     notes.push({ title, text, media: reader.result, category: selectedCategory });
     localStorage.setItem('notes', JSON.stringify(notes));
