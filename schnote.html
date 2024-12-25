@@ -543,8 +543,8 @@ body.modal-active {
 /* Browser Controls */
 .browser-controls {
   display: flex;
-  gap: 10px;
-  padding: 10px;
+  gap: 8px;
+  padding: 5px;
   background: #ddd;
   border-bottom: 1px solid #ccc;
 }
@@ -557,7 +557,7 @@ body.modal-active {
 }
 
 .browser-controls button {
-  padding: 5px 10px;
+  padding: 3px 6px;
   background: #4caf50;
   color: white;
   border: none;
@@ -1660,14 +1660,12 @@ function toggleMiniBrowser() {
   if (miniBrowser.style.display === "block") {
     // Hide the browser
     miniBrowser.style.display = "none";
-    browserIcon.textContent = "🌐 Open Browser";
+    browserIcon.textContent = "🌐 Open";
   } else {
     // Show the browser
     miniBrowser.style.display = "block";
-    browserIcon.textContent = "❌ Close Browser";
-  }
-}
-
+    browserIcon.textContent = "❌ Close"
+  
 function navigateBrowser() {
   const urlInput = document.getElementById("browserUrl");
   const iframe = document.getElementById("browserFrame");
