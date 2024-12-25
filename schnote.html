@@ -84,7 +84,7 @@ header h1, header h2 {
 
     .auth-screen h2 {
       margin-bottom: 20px;
-      font-size: 0.7rem;
+      font-size: 1rem;
     }
 
     .auth-screen input {
@@ -680,7 +680,7 @@ body.modal-active {
 <img src="https://networks.au-ibar.org/show/obafemi-awolowo-university-ife-nigeria/wiki-image/AU+REC+logos+%2841%29.png" alt="Logo" class="logo">
           </div>
 
-    <h2>Welcome to the Student Support System</h2>
+    <h2>Welcome to the Students Support System of Obafemi Awolowo University</h2>
     <div id="authSetup" style="display: none;">
       <p>Please set your secret code:</p>
       <input type="password" id="setSecretCode" placeholder="Enter your secret code">
@@ -1239,7 +1239,7 @@ function loadNotes() {
 }
 
 function saveNote() {
-  const title = prompt("Enter note title:");
+  const title = showCustomPrompt("Enter note title:");
   const text = quill.root.innerHTML.trim(); // Quill editor content
   const mediaInput = document.getElementById('noteMedia').files[0];
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
@@ -1287,7 +1287,7 @@ function showNotePopup(index) {
 
 function editNote() {
   if (currentEditingNote !== null) {
-    const confirmEdit = confirm("Are you sure you want to edit this note?");
+    const confirmEdit = showCustomPrompt("Are you sure you want to edit this note?");
     if (confirmEdit) {
       const notes = JSON.parse(localStorage.getItem('notes')) || [];
       const note = notes[currentEditingNote];
