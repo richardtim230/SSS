@@ -539,7 +539,7 @@ body.modal-active {
   z-index: 1000;
   overflow: hidden;
   border: 1px solid #ccc;
-  box-sizing: border-box; /* Include padding in width/height */
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
 }
@@ -554,7 +554,7 @@ body.modal-active {
 }
 
 .top-controls input {
-  flex: 1; /* Input field grows to fill available space */
+  flex: 1;
   padding: 5px;
   border: 1px solid #aaa;
   border-radius: 5px;
@@ -575,7 +575,7 @@ body.modal-active {
 
 /* iFrame */
 #browserFrame {
-  flex: 1; /* Take up all remaining space */
+  flex: 1;
   width: 100%;
   border: none;
 }
@@ -587,7 +587,7 @@ body.modal-active {
   padding: 10px;
   background: #ddd;
   border-top: 1px solid #ccc;
-  justify-content: center; /* Center the buttons */
+  justify-content: center;
 }
 
 .bottom-controls button {
@@ -602,6 +602,12 @@ body.modal-active {
 .bottom-controls button:hover {
   background: #45a049;
 }
+
+/* Utility Classes */
+.hidden {
+  display: none !important;
+}
+
 
 
 
@@ -626,12 +632,10 @@ body.modal-active {
 
 
   <!-- Browser Icon -->
-  <button id="browserIcon" onclick="toggleMiniBrowser()">
-    🌐 Open Browser
-  </button>
+  <button id="browserIcon" onclick="toggleMiniBrowser()">🌐 Open</button>
 
   <!-- Mini Browser -->
-  <div id="miniBrowser">
+  <div id="miniBrowser" class="hidden">
     <!-- Top Controls -->
     <div class="browser-controls top-controls">
       <input
@@ -654,6 +658,7 @@ body.modal-active {
     </div>
   </div>
 </div>
+
 
   <div class="container">
     <!-- Welcome Popup -->
@@ -766,7 +771,7 @@ body.modal-active {
         <button onclick="showCategory('Miscellaneous')">Miscellaneous</button>
         <button onclick="addCategory()">Add Category</button>
       </div>
-      <div id="noteEditor" contenteditable="true" style="height: 300px;"></div> 
+      <div id="noteEditor" style="height: 300px;"></div> 
         
       <input type="file" id="noteMedia" accept="image/*">
       <button onclick="saveNote()">Save Note</button>
@@ -1697,14 +1702,14 @@ function toggleMiniBrowser() {
   const miniBrowser = document.getElementById("miniBrowser");
   const browserIcon = document.getElementById("browserIcon");
 
-  if (miniBrowser.style.display === "block") {
-    // Hide the browser
-    miniBrowser.style.display = "none";
-    browserIcon.textContent = "🌐 Open";
-  } else {
+  if (miniBrowser.classList.contains("hidden")) {
     // Show the browser
-    miniBrowser.style.display = "block";
+    miniBrowser.classList.remove("hidden");
     browserIcon.textContent = "❌ Close";
+  } else {
+    // Hide the browser
+    miniBrowser.classList.add("hidden");
+    browserIcon.textContent = "🌐 Open";
   }
 }
 
@@ -1747,9 +1752,6 @@ function goHome() {
   const iframe = document.getElementById("browserFrame");
   iframe.src = homepage; // Set iframe source to homepage
 }
-
-
-
 
     // Authentication Logic
     document.addEventListener('DOMContentLoaded', () => {
