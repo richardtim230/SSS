@@ -406,6 +406,67 @@ body.modal-active {
   padding: 5px 10px; /* Smaller button padding */
   font-size: 0.8rem; /* Adjust font size for buttons */
 }
+/* Prompt Overlay */
+.prompt-overlay {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Prompt Box */
+.prompt-box {
+  background: white;
+  color: #333;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/* Input Field */
+.prompt-box input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Buttons */
+.prompt-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.prompt-actions button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#promptOk {
+  background-color: #4caf50;
+  color: white;
+}
+
+#promptCancel {
+  background-color: #f44336;
+  color: white;
+}
 
     
 #calendar {
@@ -450,6 +511,16 @@ body.modal-active {
     <h2>Students Support System</h2>
   </header>
   
+<div id="customPrompt" class="prompt-overlay">
+  <div class="prompt-box">
+    <h3 id="promptTitle">Enter Note Title</h3>
+    <input type="text" id="promptInput" placeholder="Type here..." />
+    <div class="prompt-actions">
+      <button id="promptOk">OK</button>
+      <button id="promptCancel">Cancel</button>
+    </div>
+  </div>
+</div>
 
   <div class="container">
     <!-- Welcome Popup -->
@@ -1169,7 +1240,7 @@ function loadNotes() {
 
 function saveNote() {
   const title = prompt("Enter note title:");
-  const text = quill.root.innerHTML.trim();
+  const text = quill.root.innerHTML.trim(); // Quill editor content
   const mediaInput = document.getElementById('noteMedia').files[0];
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
   const reader = new FileReader();
@@ -1178,17 +1249,17 @@ function saveNote() {
     notes.push({ title, text, media: reader.result, category: selectedCategory });
     localStorage.setItem('notes', JSON.stringify(notes));
     loadNotes();
-    quill.root.innerHTML = '';
+    quill.root.innerHTML = ''; // Clear editor after saving
     document.getElementById('noteMedia').value = '';
   };
 
   if (mediaInput) {
-    reader.readAsDataURL(mediaInput);
+    reader.readAsDataURL(mediaInput); // Handle media upload
   } else {
     notes.push({ title, text, media: null, category: selectedCategory });
     localStorage.setItem('notes', JSON.stringify(notes));
     loadNotes();
-    quill.root.innerHTML = '';
+    quill.root.innerHTML = ''; // Clear editor after saving
     document.getElementById('noteMedia').value = '';
   }
 }
@@ -1196,8 +1267,12 @@ function saveNote() {
 function showNotePopup(index) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
   const note = notes[index];
-  document.getElementById('noteTitle').textContent = note.title;
-  document.getElementById('noteContent').innerHTML = note.text;
+  
+  // Display title and content
+  document.getElementById('noteTitle').textContent = note.title || "Untitled";
+  document.getElementById('noteContent').innerHTML = note.text || "No content available";
+
+  // Handle media preview
   const mediaPreview = document.getElementById('noteMediaPreview');
   if (note.media) {
     mediaPreview.src = note.media;
@@ -1205,8 +1280,9 @@ function showNotePopup(index) {
   } else {
     mediaPreview.style.display = 'none';
   }
-  currentEditingNote = index;
-  document.getElementById('notePopup').style.display = 'flex';
+
+  currentEditingNote = index; // Track the current note being edited
+  document.getElementById('notePopup').style.display = 'flex'; // Show popup
 }
 
 function editNote() {
@@ -1452,6 +1528,34 @@ document.addEventListener("DOMContentLoaded", () => {
   loadCategories(); // Load categories on page load
   loadNotes(); // Load notes (initially empty until a category is selected)
 });
+    // Custom Prompt
+function showCustomPrompt(title, callback) {
+  const promptOverlay = document.getElementById("customPrompt");
+  const promptTitle = document.getElementById("promptTitle");
+  const promptInput = document.getElementById("promptInput");
+  const promptOk = document.getElementById("promptOk");
+  const promptCancel = document.getElementById("promptCancel");
+
+  // Set the title and clear the input
+  promptTitle.textContent = title;
+  promptInput.value = "";
+
+  // Show the prompt
+  promptOverlay.style.display = "flex";
+
+  // Handle the "OK" button
+  promptOk.onclick = () => {
+    const inputValue = promptInput.value.trim();
+    promptOverlay.style.display = "none";
+    if (callback) callback(inputValue);
+  };
+
+  // Handle the "Cancel" button
+  promptCancel.onclick = () => {
+    promptOverlay.style.display = "none";
+    if (callback) callback(null); // Return null on cancel
+  };
+}
 
     // Toggle the visibility of the mini-browser
 function toggleBrowser() {
