@@ -1,13 +1,4 @@
 importScripts('https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js');
- setTimeout(async () => {
-  if (!hasPrompted) {
-    const permission = await OneSignal.pushManager.subscribe();
-    console.log('Notification permission:', permission);
-    if (permission) {
-      localStorage.setItem('hasPromptedForNotifications', 'true');
-    }
-  }
-}, 5000); // 5-second delay
 
     window.OneSignalDeferred = window.OneSignalDeferred || [];
     OneSignalDeferred.push(async function(OneSignal) {
