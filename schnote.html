@@ -419,7 +419,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.css" rel="stylesheet">
   <script>
-        // Initialize the rich text editor for notes
+// Initialize the rich text editor for notes
 const quill = new Quill('#noteEditor', {
   theme: 'snow',
   placeholder: 'Start typing...',
@@ -552,15 +552,14 @@ function loadDepartmentSchedule() {
   renderSchedule(schedule);
 }
 
-
 // Save schedule to local storage
-function saveScheduleToLocalStorage(code) {
+function savePredefinedToLocalStorage() {
+  const code = document.getElementById('scheduleCode').value.trim();
   const schedule = departmentSchedules[code];
   if (!schedule) {
     alert('Invalid code. No schedule to save.');
     return;
   }
-  // Store each schedule under a unique key
   const savedSchedules = JSON.parse(localStorage.getItem('savedSchedules')) || {};
   savedSchedules[code] = schedule;
   localStorage.setItem('savedSchedules', JSON.stringify(savedSchedules));
@@ -593,10 +592,112 @@ function renderSchedule(schedule) {
   `).join('');
 }
 
-// Initialize the page
-document.addEventListener('DOMContentLoaded', loadSavedSchedule);
+// Save note
+function saveNote() {
+  const title = prompt("Enter note title:");
+  const text = quill.root.innerHTML.trim(); // Quill editor content
+  const mediaInput = document.getElementById('noteMedia').files[0];
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  const reader = new FileReader();
 
-// Load the calendar
+  reader.onload = () => {
+    notes.push({ title, text, media: reader.result, category: selectedCategory });
+    localStorage.setItem('notes', JSON.stringify(notes));
+    loadNotes();
+    quill.root.innerHTML = ''; // Clear editor after saving
+    document.getElementById('noteMedia').value = '';
+  };
+
+  if (mediaInput) {
+    reader.readAsDataURL(mediaInput); // Handle media upload
+  } else {
+    notes.push({ title, text, media: null, category: selectedCategory });
+    localStorage.setItem('notes', JSON.stringify(notes));
+    loadNotes();
+    quill.root.innerHTML = ''; // Clear editor after saving
+    document.getElementById('noteMedia').value = '';
+  }
+}
+
+// Show note popup
+function showNotePopup(index) {
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  const note = notes[index];
+
+  // Display title and content
+  document.getElementById('noteTitle').textContent = note.title || "Untitled";
+  document.getElementById('noteContent').innerHTML = note.text || "No content available";
+
+  // Handle media preview
+  const mediaPreview = document.getElementById('noteMediaPreview');
+  if (note.media) {
+    mediaPreview.src = note.media;
+    mediaPreview.style.display = 'block';
+  } else {
+    mediaPreview.style.display = 'none';
+  }
+
+  currentEditingNote = index; // Track the current note being edited
+  document.getElementById('notePopup').style.display = 'flex'; // Show popup
+}
+
+// Load notes
+function loadNotes() {
+  const notesList = document.getElementById('notesList');
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  notesList.innerHTML = notes
+    .filter(note => note.category === selectedCategory)
+    .map((note, index) => `
+      <li>
+        <h4>${note.title}</h4>
+        <button onclick="showNotePopup(${index})">View</button>
+      </li>`).join('');
+}
+
+// Initialize the page
+document.addEventListener('DOMContentLoaded', () => {
+  loadCalendar();
+  loadNotes();
+  loadSavedSchedule();
+});
+
+// Mini browser functions
+function toggleMiniBrowser() {
+  const miniBrowser = document.getElementById('miniBrowser');
+  miniBrowser.classList.toggle('hidden');
+}
+
+function navigateBrowser() {
+  const url = document.getElementById('browserUrl').value;
+  const browserFrame = document.getElementById('browserFrame');
+  if (url) {
+    browserFrame.src = url;
+  } else {
+    alert('Please enter a valid URL');
+  }
+}
+
+function goBack() {
+  const browserFrame = document.getElementById('browserFrame');
+  browserFrame.contentWindow.history.back();
+}
+
+function goForward() {
+  const browserFrame = document.getElementById('browserFrame');
+  browserFrame.contentWindow.history.forward();
+}
+
+function reloadBrowser() {
+  const browserFrame = document.getElementById('browserFrame');
+  browserFrame.contentWindow.location.reload();
+}
+
+function goHome() {
+  const browserFrame = document.getElementById('browserFrame');
+  browserFrame.src = 'https://www.wikipedia.org';
+}
+
+// Calendar functions
 function loadCalendar() {
   const calendar = document.getElementById('calendar');
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -609,7 +710,7 @@ function loadCalendar() {
 
   document.getElementById('calendarMessage').textContent = 'Make today count!';
 }
-
+    
 // Load notes
 function loadNotes() {
   const notesList = document.getElementById('notesList');
