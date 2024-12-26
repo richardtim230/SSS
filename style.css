@@ -18,7 +18,7 @@ header.hero {
 justify-content: center;
     text-align: center;  
   background-image: url('./search-bar-icon-search-3d-render-minimal-design-blue-background_41204-14844.jpg');
-  width: 95%;
+  width: 90%;
   background-size: 100% 100%;
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
   color: white;
@@ -269,10 +269,6 @@ header h2 {
     background: #d9534f; /* Darker red for hover */
 }
 
-    /* Prevent scrolling of the body when a notification is active */
-body.modal-active {
-  overflow: hidden;
-}
 
 /* Notification covers 90% of the screen */
 .notification {
