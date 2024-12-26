@@ -182,25 +182,21 @@ function closeWelcomePage() {
 
 // Navigate to Sections
 
-function navigateToSection(sectionId) {
-
+function navigateToSection(section) {
   document.querySelector('main').style.display = 'block';
 
-  const section = document.getElementById(sectionId);
-const section = document.getElementByUrl(sectionUrl);
-
-  if (section) {
-
-    section.scrollIntoView({ behavior: 'smooth' });
-
+  // Check if section is likely a URL (contains a period for relative URLs or starts with http/https for absolute URLs)
+  if (section.includes('.') || section.startsWith('http://') || section.startsWith('https://')) {
+    window.location.href = section;
   } else {
-
-    alert('Section not found!');
-
+    const sectionElement = document.getElementById(section);
+    if (sectionElement) {
+      sectionElement.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      alert('Section not found!');
+    }
   }
-
 }
-
 // =========================
 
 // Session Management
