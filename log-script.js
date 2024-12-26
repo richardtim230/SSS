@@ -258,3 +258,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+// Display User Information on Profile Page
+function displayUserInfo() {
+  const user = JSON.parse(localStorage.getItem('user')) || {};
+
+  document.getElementById('profileFullName').innerText = user.fullName || 'Not provided';
+  document.getElementById('profileEmail').innerText = user.email || 'Not provided';
+  document.getElementById('profilePhone').innerText = user.phone || 'Not provided';
+  document.getElementById('profileDepartment').innerText = user.department || 'Not provided';
+  document.getElementById('profileLevel').innerText = user.level || 'Not provided';
+}
+
+// Load User Information on Page Load
+document.addEventListener('DOMContentLoaded', () => {
+  displayUserInfo();
+  displayCourses();
+});
