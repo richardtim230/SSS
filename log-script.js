@@ -274,3 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
   displayUserInfo();
   displayCourses();
 });
+
+document.getElementById('contactAdminBtn').addEventListener('click', () => {
+  window.location.href = 'https://wa.me/2349155127634';
+});
