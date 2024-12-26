@@ -197,6 +197,51 @@ function navigateToSection(section) {
     }
   }
 }
+
+      // Add Course
+function addCourse() {
+  const courseName = document.getElementById('courseName').value;
+  if (!courseName) {
+    alert('Please enter a course name.');
+    return;
+  }
+
+  // Retrieve courses from localStorage
+  let courses = JSON.parse(localStorage.getItem('courses')) || [];
+
+  // Add new course
+  courses.push(courseName);
+
+  // Save courses to localStorage
+  localStorage.setItem('courses', JSON.stringify(courses));
+
+  // Clear input field
+  document.getElementById('courseName').value = '';
+
+  // Update course list display
+  displayCourses();
+}
+
+// Display Courses
+function displayCourses() {
+  const courseList = document.getElementById('courseList');
+  courseList.innerHTML = '';
+
+  // Retrieve courses from localStorage
+  const courses = JSON.parse(localStorage.getItem('courses')) || [];
+
+  // Display each course
+  courses.forEach(course => {
+    const li = document.createElement('li');
+    li.textContent = course;
+    courseList.appendChild(li);
+  });
+}
+
+// Load Courses on Page Load
+document.addEventListener('DOMContentLoaded', () => {
+  displayCourses();
+});
 // =========================
 
 // Session Management
