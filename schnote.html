@@ -2183,19 +2183,25 @@ function toggleAuthScreen(show) {
     const day = Object.keys(classSchedule.days).find((key) => classSchedule.days[key] === subject) || 'Unknown Day';
     return `${subject} (${day})`;
   }
-    
+
     // Check Login Status and Reload Count on Page Load
 window.onload = function () {
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   let reloadCount = parseInt(localStorage.getItem("reloadCount")) || 0;
 
+  // Hide all screens initially
+  document.getElementById("loginScreen").classList.add("hidden");
+  document.getElementById("registerScreen").classList.add("hidden");
+  document.getElementById("welcomeScreen").classList.add("hidden");
+  document.getElementById("mainApp").classList.add("hidden");
+
   if (isLoggedIn === "true" && reloadCount < 5) {
     // Increment and save reload count
     reloadCount++;
     localStorage.setItem("reloadCount", reloadCount);
 
-    // Show welcome screen if user details exist and reload count is under 5
+    // Show welcome screen if user is logged in and reload count is under 5
     if (userDetails) {
       document.getElementById("welcomeScreen").classList.remove("hidden");
       document.getElementById("userName").textContent = userDetails.fullName;
@@ -2311,8 +2317,9 @@ function navigateToSection(section) {
 
 // Redirect to Main App
 function closeWelcomeScreen() {
-  // Simply redirect without logging the user out
-  window.location.href = "main-app.html"; // Replace with the main app URL
+  // Simply show the main app without logging the user out
+  document.getElementById("welcomeScreen").classList.add("hidden");
+  document.getElementById("mainApp").classList.remove("hidden");
 }
 
 // Logout the User
@@ -2322,7 +2329,6 @@ function logoutUser() {
   document.getElementById("loginScreen").classList.remove("hidden");
   alert("Logged out. Please log in again.");
 }
-
 
         if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/service-worker.js')
