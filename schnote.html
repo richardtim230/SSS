@@ -1119,20 +1119,13 @@ body.modal-active {
       <p>How can we assist you today?</p>
 
       <div class="welcome-buttons">
+  <button onclick="navigateToSection('Notes')">Notes</button>
+  <button onclick="navigateToSection('Class/Personal Timetable')">Class/Personal Timetable</button>
+  <button onclick="navigateToSection('Contact Support')">Contact Support</button>
+  <button class="secondary-button" onclick="closeWelcomeScreen()">Enter Main App</button>
+</div>
+<button class="logout-button" onclick="logoutUser()">Logout</button>
 
-        <button onclick="navigateToSection('notes')">Notes</button>
-
-        <button onclick="navigateToSection('schedule')">Class/Personal Timetable</button>
-
-        <button onclick="navigateToSection('Contact Support')">Contact Support</button>
-
-        <button class="secondary-button" onclick="closeWelcomeScreen()">Enter Main App</button>
-
-      </div>
-
-    </div>
-
-  </div>
 
 
 
@@ -2324,196 +2317,117 @@ function toggleAuthScreen(show) {
     const day = Object.keys(classSchedule.days).find((key) => classSchedule.days[key] === subject) || 'Unknown Day';
     return `${subject} (${day})`;
   }
+    
     // Check Login Status and Reload Count on Page Load
-
 window.onload = function () {
-
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
-
   const isLoggedIn = localStorage.getItem("isLoggedIn");
-
   let reloadCount = parseInt(localStorage.getItem("reloadCount")) || 0;
 
   if (isLoggedIn === "true" && reloadCount < 5) {
-
     // Increment and save reload count
-
     reloadCount++;
-
     localStorage.setItem("reloadCount", reloadCount);
 
     // Show welcome screen if user details exist and reload count is under 5
-
     if (userDetails) {
-
       document.getElementById("welcomeScreen").classList.remove("hidden");
-
       document.getElementById("userName").textContent = userDetails.fullName;
-
       return;
-
     }
-
   }
 
   // Force relogin if reload count reaches 5 or user is not logged in
-
   localStorage.setItem("reloadCount", 0); // Reset reload count
-
   localStorage.setItem("isLoggedIn", "false");
-
   document.getElementById("loginScreen").classList.remove("hidden");
-
 };
 
 // Toggle Password Visibility
-
 function togglePassword(inputId) {
-
   const input = document.getElementById(inputId);
-
   if (input.type === "password") {
-
     input.type = "text";
-
   } else {
-
     input.type = "password";
-
   }
-
 }
 
 // Show the Register Screen
-
 function showRegisterScreen() {
-
   document.getElementById("loginScreen").classList.add("hidden");
-
   document.getElementById("registerScreen").classList.remove("hidden");
-
 }
 
 // Show the Login Screen
-
 function showLoginScreen() {
-
   document.getElementById("registerScreen").classList.add("hidden");
-
   document.getElementById("loginScreen").classList.remove("hidden");
-
 }
 
 // Register Functionality
-
 function register() {
-
   // Collect User Details
-
   const userDetails = {
-
     fullName: document.getElementById("registerFullName").value,
-
     email: document.getElementById("registerEmail").value,
-
     phone: document.getElementById("registerPhone").value,
-
     department: document.getElementById("registerDepartment").value,
-
     level: document.getElementById("registerLevel").value,
-
     password: document.getElementById("registerPassword").value,
-
     securityQuestion: document.getElementById("securityQuestion").value,
-
     securityAnswer: document.getElementById("securityAnswer").value,
-
   };
 
   // Validation
-
   if (
-
     !userDetails.fullName ||
-
     !userDetails.email ||
-
     !userDetails.phone ||
-
     !userDetails.department ||
-
     !userDetails.level ||
-
     !userDetails.password ||
-
     !userDetails.securityQuestion ||
-
     !userDetails.securityAnswer
-
   ) {
-
     alert("Please fill in all fields.");
-
     return;
-
   }
 
   // Save to Local Storage
-
   localStorage.setItem("userDetails", JSON.stringify(userDetails));
-
   alert("Registration successful!");
-
   showLoginScreen();
-
 }
 
 // Login Functionality
-
 function login() {
-
   // Collect Login Credentials
-
   const email = document.getElementById("loginUsername").value;
-
   const password = document.getElementById("loginPassword").value;
 
   // Retrieve User Details
-
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
 
   // Validation
-
   if (!userDetails || userDetails.email !== email || userDetails.password !== password) {
-
     alert("Invalid username or password");
-
     return;
-
   }
 
   // Set Login Status
-
   localStorage.setItem("isLoggedIn", "true");
-
   localStorage.setItem("reloadCount", "0"); // Reset reload count
 
   // Show Welcome Screen
-
   document.getElementById("loginScreen").classList.add("hidden");
-
   document.getElementById("welcomeScreen").classList.remove("hidden");
-
   document.getElementById("userName").textContent = userDetails.fullName;
-
 }
 
 // Forgot Password Placeholder
-
 function forgotPassword() {
-
   alert("Forgot Password functionality coming soon!");
-
 }
 
 // Navigate to Different Sections
@@ -2528,23 +2442,19 @@ function navigateToSection(section) {
     alert("Section not implemented yet!");
   }
 }
+
 // Redirect to Main App
 function closeWelcomeScreen() {
   // Simply redirect without logging the user out
   window.location.href = "main-app.html"; // Replace with the main app URL
 }
 
-
-  // Logout the user
-
+// Logout the User
+function logoutUser() {
   localStorage.setItem("isLoggedIn", "false");
-
   document.getElementById("welcomeScreen").classList.add("hidden");
-
   document.getElementById("loginScreen").classList.remove("hidden");
-
   alert("Logged out. Please log in again.");
-
 }
 
 
