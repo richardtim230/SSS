@@ -186,7 +186,7 @@ function navigateToSection(sectionId) {
 
   document.querySelector('main').style.display = 'block';
 
-  const section = document.getElementById(sectionId);
+  const section = document.getElementById();
 
   if (section) {
 
