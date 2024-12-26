@@ -592,3 +592,51 @@ section p {
 
 }
 
+/* Course Section Styling */
+#courses h3 {
+  margin-top: 20px;
+  font-size: 1.5rem;
+  text-align: center;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+#courses input[type="text"] {
+  width: 90%;
+  margin: 10px auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: block;
+  background: #f9f9f9;
+}
+
+#courses button {
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px auto;
+  display: block;
+  width: 90%;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#courses button:hover {
+  background: #0056b3;
+}
+
+#courseList {
+  list-style-type: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+#courseList li {
+  background: #f1f1f1;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  }
