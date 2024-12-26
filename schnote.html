@@ -419,7 +419,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.css" rel="stylesheet">
   <script>
-// Initialize the rich text editor for notes
+        // Initialize the rich text editor for notes
 const quill = new Quill('#noteEditor', {
   theme: 'snow',
   placeholder: 'Start typing...',
@@ -476,7 +476,67 @@ let selectedCategory = "Personal";
 
 // Random weekly schedules for departments
 const departmentSchedules = {
-  // predefined schedules
+  SCI123: [
+    { time: '8:00 AM', Mon: 'PHY101 Lab 1', Tue: 'CHM102 LT 2', Wed: 'MTH105 LT 3', Thu: 'PHY101 Lab 2', Fri: 'BIO110 LT 1' },
+    { time: '10:00 AM', Mon: 'CHM102 LT 3', Tue: 'PHY101 Lab 2', Wed: 'BIO110 Lab 1', Thu: 'MTH105 LT 1', Fri: 'CHM102 Lab' },
+    { time: '1:00 PM', Mon: 'MTH105 LT 2', Tue: 'BIO110 Lab 1', Wed: '', Thu: 'PHY101 Lab 3', Fri: '' }
+  ],
+  HEA456: [
+    { time: '8:00 AM', Mon: 'MED200 Lab 3', Tue: 'NUR210 LT 1', Wed: 'ANAT301 LT 2', Thu: 'MED200 LT 3', Fri: 'PHYS301 LT 1' },
+    { time: '11:00 AM', Mon: 'NUR210 Lab', Tue: '', Wed: 'PHARM210 Lab', Thu: 'ANAT301 LT 2', Fri: 'NUR210 LT 2' },
+    { time: '3:00 PM', Mon: '', Tue: 'MED200 LT 3', Wed: 'NUR210 Lab', Thu: '', Fri: '' }
+  ],
+  PHA789: [
+    { time: '9:00 AM', Mon: 'PHA201 Lab', Tue: 'PHA203 LT 1', Wed: 'PHA202 LT 3', Thu: 'PHA201 Lab', Fri: 'PHA202 LT 1' },
+    { time: '1:00 PM', Mon: '', Tue: 'PHA202 LT 1', Wed: 'PHA203 Lab', Thu: '', Fri: 'PHA201 Lab' },
+    { time: '4:00 PM', Mon: 'PHA202 LT 3', Tue: '', Wed: 'PHA201 Lab', Thu: 'PHA203 LT 2', Fri: '' }
+  ],
+  AGR101: [
+    { time: '8:00 AM', Mon: 'AGRO101 LT 1', Tue: 'FST105 Lab', Wed: 'AGR105 LT 3', Thu: 'FST105 Lab', Fri: 'AGR106 LT 2' },
+    { time: '12:00 PM', Mon: '', Tue: 'AGR107 LT 2', Wed: 'AGRO101 LT 1', Thu: 'AGR106 Lab', Fri: '' },
+    { time: '2:00 PM', Mon: 'AGR106 LT 3', Tue: '', Wed: '', Thu: 'FST105 LT 3', Fri: '' }
+  ],
+  ART202: [
+    { time: '9:00 AM', Mon: 'HIS101 LT 2', Tue: 'ENG102 LT 3', Wed: 'PHIL105 LT 2', Thu: 'HIS101 LT 1', Fri: 'ART110 LT 2' },
+    { time: '11:00 AM', Mon: 'ENG102 LT 1', Tue: 'PHIL105 LT 3', Wed: '', Thu: 'ART110 LT 3', Fri: 'ENG102 LT 2' },
+    { time: '3:00 PM', Mon: '', Tue: 'PHIL105 LT 1', Wed: 'HIS101 LT 3', Thu: 'ENG102 LT 1', Fri: '' }
+  ],
+  "ZOO/PT1": [
+    { time: '8:00 AM', Mon: 'CHM 101 (1k SLT)', Tues: 'SER 001 (BOOC)', Wed: 'ZOO 101 (ODLT 1)', Thur: 'SER 001 (BOOC)', Fri: 'ZOO 101 (TETFUND ETF)' },
+    { time: '9:00 AM', Mon: 'ZOO 101 (FBLT)', Tues: 'CHM 101 (1k SLT)', Wed: '—', Thur: '—', Fri: '-' },
+    { time: '10:00 AM', Mon: 'PHY 105 (1k SLT)', Tues: '—', Wed: 'PHY 105 (1k SLT)', Thur: '-', Fri: 'PHY 105 (1k SLT)' },
+    { time: '11:00 AM', Mon: '—', Tues: 'BOT 101 (1k SLT)', Wed: '-', Thur: '-', Fri: '-' },
+    { time: '12:00 PM', Mon: 'BOT 101 (1k SLT)', Tues: 'ZOO 101 (—)', Wed: 'BOT 101 (1k SLT)', Thur: 'CHM 101 (1k SLT)', Fri: '-' },
+    { time: '1:00 PM', Mon: '-', Tues: '-', Wed: 'CHM 101 (1k SLT)', Thur: 'PHY 107 (Yellow House)', Fri: '-' },
+    { time: '2:00 PM', Mon: '-', Tues: '-', Wed: 'CHM 103 (2:00PM-5:00PM)', Thur: '-', Fri: '-' },
+    { time: '3:00 PM', Mon: '-', Tues: '-', Wed: '-', Thur: '-', Fri: '-' },
+    { time: '4:00 PM', Mon: '-', Tues: '-', Wed: '-', Thur: '-', Fri: 'BOT 103 (4:30 PM - 6:00 PM)' },
+    { time: '5:00 PM', Mon: '-', Tues: '-', Wed: '-', Thur: '-', Fri: '-' }
+  ],
+  "ZOO/PT2": [
+    { time: '8:00 AM', Mon: 'MTH105 ODLT 2', Tues: 'ZOO207 Z0.01', Wed: 'ZOO203 G.23', Thur: 'ZOO207 Z0.01', Fri: '-' },
+    { time: '9:00 AM', Mon: 'ZOO203 BOO C', Tues: 'BOT202 G.23', Wed: 'ZOO203 BOO B', Thur: '-', Fri: 'ZOO203 BOO C' },
+    { time: '10:00 AM', Mon: '-', Tues: '-', Wed: '-', Thur: 'BOT202 G.23', Fri: '' },
+    { time: '11:00 AM', Mon: 'ZOO201 Z0.01', Tues: 'MTH105 FBLT', Wed: 'ZOO201 BOO B', Thur: 'ZOO201 Z0.01', Fri: 'ZOO201 BOO A' },
+    { time: '12:00 PM', Mon: 'BOT202 BOO C', Tues: '-', Wed: '-', Thur: '-', Fri: '-' },
+    { time: '1:00 PM', Mon: 'ZOO203 HSLT C', Tues: '-', Wed: '-', Thur: '-', Fri: '-' },
+    { time: '2:00 PM', Mon: 'MTH105 ODLT 1', Tues: '-', Wed: '-', Thur: 'MTH105 ODLT 2', Fri: '-' },
+    { time: '3:00 PM', Mon: '-', Tues: 'MTH105 HSLT C', Wed: '-', Thur: '-', Fri: '-' },
+    { time: '4:00 PM', Mon: '-', Tues: '-', Wed: 'MTH105 HSLT C', Thur: '-', Fri: 'CSC201 HSLT C' }
+  ],
+  "MCB/PT1": [
+    { time: '8:00 AM', Mon: 'CHM 101 (1k SLT)\nBOT 103 (Bot Gr. IF)', Tues: 'SEA 001 (All venues)', Wed: 'CHM 101 (1k SLT)', Thur: 'SEA 001 (All venues)', Fri: 'ZOO 101 (CET/TETFUND)' },
+    { time: '9:00 AM', Mon: 'ZOO 101 (FBLT)', Tues: 'CHM 101 (1k SLT)', Wed: 'ZOO 101 (ODLT 1)', Thur: 'CHM 101 (1k SLT)', Fri: 'CHM 101 (1k SLT)' },
+    { time: '10:00 AM', Mon: 'PHY 105 (1k SLT)', Tues: 'PHY 105 (1k SLT)', Wed: 'PHY 105 (1k SLT)', Thur: 'PHY 105 (1k SLT)', Fri: 'PHY 105 (1k SLT)\nM CB SEMINAR (BOP C)' },
+    { time: '11:00 AM', Mon: 'CHM 101 (1k SLT)', Tues: 'BOT 101 (1k SLT)', Wed: '', Thur: 'CHM 101 (1k SLT)', Fri: '' },
+    { time: '12:00 PM', Mon: 'BOT 101 (1k SLT)', Tues: 'ZOO 101 (FBLT)', Wed: 'BOT 101 (1k SLT)', Thur: '', Fri: '' },
+    { time: '1:00 PM', Mon: '', Tues: '', Wed: '', Thur: '', Fri: '' },
+    { time: '2:00 PM', Mon: '', Tues: '', Wed: '', Thur: '', Fri: '' },
+    { time: '3:00 PM', Mon: '', Tues: '', Wed: '', Thur: '', Fri: '' },
+    { time: '4:00 PM', Mon: '', Tues: '', Wed: '', Thur: '', Fri: '' },
+    { time: '5:00 PM', Mon: '', Tues: 'ZOO 103 (Zoology Lab Z 1:00)', Wed: 'ZOO 103 (Zoology Lab Z 1:00)', Thur: '', Fri: '' },
+    { time: '6:00 PM', Mon: '', Tues: '', Wed: '', Thur: '', Fri: '' }
+  ]
 };
 
 // Load department schedule based on code
@@ -523,6 +583,9 @@ function loadSavedSchedule() {
   const savedSchedule = JSON.parse(localStorage.getItem('schedule')) || [];
   renderSchedule(savedSchedule);
 }
+
+// Initialize the page
+document.addEventListener('DOMContentLoaded', loadSavedSchedule);
 
 // Load the calendar
 function loadCalendar() {
