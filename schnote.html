@@ -661,11 +661,17 @@ document.addEventListener('DOMContentLoaded', () => {
   loadSavedSchedule();
 });
 
-// Mini browser functions
-function toggleMiniBrowser() {
-  const miniBrowser = document.getElementById('miniBrowser');
-  miniBrowser.classList.toggle('hidden');
-}
+    // Show the browser
+    miniBrowser.classList.remove("hidden");
+    browserIcon.textContent = "❌";
+    document.body.style.overflow = "hidden"; // Disable scrolling
+  } else {
+    // Hide the browser
+    miniBrowser.classList.add("hidden");
+    browserIcon.textContent = "🌐";
+    document.body.style.overflow = "auto"; // Enable scrolling
+    }
+  }
 
 function navigateBrowser() {
   const url = document.getElementById('browserUrl').value;
