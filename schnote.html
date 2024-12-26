@@ -558,16 +558,24 @@ function loadDepartmentSchedule() {
   renderSchedule(schedule);
 }
 
-// Save schedule to local storage
+// Save schedule to local storage with title
 function savePredefinedToLocalStorage() {
+  const title = document.getElementById('scheduleTitle').value.trim();
   const code = document.getElementById('scheduleCode').value.trim();
   const schedule = departmentSchedules[code];
+
+  if (!title) {
+    alert('Please enter a title for the schedule.');
+    return;
+  }
+
   if (!schedule) {
     alert('Invalid code. No schedule to save.');
     return;
   }
+
   const savedSchedules = JSON.parse(localStorage.getItem('savedSchedules')) || {};
-  savedSchedules[code] = schedule;
+  savedSchedules[title] = schedule;
   localStorage.setItem('savedSchedules', JSON.stringify(savedSchedules));
   alert('Schedule saved to local storage!');
 }
@@ -597,7 +605,54 @@ function renderSchedule(schedule) {
     </tr>
   `).join('');
 }
+// Add schedule to the table
+function addSchedule() {
+  const time = document.getElementById('timeInput').value.trim();
+  const day = document.getElementById('dayInput').value.trim();
+  const subject = document.getElementById('subjectInput').value.trim();
 
+  if (!time || !day || !subject) {
+    alert('Please fill in all fields to add a schedule.');
+    return;
+  }
+
+  const scheduleBody = document.getElementById('scheduleBody');
+  const newRow = document.createElement('tr');
+  newRow.innerHTML = `
+    <td>${time}</td>
+    <td>${day === 'Monday' ? subject : ''}</td>
+    <td>${day === 'Tuesday' ? subject : ''}</td>
+    <td>${day === 'Wednesday' ? subject : ''}</td>
+    <td>${day === 'Thursday' ? subject : ''}</td>
+    <td>${day === 'Friday' ? subject : ''}</td>
+  `;
+  scheduleBody.appendChild(newRow);
+
+  // Clear inputs
+  document.getElementById('timeInput').value = '';
+  document.getElementById('dayInput').value = '';
+  document.getElementById('subjectInput').value = '';
+}
+
+
+
+// Load schedule from local storage
+function loadSavedSchedule() {
+  const savedSchedules = JSON.parse(localStorage.getItem('savedSchedules')) || {};
+  const scheduleBody = document.getElementById('scheduleBody');
+  scheduleBody.innerHTML = '';
+
+  Object.keys(savedSchedules).forEach(title => {
+    const titleRow = document.createElement('tr');
+    titleRow.innerHTML = `<td colspan="6" style="font-weight:bold; text-align:center;">${title}</td>`;
+    scheduleBody.appendChild(titleRow);
+
+    renderSchedule(savedSchedules[title]);
+  });
+}
+
+
+    
 // Save note
 function saveNote() {
   const title = prompt("Enter note title:");
