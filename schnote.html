@@ -499,35 +499,30 @@ body.modal-active {
 
 
     <!-- Class Scheduler -->
-    <div id="scheduleSection">
-      <h3>Class Scheduler</h3>
-      <div id="scheduleSection">
-
-      <div>
-
-        <p>Enter the schedule code to load predefined classes:</p>
-
-        <input type="text" id="scheduleCode" placeholder="Enter code">
-
-        <button onclick="loadDepartmentSchedule()">Load Schedule</button>
-        <button onclick="savePredefinedToLocalStorage()">Save Predefined Schedule</button>
-
-        </div>
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th>Time</th>
-              <th>Mon</th>
-              <th>Tues</th>
-              <th>Wed</th>
-              <th>Thur</th>
-              <th>Fri</th>
-            </tr>
-          </thead>
-          <tbody id="scheduleBody"></tbody>
-        </table>
-      </div>
+<div id="scheduleSection">
+  <h3>Class Scheduler</h3>
+  <div>
+    <p>Enter the schedule code to load predefined classes:</p>
+    <input type="text" id="scheduleCode" placeholder="Enter code">
+    <button onclick="loadDepartmentSchedule()">Load Schedule</button>
+    <button onclick="savePredefinedToLocalStorage()">Save Predefined Schedule</button>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Mon</th>
+          <th>Tues</th>
+          <th>Wed</th>
+          <th>Thur</th>
+          <th>Fri</th>
+        </tr>
+      </thead>
+      <tbody id="scheduleBody"></tbody>
+    </table>
+  </div>
+                                                                               </div>
       <h4>Add Schedule</h4>
       <select id="timeInput">
         <option value="">Select Time</option>
@@ -961,45 +956,59 @@ document.addEventListener('DOMContentLoaded', loadSavedSchedule);
 
 
 
-    // Load predefined schedule
+// JavaScript Part
+    
+const departmentSchedules = {
+  //... predefined schedules
+};
 
-    function loadScheduledClasses() {
+function loadDepartmentSchedule() {
+  const code = document.getElementById('scheduleCode').value.trim();
+  const schedule = departmentSchedules[code];
 
-      const code = document.getElementById('scheduleCode').value.trim();
+  if (!schedule) {
+    alert('Invalid code. Please try again.');
+    return;
+  }
 
-      if (code !== 'ZOoGoY') {
+  renderSchedule(schedule);
+}
 
-        alert('Invalid code. Please try again.');
+function renderSchedule(schedule) {
+  const scheduleBody = document.getElementById('scheduleBody');
+  scheduleBody.innerHTML = schedule.map(row => `
+    <tr>
+      <td>${row.time}</td>
+      <td>${row.Mon || ''}</td>
+      <td>${row.Tues || ''}</td>
+      <td>${row.Wed || ''}</td>
+      <td>${row.Thur || ''}</td>
+      <td>${row.Fri || ''}</td>
+    </tr>
+  `).join('');
+}
 
-        return;
+function savePredefinedToLocalStorage() {
+  const code = document.getElementById('scheduleCode').value.trim();
+  const schedule = departmentSchedules[code];
 
-      }
+  if (!schedule) {
+    alert('Invalid code. No schedule to save.');
+    return;
+  }
 
+  localStorage.setItem('predefinedSchedule', JSON.stringify(schedule));
+  alert('Predefined schedule saved to local storage!');
+}
 
+// Load schedule from local storage
+function loadSavedSchedule() {
+  const savedSchedule = JSON.parse(localStorage.getItem('predefinedSchedule')) || [];
+  renderSchedule(savedSchedule);
+}
 
-      const scheduleBody = document.getElementById('scheduleBody');
-
-      scheduleBody.innerHTML = predefinedSchedule.map(row => `
-
-        <tr>
-
-          <td>${row.time}</td>
-
-          <td>${row.Mon || ''}</td>
-
-          <td>${row.Tues || ''}</td>
-
-          <td>${row.Wed || ''}</td>
-
-          <td>${row.Thur || ''}</td>
-
-          <td>${row.Fri || ''}</td>
-
-        </tr>
-
-      `).join('');
-
-    }
+// Initialize the page
+document.addEventListener('DOMContentLoaded', loadSavedSchedule);
 const motivationalMessages = [
   "Keep pushing forward!",
   "Believe in yourself!",
@@ -1667,3 +1676,56 @@ function toggleAuthScreen(show) {
   
 </body>
 </html>
+
+// JavaScript Part
+const departmentSchedules = {
+  //... predefined schedules
+};
+
+function loadDepartmentSchedule() {
+  const code = document.getElementById('scheduleCode').value.trim();
+  const schedule = departmentSchedules[code];
+
+  if (!schedule) {
+    alert('Invalid code. Please try again.');
+    return;
+  }
+
+  renderSchedule(schedule);
+}
+
+function renderSchedule(schedule) {
+  const scheduleBody = document.getElementById('scheduleBody');
+  scheduleBody.innerHTML = schedule.map(row => `
+    <tr>
+      <td>${row.time}</td>
+      <td>${row.Mon || ''}</td>
+      <td>${row.Tues || ''}</td>
+      <td>${row.Wed || ''}</td>
+      <td>${row.Thur || ''}</td>
+      <td>${row.Fri || ''}</td>
+    </tr>
+  `).join('');
+}
+
+function savePredefinedToLocalStorage() {
+  const code = document.getElementById('scheduleCode').value.trim();
+  const schedule = departmentSchedules[code];
+
+  if (!schedule) {
+    alert('Invalid code. No schedule to save.');
+    return;
+  }
+
+  localStorage.setItem('predefinedSchedule', JSON.stringify(schedule));
+  alert('Predefined schedule saved to local storage!');
+}
+
+// Load schedule from local storage
+function loadSavedSchedule() {
+  const savedSchedule = JSON.parse(localStorage.getItem('predefinedSchedule')) || [];
+  renderSchedule(savedSchedule);
+}
+
+// Initialize the page
+document.addEventListener('DOMContentLoaded', loadSavedSchedule);
