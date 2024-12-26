@@ -557,8 +557,6 @@ function loadDepartmentSchedule() {
   renderSchedule(schedule);
 }
 
-// Save schedule to local storage with title
-
 // Add schedule to the table
 function addSchedule() {
   const time = document.getElementById('timeInput').value.trim();
@@ -640,30 +638,6 @@ function renderSchedule(schedule) {
   `).join('');
 }
 
-
-    
-  // Clear inputs
-  document.getElementById('timeInput').value = '';
-  document.getElementById('dayInput').value = '';
-  document.getElementById('subjectInput').value = '';
-}
-
-
-
-// Load schedule from local storage
-function loadSavedSchedule() {
-  const savedSchedules = JSON.parse(localStorage.getItem('savedSchedules')) || {};
-  const scheduleBody = document.getElementById('scheduleBody');
-  scheduleBody.innerHTML = '';
-
-  Object.keys(savedSchedules).forEach(title => {
-    const titleRow = document.createElement('tr');
-    titleRow.innerHTML = `<td colspan="6" style="font-weight:bold; text-align:center;">${title}</td>`;
-    scheduleBody.appendChild(titleRow);
-
-    renderSchedule(savedSchedules[title]);
-  });
-}
 
 
     
