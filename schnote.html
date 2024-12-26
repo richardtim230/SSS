@@ -277,28 +277,34 @@
     </div>
   </div>
 
-<!-- Browser Icon -->
-<button id="browserIcon" onclick="toggleMiniBrowser()">🌐 Open</button>
+  <!-- Browser Icon -->
+  <button id="browserIcon" onclick="toggleMiniBrowser()">🌐 Open</button>
 
-<!-- Mini Browser -->
-<div id="miniBrowser" class="hidden">
-  <!-- Top Controls -->
-  <div class="browser-controls top-controls">
-    <input type="text" id="browserUrl" placeholder="Enter URL (e.g., https://www.google.com)" />
-    <button onclick="navigateBrowser()">Go</button>
-  </div>
+  <!-- Mini Browser -->
+  <div id="miniBrowser" class="hidden">
+    <!-- Top Controls -->
+    <div class="browser-controls top-controls">
+      <input
+        type="text"
+        id="browserUrl"
+        placeholder="Enter URL (e.g., https://www.google.com)"
+      />
+      <button onclick="navigateBrowser()">Go</button>
+    </div>
 
-  <!-- Browser Content -->
-  <iframe id="browserFrame" src="https://www.wikipedia.org"></iframe>
+    <!-- Browser Content -->
+    <iframe id="browserFrame" src="https://www.wikipedia.org"></iframe>
 
-  <!-- Footer Controls -->
-  <div class="browser-controls bottom-controls">
-    <button onclick="goBack()">Back</button>
-    <button onclick="goForward()">Forward</button>
-    <button onclick="reloadBrowser()">Reload</button>
-    <button onclick="goHome()">Home</button>
+    <!-- Footer Controls -->
+    <div class="browser-controls bottom-controls">
+      <button onclick="goBack()">Back</button>
+      <button onclick="goForward()">Forward</button>
+      <button onclick="reloadBrowser()">Reload</button>
+      <button onclick="goHome()">Home</button>
+    </div>
   </div>
 </div>
+
 
   <div class="container">
     <!-- Class Scheduler -->
@@ -661,6 +667,15 @@ document.addEventListener('DOMContentLoaded', () => {
   loadSavedSchedule();
 });
 
+//Mini Browser
+
+const homepage = "https://www.wikipedia.org";
+
+function toggleMiniBrowser() {
+  const miniBrowser = document.getElementById("miniBrowser");
+  const browserIcon = document.getElementById("browserIcon");
+
+  if (miniBrowser.classList.contains("hidden")) {
     // Show the browser
     miniBrowser.classList.remove("hidden");
     browserIcon.textContent = "❌";
@@ -674,35 +689,43 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 function navigateBrowser() {
-  const url = document.getElementById('browserUrl').value;
-  const browserFrame = document.getElementById('browserFrame');
-  if (url) {
-    browserFrame.src = url;
-  } else {
-    alert('Please enter a valid URL');
+  const urlInput = document.getElementById("browserUrl");
+  const iframe = document.getElementById("browserFrame");
+  let url = urlInput.value.trim();
+  if (!url.startsWith("http://") && !url.startsWith("https://")) {
+    url = "https://" + url; // Default to HTTPS if no protocol is provided
   }
-}
 
-function goBack() {
-  const browserFrame = document.getElementById('browserFrame');
-  browserFrame.contentWindow.history.back();
-}
-
-function goForward() {
-  const browserFrame = document.getElementById('browserFrame');
-  browserFrame.contentWindow.history.forward();
+  iframe.src = url;
 }
 
 function reloadBrowser() {
-  const browserFrame = document.getElementById('browserFrame');
-  browserFrame.contentWindow.location.reload();
+  const iframe = document.getElementById("browserFrame");
+  iframe.contentWindow.location.reload(); // Reload iframe content
 }
 
+function goBack() {
+  const iframe = document.getElementById("browserFrame");
+  try {
+    iframe.contentWindow.history.back(); // Navigate back
+  } catch (e) {
+    alert("No back history available.");
+  }
+}
+
+function goForward() {
+  const iframe = document.getElementById("browserFrame");
+  try {
+    iframe.contentWindow.history.forward(); // Navigate forward
+  } catch (e) {
+    alert("No forward history available.");
+  }
+  }
 function goHome() {
-  const browserFrame = document.getElementById('browserFrame');
-  browserFrame.src = 'https://www.wikipedia.org';
+  const iframe = document.getElementById("browserFrame");
+  iframe.src = homepage; // Set iframe source to homepage
 }
-
+    
 // Calendar functions
 function loadCalendar() {
   const calendar = document.getElementById('calendar');
@@ -839,40 +862,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadSavedSchedule();
 });
 
-  function toggleMiniBrowser() {
-  const miniBrowser = document.getElementById('miniBrowser');
-  miniBrowser.classList.toggle('hidden');
-}
-
-function navigateBrowser() {
-  const url = document.getElementById('browserUrl').value;
-  const browserFrame = document.getElementById('browserFrame');
-  if (url) {
-    browserFrame.src = url;
-  } else {
-    alert('Please enter a valid URL');
-  }
-}
-
-function goBack() {
-  const browserFrame = document.getElementById('browserFrame');
-  browserFrame.contentWindow.history.back();
-}
-
-function goForward() {
-  const browserFrame = document.getElementById('browserFrame');
-  browserFrame.contentWindow.history.forward();
-}
-
-function reloadBrowser() {
-  const browserFrame = document.getElementById('browserFrame');
-  browserFrame.contentWindow.location.reload();
-}
-
-function goHome() {
-  const browserFrame = document.getElementById('browserFrame');
-  browserFrame.src = 'https://www.wikipedia.org';
-    }
+  
   </script>
  </body>
 </html>
