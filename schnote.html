@@ -64,6 +64,18 @@ header h1, header h2 {
   top: 0px;
   position: center;
     }
+/* Center the logo */
+.logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+
+.logo img {
+  max-width: 100px; /* Adjust the size of the logo */
+  height: auto;
+}
 
 /* Authentication */
 .overlay {
@@ -2505,16 +2517,23 @@ function forgotPassword() {
 }
 
 // Navigate to Different Sections
-
 function navigateToSection(section) {
-
-  alert(`Navigating to ${section}`);
-
+  if (section === "Notes") {
+    window.location.href = "schedule.html"; // Redirect to Notes page
+  } else if (section === "Class/Personal Timetable") {
+    window.location.href = "resources.html"; // Redirect to Resources page
+  } else if (section === "Contact Support") {
+    window.location.href = "support.html"; // Redirect to Support page
+  } else {
+    alert("Section not implemented yet!");
+  }
+}
+// Redirect to Main App
+function closeWelcomeScreen() {
+  // Simply redirect without logging the user out
+  window.location.href = "main-app.html"; // Replace with the main app URL
 }
 
-// Close the Welcome Screen
-
-function closeWelcomeScreen() {
 
   // Logout the user
 
