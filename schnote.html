@@ -277,28 +277,28 @@
     </div>
   </div>
 
-  <!-- Browser Icon -->
-  <button id="browserIcon" onclick="toggleMiniBrowser()">🌐 Open</button>
+<!-- Browser Icon -->
+<button id="browserIcon" onclick="toggleMiniBrowser()">🌐 Open</button>
 
-  <!-- Mini Browser -->
-  <div id="miniBrowser" class="hidden">
-    <!-- Top Controls -->
-    <div class="browser-controls top-controls">
-      <input type="text" id="browserUrl" placeholder="Enter URL (e.g., https://www.google.com)" />
-      <button onclick="navigateBrowser()">Go</button>
-    </div>
-
-    <!-- Browser Content -->
-    <iframe id="browserFrame" src="https://www.wikipedia.org"></iframe>
-
-    <!-- Footer Controls -->
-    <div class="browser-controls bottom-controls">
-      <button onclick="goBack()">Back</button>
-      <button onclick="goForward()">Forward</button>
-      <button onclick="reloadBrowser()">Reload</button>
-      <button onclick="goHome()">Home</button>
-    </div>
+<!-- Mini Browser -->
+<div id="miniBrowser" class="hidden">
+  <!-- Top Controls -->
+  <div class="browser-controls top-controls">
+    <input type="text" id="browserUrl" placeholder="Enter URL (e.g., https://www.google.com)" />
+    <button onclick="navigateBrowser()">Go</button>
   </div>
+
+  <!-- Browser Content -->
+  <iframe id="browserFrame" src="https://www.wikipedia.org"></iframe>
+
+  <!-- Footer Controls -->
+  <div class="browser-controls bottom-controls">
+    <button onclick="goBack()">Back</button>
+    <button onclick="goForward()">Forward</button>
+    <button onclick="reloadBrowser()">Reload</button>
+    <button onclick="goHome()">Home</button>
+  </div>
+</div>
 
   <div class="container">
     <!-- Class Scheduler -->
@@ -722,6 +722,41 @@ document.addEventListener('DOMContentLoaded', () => {
   loadNotes();
   loadSavedSchedule();
 });
+
+  function toggleMiniBrowser() {
+  const miniBrowser = document.getElementById('miniBrowser');
+  miniBrowser.classList.toggle('hidden');
+}
+
+function navigateBrowser() {
+  const url = document.getElementById('browserUrl').value;
+  const browserFrame = document.getElementById('browserFrame');
+  if (url) {
+    browserFrame.src = url;
+  } else {
+    alert('Please enter a valid URL');
+  }
+}
+
+function goBack() {
+  const browserFrame = document.getElementById('browserFrame');
+  browserFrame.contentWindow.history.back();
+}
+
+function goForward() {
+  const browserFrame = document.getElementById('browserFrame');
+  browserFrame.contentWindow.history.forward();
+}
+
+function reloadBrowser() {
+  const browserFrame = document.getElementById('browserFrame');
+  browserFrame.contentWindow.location.reload();
+}
+
+function goHome() {
+  const browserFrame = document.getElementById('browserFrame');
+  browserFrame.src = 'https://www.wikipedia.org';
+    }
   </script>
  </body>
 </html>
