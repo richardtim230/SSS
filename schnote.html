@@ -552,10 +552,36 @@ function loadDepartmentSchedule() {
   renderSchedule(schedule);
 }
 
+
+// Save schedule to local storage
+function saveScheduleToLocalStorage(code) {
+  const schedule = departmentSchedules[code];
+  if (!schedule) {
+    alert('Invalid code. No schedule to save.');
+    return;
+  }
+  // Store each schedule under a unique key
+  const savedSchedules = JSON.parse(localStorage.getItem('savedSchedules')) || {};
+  savedSchedules[code] = schedule;
+  localStorage.setItem('savedSchedules', JSON.stringify(savedSchedules));
+  alert('Schedule saved to local storage!');
+}
+
+// Load schedule from local storage
+function loadSavedSchedule() {
+  const savedSchedules = JSON.parse(localStorage.getItem('savedSchedules')) || {};
+  const scheduleBody = document.getElementById('scheduleBody');
+  scheduleBody.innerHTML = '';
+
+  Object.keys(savedSchedules).forEach(code => {
+    renderSchedule(savedSchedules[code]);
+  });
+}
+
 // Render the schedule in the table
 function renderSchedule(schedule) {
   const scheduleBody = document.getElementById('scheduleBody');
-  scheduleBody.innerHTML = schedule.map(row => `
+  scheduleBody.innerHTML += schedule.map(row => `
     <tr>
       <td>${row.time}</td>
       <td>${row.Mon || ''}</td>
@@ -565,23 +591,6 @@ function renderSchedule(schedule) {
       <td>${row.Fri || ''}</td>
     </tr>
   `).join('');
-}
-
-// Save schedule to local storage
-function saveScheduleToLocalStorage(code) {
-  const schedule = departmentSchedules[code];
-  if (!schedule) {
-    alert('Invalid code. No schedule to save.');
-    return;
-  }
-  localStorage.setItem('schedule', JSON.stringify(schedule));
-  alert('Schedule saved to local storage!');
-}
-
-// Load schedule from local storage
-function loadSavedSchedule() {
-  const savedSchedule = JSON.parse(localStorage.getItem('schedule')) || [];
-  renderSchedule(savedSchedule);
 }
 
 // Initialize the page
