@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>STUDENTS SUPPORT SYSTEM</title>
+
+  <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+
+  <!-- Login Page -->
+
+  <div id="loginPage" class="overlay active">
+
+    <div class="auth-container glassy">
+
+      <h1>STUDENTS SUPPORT SYSTEM</h1>
+
+      <img src="logo.png" alt="App Logo" class="logo">
+
+      <h2>Login</h2>
+
+      <input type="text" id="loginEmail" placeholder="Email or Username">
+
+      <div class="password-container">
+
+        <input type="password" id="loginPassword" placeholder="Password">
+
+        <span class="toggle-password" onclick="togglePassword('loginPassword')">👁️</span>
+
+      </div>
+
+      <button onclick="login()">Login</button>
+
+      <button onclick="showForgotPassword()">Forgot Password?</button>
+
+      <p>Don't have an account? <a href="#" onclick="showRegister()">Register here</a></p>
+
+    </div>
+
+  </div>
+
+  <!-- Registration Page -->
+
+  <div id="registerPage" class="overlay">
+
+    <div class="auth-container glassy">
+
+      <h1>STUDENTS SUPPORT SYSTEM</h1>
+
+      <h2>Register</h2>
+
+      <input type="text" id="fullName" placeholder="Full Name">
+
+      <input type="email" id="email" placeholder="Email">
+
+      <input type="tel" id="phone" placeholder="Phone Number">
+
+      <input type="text" id="department" placeholder="Department">
+
+      <input type="text" id="level" placeholder="Level">
+
+      <div class="password-container">
+
+        <input type="password" id="password" placeholder="Password">
+
+        <span class="toggle-password" onclick="togglePassword('password')">👁️</span>
+
+      </div>
+
+      <input type="text" id="securityQuestion" placeholder="Security Question">
+
+      <input type="text" id="securityAnswer" placeholder="Security Answer">
+
+      <button onclick="register()">Register</button>
+
+      <p>Already have an account? <a href="#" onclick="showLogin()">Login here</a></p>
+
+    </div>
+
+  </div>
+
+  <!-- Forgot Password Page -->
+
+  <div id="forgotPasswordPage" class="overlay">
+
+    <div class="auth-container glassy">
+
+      <h1>STUDENTS SUPPORT SYSTEM</h1>
+
+      <h2>Recover Password</h2>
+
+      <input type="email" id="recoveryEmail" placeholder="Enter Registered Email">
+
+      <input type="text" id="recoveryQuestion" placeholder="Enter Security Question">
+
+      <input type="text" id="recoveryAnswer" placeholder="Answer">
+
+      <button onclick="recoverPassword()">Recover Password</button>
+
+      <p>Remembered your password? <a href="#" onclick="showLogin()">Back to Login</a></p>
+
+    </div>
+
+  </div>
+
+  <!-- Welcome Page -->
+
+  <div id="welcomePage" class="overlay">
+
+    <div class="welcome-container glassy">
+
+      <h1>🎓 Welcome, <span id="userName">Student</span>!</h1>
+
+      <p>Select a section to explore:</p>
+
+      <div class="navigation-buttons">
+
+        <button onclick="navigateToSection('dashboard')">📊 Dashboard</button>
+
+        <button onclick="navigateToSection('profile')">👤 Profile</button>
+
+        <button onclick="navigateToSection('courses')">📚 Courses</button>
+
+        <button onclick="navigateToSection('support')">🛠️ Support</button>
+
+      </div>
+
+      <button class="proceed-btn" onclick="proceedToApp()">Proceed to Main App</button>
+
+      <button class="close-btn" onclick="closeWelcomePage()">Close</button>
+
+    </div>
+
+  </div>
+
+  <!-- Main Application Sections -->
+
+  <main>
+
+    <section id="home">
+
+      <h2>🏠 Home</h2>
+
+      <p>Welcome to the STUDENTS SUPPORT SYSTEM main application. Explore the sections below.</p>
+
+      <div class="section-navigation">
+
+        <button onclick="navigateToSection('dashboard')">📊 Dashboard</button>
+
+        <button onclick="navigateToSection('profile')">👤 Profile</button>
+
+        <button onclick="navigateToSection('courses')">📚 Courses</button>
+
+        <button onclick="navigateToSection('support')">🛠️ Support</button>
+
+      </div>
+
+    </section>
+
+    <section id="dashboard">
+
+      <h2>📊 Dashboard</h2>
+
+      <p>Welcome to the Dashboard section. Here you’ll find your overall summary.</p>
+
+      <div class="section-navigation">
+
+        <button onclick="navigateToSection('profile')">Go to Profile</button>
+
+        <button onclick="navigateToSection('courses')">Go to Courses</button>
+
+        <button onclick="navigateToSection('support')">Go to Support</button>
+
+      </div>
+
+      <button class="homepage-btn" onclick="navigateToSection('home')">🏠 Back to Home</button>
+
+    </section>
+
+    <section id="profile">
+
+      <h2>👤 Profile</h2>
+
+      <p>Update your personal information and settings here.</p>
+
+      <div class="section-navigation">
+
+        <button onclick="navigateToSection('dashboard')">Go to Dashboard</button>
+
+        <button onclick="navigateToSection('courses')">Go to Courses</button>
+
+        <button onclick="navigateToSection('support')">Go to Support</button>
+
+      </div>
+
+      <button class="homepage-btn" onclick="navigateToSection('home')">🏠 Back to Home</button>
+
+    </section>
+
+    <section id="courses">
+
+      <h2>📚 Courses</h2>
+
+      <p>Browse and manage your courses here.</p>
+
+      <div class="section-navigation">
+
+        <button onclick="navigateToSection('dashboard')">Go to Dashboard</button>
+
+        <button onclick="navigateToSection('profile')">Go to Profile</button>
+
+        <button onclick="navigateToSection('support')">Go to Support</button>
+
+      </div>
+
+      <button class="homepage-btn" onclick="navigateToSection('home')">🏠 Back to Home</button>
+
+    </section>
+
+    <section id="support">
+
+      <h2>🛠️ Support</h2>
+
+      <p>Need help? Reach out to our support team.</p>
+
+      <div class="section-navigation">
+
+        <button onclick="navigateToSection('dashboard')">Go to Dashboard</button>
+
+        <button onclick="navigateToSection('profile')">Go to Profile</button>
+
+        <button onclick="navigateToSection('courses')">Go to Courses</button>
+
+      </div>
+
+      <button class="homepage-btn" onclick="navigateToSection('home')">🏠 Back to Home</button>
+
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>
+
