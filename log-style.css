@@ -640,3 +640,24 @@ section p {
   padding: 10px;
   border-radius: 5px;
   }
+/* Profile Section Styling */
+#profile h3 {
+  margin-top: 20px;
+  font-size: 1.5rem;
+  text-align: center;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+#profile p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+#profile span {
+  color: #333;
+  font-weight: bold;
+  }
