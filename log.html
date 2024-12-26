@@ -207,24 +207,24 @@
     </section>
 
     <section id="courses">
+  <h2>📚 Courses</h2>
+  <p>Browse and manage your courses here.</p>
 
-      <h2>📚 Courses</h2>
+  <div class="section-navigation">
+    <button onclick="navigateToSection('dashboard')">Go to Dashboard</button>
+    <button onclick="navigateToSection('profile')">Go to Profile</button>
+    <button onclick="navigateToSection('support')">Go to Support</button>
+  </div>
 
-      <p>Browse and manage your courses here.</p>
+  <h3>Add a new course</h3>
+  <input type="text" id="courseName" placeholder="Course Name">
+  <button onclick="addCourse()">Add Course</button>
 
-      <div class="section-navigation">
+  <h3>Your Courses</h3>
+  <ul id="courseList"></ul>
 
-        <button onclick="navigateToSection('dashboard')">Go to Dashboard</button>
-
-        <button onclick="navigateToSection('profile')">Go to Profile</button>
-
-        <button onclick="navigateToSection('support')">Go to Support</button>
-
-      </div>
-
-      <button class="homepage-btn" onclick="navigateToSection('home')">🏠 Back to Home</button>
-
-    </section>
+  <button class="homepage-btn" onclick="navigateToSection('home')">🏠 Back to Home</button>
+</section>
 
     <section id="support">
 
