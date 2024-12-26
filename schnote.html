@@ -476,9 +476,28 @@ quill.getModule('toolbar').addHandler('image', () => {
   };
 });
 
-let currentEditingNote = null;
-const defaultCategories = ["Personal", "Academic", "Miscellaneous"];
-let selectedCategory = "Personal";
+
+  const defaultCategories = ["Personal", "Academic", "Miscellaneous"];
+  let selectedCategory = "Personal";
+
+  function showCategory(category) {
+    selectedCategory = category;
+    loadNotes(); // Function to load notes based on the selected category
+  }
+
+  function addCategory() {
+    const newCategory = prompt("Enter new category name:");
+    if (newCategory && !defaultCategories.includes(newCategory)) {
+      defaultCategories.push(newCategory);
+      // Update the categories section with the new category button
+      const categoriesDiv = document.getElementById('categories');
+      const newButton = document.createElement('button');
+      newButton.textContent = newCategory;
+      newButton.onclick = () => showCategory(newCategory);
+      categoriesDiv.insertBefore(newButton, categoriesDiv.lastElementChild);
+    }
+  }
+
 
 // Random weekly schedules for departments
 const departmentSchedules = {
@@ -898,6 +917,8 @@ function navigateNote(direction) {
 
   showNotePopup(newIndex);
 }
+
+
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', () => {
