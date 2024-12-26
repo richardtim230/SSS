@@ -65,60 +65,344 @@ header h1, header h2 {
   position: center;
     }
 
-    /* Authentication Screen */
-    .auth-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #0055cc;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 100000;
-      flex-direction: column;
-      text-align: center;
-    }
+/* Authentication */
+.overlay {
 
-    .auth-screen h2 {
-      margin-bottom: 20px;
-      font-size: 1rem;
-    }
+  position: fixed;
 
-    .auth-screen input {
-      padding: 10px;
-      font-size: 1rem;
-      border-radius: 5px;
-      border: none;
-      margin-bottom: 15px;
-      width: 250px;
-      text-align: center;
-    }
+  top: 0;
 
-    .auth-screen button {
-      padding: 10px 20px;
-      background: white;
-      color: #0055cc;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
+  left: 0;
 
-    .auth-screen button:hover {
-      background: #ddd;
-    }
+  width: 100%;
 
-    .auth-warning {
-      margin-top: 20px;
-      font-size: 0.9rem;
-      color: #ffd700;
-      font-weight: bold;
-    }
-    
+  height: 100%;
+
+  background: linear-gradient(135deg, #4c8bf5, #6b8ce6);
+
+  color: white;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  z-index: 1000;
+
+  overflow: auto; /* Allow scrolling for large content */
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+}
+
+/* App Name Styling */
+
+.app-name {
+
+  font-size: 1.8rem;
+
+  font-weight: bold;
+
+  color: #fff;
+
+  margin-bottom: 20px;
+
+  text-align: center;
+
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+
+}
+
+/* Auth Container */
+
+.auth-container {
+
+  background: white;
+
+  color: #333;
+
+  border-radius: 10px;
+
+  padding: 18px;
+
+  width: 100%;
+  height: 95%;
+
+  max-width: 400px;
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  text-align: center;
+
+  overflow: auto;
+  top: 10px;
+
+}
+
+.auth-container h2 {
+
+  font-size: 1.5rem;
+
+  color: #4c8bf5;
+
+  margin-bottom: 20px;
+top: 6px;
+}
+
+.registerScreen h2 { 
+  top: 10px;
+  }
+ 
+.input-field {
+
+  margin-bottom: 15px;
+
+  text-align: left;
+
+}
+
+.input-field label {
+
+  font-size: 0.9rem;
+
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #333;
+
+}
+
+.input-field input,
+
+.input-field select {
+
+  width: 100%;
+
+  padding: 10px;
+
+  font-size: 1rem;
+
+  border: 1px solid #ccc;
+
+  border-radius: 5px;
+
+  outline: none;
+
+}
+
+.input-field input:focus,
+
+.input-field select:focus {
+
+  border-color: #4c8bf5;
+
+  box-shadow: 0 0 5px rgba(76, 139, 245, 0.5);
+
+}
+
+.toggle-password {
+
+  position: absolute;
+
+  right: 10px;
+
+  top: 40%;
+
+  transform: translateY(-50%);
+
+  cursor: pointer;
+
+  color: #333;
+
+}
+
+.actions {
+
+  margin-top: 20px;
+
+}
+
+.actions button {
+
+  width: 100%;
+
+  padding: 10px;
+
+  background: #4c8bf5;
+
+  color: white;
+
+  border: none;
+
+  border-radius: 5px;
+
+  font-size: 1rem;
+
+  cursor: pointer;
+
+  transition: background 0.3s ease, transform 0.2s ease;
+
+}
+
+.actions button:hover {
+
+  background: #357ae0;
+
+  transform: scale(1.02);
+
+}
+
+.secondary-button {
+
+  margin-top: 10px;
+
+  background: #ddd;
+
+  color: #4c8bf5;
+
+}
+
+.secondary-button:hover {
+
+  background: #cce0ff;
+
+}
+
+/* Welcome Container */
+
+.welcome-container {
+
+  background: linear-gradient(135deg, #ffffff, #f0f4fc);
+
+  color: #333;
+
+  padding: 30px;
+
+  border-radius: 15px;
+
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+
+  text-align: center;
+
+  width: 100%;
+
+  max-width: 500px;
+
+}
+
+.welcome-container h2 {
+
+  font-size: 1.8rem;
+
+  margin-bottom: 15px;
+
+  color: #4c8bf5;
+
+}
+
+.welcome-container p {
+
+  font-size: 1rem;
+
+  color: #555;
+
+  margin-bottom: 25px;
+
+}
+
+.welcome-buttons {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+  justify-content: center;
+
+}
+
+.welcome-buttons button {
+
+  flex: 1 1 calc(45% - 10px);
+
+  padding: 10px 20px;
+
+  background: #4c8bf5;
+
+  color: white;
+
+  border: none;
+
+  border-radius: 5px;
+
+  font-size: 1rem;
+
+  cursor: pointer;
+
+  transition: background 0.3s ease, transform 0.2s ease;
+
+}
+
+.welcome-buttons button:hover {
+
+  background: #357ae0;
+
+  transform: scale(1.05);
+
+}
+
+.welcome-buttons .secondary-button {
+
+  background: #ddd;
+
+  color: #4c8bf5;
+
+}
+
+.welcome-buttons .secondary-button:hover {
+
+  background: #cce0ff;
+
+}
+
+/* Responsive Design */
+
+@media (max-width: 600px) {
+
+  .auth-container {
+
+    max-width: 95%;
+
+    padding: 15px;
+
+  }
+
+  .welcome-container {
+
+    max-width: 95%;
+
+    padding: 20px;
+
+  }
+
+  .welcome-buttons button {
+
+    flex: 1 1 100%;
+
+  }
+
+}
+
+.hidden {
+
+  display: none;
+
+  }
     
 .container {
   max-width: 1200px;
@@ -630,6 +914,197 @@ body.modal-active {
   </div>
 </div>
 
+  <!-- Login Screen -->
+
+  <div id="loginScreen" class="overlay">
+
+    <div class="auth-container">
+
+      <!-- App Name -->
+
+      <h1 class="app-name">STUDENTS SUPPORT SYSTEM</h1>
+
+      <!-- Logo -->
+
+      <div class="logo">
+
+        <img src="logo.png" alt="App Logo" width="80" height="80">
+
+      </div>
+
+      <h2>Login</h2>
+
+      <div class="input-field">
+
+        <label for="loginUsername">Username (Email)</label>
+
+        <input type="text" id="loginUsername" placeholder="Enter your email">
+
+      </div>
+
+      <div class="input-field">
+
+        <label for="loginPassword">Password</label>
+
+        <div style="position: relative;">
+
+          <input type="password" id="loginPassword" placeholder="Enter your password">
+
+          <span class="toggle-password" onclick="togglePassword('loginPassword')">👁️</span>
+
+        </div>
+
+      </div>
+
+      <div class="actions">
+
+        <button onclick="login()">Login</button>
+
+        <button class="secondary-button" onclick="forgotPassword()">Forgot Password?</button>
+
+      </div>
+
+      <p class="link" onclick="showRegisterScreen()">Don't have an account? Register</p>
+
+    </div>
+
+  </div>
+
+  <!-- Register Screen -->
+
+  <div id="registerScreen" class="overlay hidden">
+
+    <div class="auth-container">
+
+      <!-- App Name -->
+
+      <h1 class="app-name">STUDENTS SUPPORT SYSTEM</h1>
+
+      <h2>Register</h2>
+
+      <div class="input-field">
+
+        <label for="registerFullName">Full Name</label>
+
+        <input type="text" id="registerFullName" placeholder="Enter your full name">
+
+      </div>
+
+      <div class="input-field">
+
+        <label for="registerEmail">Email</label>
+
+        <input type="email" id="registerEmail" placeholder="Enter your email">
+
+      </div>
+
+      <div class="input-field">
+
+        <label for="registerPhone">Phone Number</label>
+
+        <input type="text" id="registerPhone" placeholder="Enter your phone number">
+
+      </div>
+
+      <div class="input-field">
+
+        <label for="registerDepartment">Department</label>
+
+        <input type="text" id="registerDepartment" placeholder="Enter your department">
+
+      </div>
+
+      <div class="input-field">
+
+        <label for="registerLevel">Level</label>
+
+        <input type="text" id="registerLevel" placeholder="Enter your level">
+
+      </div>
+
+      <div class="input-field">
+
+        <label for="registerPassword">Password</label>
+
+        <div style="position: relative;">
+
+          <input type="password" id="registerPassword" placeholder="Create a password">
+
+          <span class="toggle-password" onclick="togglePassword('registerPassword')">👁️</span>
+
+        </div>
+
+      </div>
+
+      <div class="input-field">
+
+        <label for="securityQuestion">Security Question</label>
+
+        <select id="securityQuestion">
+
+          <option value="">-- Select a question --</option>
+
+          <option value="pet">What is your pet's name?</option>
+
+          <option value="mother">What is your mother's maiden name?</option>
+
+          <option value="city">What city were you born in?</option>
+
+        </select>
+
+      </div>
+
+      <div class="input-field">
+
+        <label for="securityAnswer">Answer</label>
+
+        <input type="text" id="securityAnswer" placeholder="Your answer">
+
+      </div>
+
+      <div class="actions">
+
+        <button onclick="register()">Register</button>
+
+      </div>
+
+      <p class="link" onclick="showLoginScreen()">Already have an account? Login</p>
+
+    </div>
+
+  </div>
+
+  <!-- Welcome Screen -->
+
+  <div id="welcomeScreen" class="overlay hidden">
+
+    <div class="welcome-container">
+
+      <!-- App Name -->
+
+      <h1 class="app-name">STUDENTS SUPPORT SYSTEM</h1>
+
+      <h2 id="welcomeMessage">Welcome, <span id="userName"></span>!</h2>
+
+      <p>How can we assist you today?</p>
+
+      <div class="welcome-buttons">
+
+        <button onclick="navigateToSection('notesSection')">Notes</button>
+
+        <button onclick="navigateToSection('scheduleSection')">Class/Personal Timetable</button>
+
+        <button onclick="navigateToSection('Contact Support')">Contact Support</button>
+
+        <button class="secondary-button" onclick="closeWelcomeScreen()">Enter Main App</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
 
   <!-- Browser Icon -->
   <button id="browserIcon" onclick="toggleMiniBrowser()">🌐 Open</button>
@@ -811,28 +1286,7 @@ body.modal-active {
     </div>
   </div>
 
-      <!-- Authentication Screen -->
-  <div class="auth-screen" id="authScreen">
- 
-    <div class="content">
-<img src="https://networks.au-ibar.org/show/obafemi-awolowo-university-ife-nigeria/wiki-image/AU+REC+logos+%2841%29.png" alt="Logo" class="logo">
-          </div>
-
-    <h2>Welcome to the Students Support System of Obafemi Awolowo University</h2>
-    <div id="authSetup" style="display: none;">
-      <p>Please set your secret code:</p>
-      <input type="password" id="setSecretCode" placeholder="Enter your secret code">
-      <button onclick="saveSecretCode()">Save Code</button>
-    </div>
-    <div id="authLogin" style="display: none;">
-      <p>Enter your secret code to access the application:</p>
-      <input type="password" id="authCode" placeholder="Enter your secret code">
-      <button onclick="authenticate()">Login</button>
-    </div>
-    <div class="auth-warning">
-      <p>⚠ If you forget your secret code, it cannot be retrieved. You must reset the application.</p>
-    </div>
-  </div>
+      
     
     
 <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
@@ -1856,6 +2310,223 @@ function toggleAuthScreen(show) {
     const day = Object.keys(classSchedule.days).find((key) => classSchedule.days[key] === subject) || 'Unknown Day';
     return `${subject} (${day})`;
   }
+    // Check Login Status and Reload Count on Page Load
+
+window.onload = function () {
+
+  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+  let reloadCount = parseInt(localStorage.getItem("reloadCount")) || 0;
+
+  if (isLoggedIn === "true" && reloadCount < 5) {
+
+    // Increment and save reload count
+
+    reloadCount++;
+
+    localStorage.setItem("reloadCount", reloadCount);
+
+    // Show welcome screen if user details exist and reload count is under 5
+
+    if (userDetails) {
+
+      document.getElementById("welcomeScreen").classList.remove("hidden");
+
+      document.getElementById("userName").textContent = userDetails.fullName;
+
+      return;
+
+    }
+
+  }
+
+  // Force relogin if reload count reaches 5 or user is not logged in
+
+  localStorage.setItem("reloadCount", 0); // Reset reload count
+
+  localStorage.setItem("isLoggedIn", "false");
+
+  document.getElementById("loginScreen").classList.remove("hidden");
+
+};
+
+// Toggle Password Visibility
+
+function togglePassword(inputId) {
+
+  const input = document.getElementById(inputId);
+
+  if (input.type === "password") {
+
+    input.type = "text";
+
+  } else {
+
+    input.type = "password";
+
+  }
+
+}
+
+// Show the Register Screen
+
+function showRegisterScreen() {
+
+  document.getElementById("loginScreen").classList.add("hidden");
+
+  document.getElementById("registerScreen").classList.remove("hidden");
+
+}
+
+// Show the Login Screen
+
+function showLoginScreen() {
+
+  document.getElementById("registerScreen").classList.add("hidden");
+
+  document.getElementById("loginScreen").classList.remove("hidden");
+
+}
+
+// Register Functionality
+
+function register() {
+
+  // Collect User Details
+
+  const userDetails = {
+
+    fullName: document.getElementById("registerFullName").value,
+
+    email: document.getElementById("registerEmail").value,
+
+    phone: document.getElementById("registerPhone").value,
+
+    department: document.getElementById("registerDepartment").value,
+
+    level: document.getElementById("registerLevel").value,
+
+    password: document.getElementById("registerPassword").value,
+
+    securityQuestion: document.getElementById("securityQuestion").value,
+
+    securityAnswer: document.getElementById("securityAnswer").value,
+
+  };
+
+  // Validation
+
+  if (
+
+    !userDetails.fullName ||
+
+    !userDetails.email ||
+
+    !userDetails.phone ||
+
+    !userDetails.department ||
+
+    !userDetails.level ||
+
+    !userDetails.password ||
+
+    !userDetails.securityQuestion ||
+
+    !userDetails.securityAnswer
+
+  ) {
+
+    alert("Please fill in all fields.");
+
+    return;
+
+  }
+
+  // Save to Local Storage
+
+  localStorage.setItem("userDetails", JSON.stringify(userDetails));
+
+  alert("Registration successful!");
+
+  showLoginScreen();
+
+}
+
+// Login Functionality
+
+function login() {
+
+  // Collect Login Credentials
+
+  const email = document.getElementById("loginUsername").value;
+
+  const password = document.getElementById("loginPassword").value;
+
+  // Retrieve User Details
+
+  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+
+  // Validation
+
+  if (!userDetails || userDetails.email !== email || userDetails.password !== password) {
+
+    alert("Invalid username or password");
+
+    return;
+
+  }
+
+  // Set Login Status
+
+  localStorage.setItem("isLoggedIn", "true");
+
+  localStorage.setItem("reloadCount", "0"); // Reset reload count
+
+  // Show Welcome Screen
+
+  document.getElementById("loginScreen").classList.add("hidden");
+
+  document.getElementById("welcomeScreen").classList.remove("hidden");
+
+  document.getElementById("userName").textContent = userDetails.fullName;
+
+}
+
+// Forgot Password Placeholder
+
+function forgotPassword() {
+
+  alert("Forgot Password functionality coming soon!");
+
+}
+
+// Navigate to Different Sections
+
+function navigateToSection(section) {
+
+  alert(`Navigating to ${section}`);
+
+}
+
+// Close the Welcome Screen
+
+function closeWelcomeScreen() {
+
+  // Logout the user
+
+  localStorage.setItem("isLoggedIn", "false");
+
+  document.getElementById("welcomeScreen").classList.add("hidden");
+
+  document.getElementById("loginScreen").classList.remove("hidden");
+
+  alert("Logged out. Please log in again.");
+
+}
+
+
         if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/service-worker.js')
         .then(() => console.log('Service Worker Registered'))
