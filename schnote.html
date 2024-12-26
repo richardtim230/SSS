@@ -1,14 +1,4 @@
 <!DOCTYPE html>
-<html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <title>Untitled</title>
-  
-
-</head>
-<body>
-<!-- partial:index.partial.html -->
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -18,431 +8,256 @@
   <link rel="manifest" href="/manifest.json">
   <style>
     body {
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(to right, blue, orange);
-
-  color: black;
-
-}
-header {
-
-  background: white
-
-  color: white;
-
-  padding: 10px;
-
-  text-align: center;
-
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-
-  font-size: 0.7rem;
-
-  color: white;
-
-  font-weight: bold;
-
-}
-
-header h1, header h2 {
-  margin: 5px;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, blue, orange);
+      color: black;
     }
-
-        /*Logo*/
-
-.content {
-  text-align: center;
-  font-family: Arial, sans-serif;
+    header {
+      background: white;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      font-size: 0.7rem;
+      font-weight: bold;
     }
-
-.logo {
-  width: 140px;
-  height: auto;
-  margin-top: 1rem;
-  top: 0px;
-  position: center;
+    header h1, header h2 {
+      margin: 5px;
     }
-
-    
-.container {
-  max-width: 1200px;
-  margin: 20px auto;
-  padding: 10px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-h3 {
-  color: #0055cc;
-  border-bottom: 2px solid #0055cc;
-  padding-bottom: 5px;
-}
-
-
-
-
-
-.table-wrapper {
-  overflow-x: auto;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-  table-layout: fixed;
-}
-
-th, td {
-  border: 0.5px solid #ddd;
-  padding: 6px;
-  text-align: left;
-  vertical-align: left;
-  font-size: 0.50rem;
-  font-weight: bold;
-}
-
-th {
-  background-color: #0055cc;
-  color: white;
-}
-
-select, input[type="text"], button {
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 0.9rem;
-  margin: 5px 0;
-}
-
-button {
-  background-color: #0055cc;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #003b8a;
-}
-
-#noteEditor {
-  border: 1px solid #ddd;
-  margin-bottom: 10px;
-  height: 200px;
-}
-
-ul {
-  padding: 0;
-  list-style: none;
-}
-
-ul li {
-  margin: 10px 0;
-
-  padding: 10px;
-
-  background: orange;
-
-  border: 1px solid #ddd;
-
-  border-radius: 10px;
-
-  color: black;
-
-}
-
-#categories {
-  display: flex;
-  gap: 5px;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
-}
-
-.popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  flex-direction: column;
-}
-    
-/* Prevent scrolling of the body when a notification is active */
-body.modal-active {
-  overflow: hidden;
-  }
-
-  .welcomePopup-content {
-  background: white;
-  color: #333;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 600px;
-  width: 90%;
-  text-align: left;
-  overflow-y: auto;
-  max-height: 80%;
-    height: 40%;
-  
-}
-
-.popup-content {
-  background: white;
-  color: #333;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 600px;
-  width: 90%;
-  height: 95%;
-  overflow-y: auto;
-  max-height: 80%;
-  flex: 1;
-  z-index: 1;
-  position: relative;
-}
-
-  #popup-text {
-  white-space: pre-wrap; /* Preserve spaces and line breaks */
-}
-
-#drawingCanvas {
-  z-index: 2;
-  pointer-events: none; /* Initially disabled until drawing is enabled */
-  border: 1px solid transparent;
-}
-
-
-.popup-footer {
-  display: flex;
-  justify-content: space-between; /* Spread buttons evenly */
-  flex-wrap: wrap; /* Allow wrapping on smaller screens */
-  gap: 5px; /* Reduce space between buttons */
-  padding: 8px; /* Reduced padding */
-  border-top: 1px solid #ccc;
-  background-color: #f9f9f9;
-}
-
-.popup-footer button, .popup-footer label, .popup-footer input {
-  margin: 2px; /* Minimal margin */
-  padding: 5px 10px; /* Smaller button padding */
-  font-size: 0.8rem; /* Adjust font size for buttons */
-}
-/* Prompt Overlay */
-.prompt-overlay {
-  display: none; /* Hidden by default */
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
-  z-index: 1000;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Prompt Box */
-.prompt-box {
-  background: white;
-  color: #333;
-  border-radius: 10px;
-  width: 90%;
-  max-width: 400px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  text-align: center;
-}
-
-/* Input Field */
-.prompt-box input {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
-/* Buttons */
-.prompt-actions {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.prompt-actions button {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-#promptOk {
-  background-color: #4caf50;
-  color: white;
-}
-
-#promptCancel {
-  background-color: #f44336;
-  color: white;
-}
-
-    
-#calendar {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
-  background: #f5f5f5;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 9px;
-  margin-top: 8px;
-  overflow-x: auto;
-}
-
-.day {
-  background: #e7eaf3;
-  border: 1px solid #ddd;
-  padding: 6px;
-  font-size: 0.6rem;
-  text-align: center;
-  border-radius: 5px;
-  font-weight: bold;
-}
-
-.day.today {
-  background: #0055cc;
-  color: white;
-  font-weight: bold;
-}
-/* Prevent scrolling of the body when a notification is active */
-body.modal-active {
-  overflow: hidden;
-  }
-    .hidden {
-  display: none;
+    .content {
+      text-align: center;
+      font-family: Arial, sans-serif;
     }
-
-
-/* Browser Icon */
-#browserIcon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 1001;
-  background: #4caf50;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 50%;
-  font-size: 20px;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-#browserIcon:hover {
-  background: #45a049;
-}
-
-/* Mini Browser Overlay */
-#miniBrowser {
-  display: none; /* Hidden by default */
-  position: fixed;
-  top: 5%;
-  left: 5%;
-  width: 90%;
-  height: 90%;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  overflow: hidden;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Top Controls */
-.top-controls {
-  display: flex;
-  gap: 5px;
-  padding: 10px;
-  background: #ddd;
-  border-bottom: 1px solid #ccc;
-}
-
-.top-controls input {
-  flex: 1;
-  padding: 5px;
-  border: 1px solid #aaa;
-  border-radius: 5px;
-}
-
-.top-controls button {
-  padding: 5px 10px;
-  background: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.top-controls button:hover {
-  background: #45a049;
-}
-
-/* iFrame */
-#browserFrame {
-  flex: 1;
-  width: 100%;
-  border: none;
-}
-
-/* Bottom Controls (Footer) */
-.bottom-controls {
-  display: flex;
-  gap: 5px;
-  padding: 10px;
-  background: #ddd;
-  border-top: 1px solid #ccc;
-  justify-content: center;
-}
-
-.bottom-controls button {
-  padding: 5px 10px;
-  background: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.bottom-controls button:hover {
-  background: #45a049;
-}
-
-/* Utility Classes */
-.hidden {
-  display: none !important;
-}
-
-
-
-
+    .logo {
+      width: 140px;
+      height: auto;
+      margin-top: 1rem;
+      top: 0px;
+      position: center;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 10px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h3 {
+      color: #0055cc;
+      border-bottom: 2px solid #0055cc;
+      padding-bottom: 5px;
+    }
+    .table-wrapper {
+      overflow-x: auto;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      table-layout: fixed;
+    }
+    th, td {
+      border: 0.5px solid #ddd;
+      padding: 6px;
+      text-align: left;
+      vertical-align: left;
+      font-size: 0.50rem;
+      font-weight: bold;
+    }
+    th {
+      background-color: #0055cc;
+      color: white;
+    }
+    select, input[type="text"], button {
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      margin: 5px 0;
+    }
+    button {
+      background-color: #0055cc;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #003b8a;
+    }
+    #noteEditor {
+      border: 1px solid #ddd;
+      margin-bottom: 10px;
+      height: 200px;
+    }
+    ul {
+      padding: 0;
+      list-style: none;
+    }
+    ul li {
+      margin: 10px 0;
+      padding: 10px;
+      background: orange;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      color: black;
+    }
+    #categories {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      flex-direction: column;
+    }
+    .welcomePopup-content, .popup-content {
+      background: white;
+      color: #333;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      width: 90%;
+      overflow-y: auto;
+    }
+    .popup-footer {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 5px;
+      padding: 8px;
+      border-top: 1px solid #ccc;
+      background-color: #f9f9f9;
+    }
+    .popup-footer button, .popup-footer label, .popup-footer input {
+      margin: 2px;
+      padding: 5px 10px;
+      font-size: 0.8rem;
+    }
+    .prompt-overlay, .hidden {
+      display: none !important;
+    }
+    #calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+      background: #f5f5f5;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 9px;
+      margin-top: 8px;
+      overflow-x: auto;
+    }
+    .day {
+      background: #e7eaf3;
+      border: 1px solid #ddd;
+      padding: 6px;
+      font-size: 0.6rem;
+      text-align: center;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .day.today {
+      background: #0055cc;
+      color: white;
+      font-weight: bold;
+    }
+    #browserIcon {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1001;
+      background: #4caf50;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    #browserIcon:hover {
+      background: #45a049;
+    }
+    #miniBrowser {
+      display: none;
+      position: fixed;
+      top: 5%;
+      left: 5%;
+      width: 90%;
+      height: 90%;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      overflow: hidden;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+    .top-controls {
+      display: flex;
+      gap: 5px;
+      padding: 10px;
+      background: #ddd;
+      border-bottom: 1px solid #ccc;
+    }
+    .top-controls input {
+      flex: 1;
+      padding: 5px;
+      border: 1px solid #aaa;
+      border-radius: 5px;
+    }
+    .top-controls button {
+      padding: 5px 10px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .top-controls button:hover {
+      background: #45a049;
+    }
+    #browserFrame {
+      flex: 1;
+      width: 100%;
+      border: none;
+    }
+    .bottom-controls {
+      display: flex;
+      gap: 5px;
+      padding: 10px;
+      background: #ddd;
+      border-top: 1px solid #ccc;
+      justify-content: center;
+    }
+    .bottom-controls button {
+      padding: 5px 10px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .bottom-controls button:hover {
+      background: #45a049;
+    }
   </style>
 </head>
 <body>
@@ -450,20 +265,17 @@ body.modal-active {
     <h1>Obafemi Awolowo University</h1>
     <h2>Students Support System</h2>
   </header>
-  
-<div id="customPrompt" class="prompt-overlay">
-  <div class="prompt-box">
-    <h3 id="promptTitle">Enter Note Title</h3>
-    <input type="text" id="promptInput" placeholder="Type here..." />
-    <div class="prompt-actions">
-      <button id="promptOk">OK</button>
-      <button id="promptCancel">Cancel</button>
+
+  <div id="customPrompt" class="prompt-overlay">
+    <div class="prompt-box">
+      <h3 id="promptTitle">Enter Note Title</h3>
+      <input type="text" id="promptInput" placeholder="Type here..." />
+      <div class="prompt-actions">
+        <button id="promptOk">OK</button>
+        <button id="promptCancel">Cancel</button>
+      </div>
     </div>
   </div>
-</div>
-
-      
-
 
   <!-- Browser Icon -->
   <button id="browserIcon" onclick="toggleMiniBrowser()">🌐 Open</button>
@@ -472,11 +284,7 @@ body.modal-active {
   <div id="miniBrowser" class="hidden">
     <!-- Top Controls -->
     <div class="browser-controls top-controls">
-      <input
-        type="text"
-        id="browserUrl"
-        placeholder="Enter URL (e.g., https://www.google.com)"
-      />
+      <input type="text" id="browserUrl" placeholder="Enter URL (e.g., https://www.google.com)" />
       <button onclick="navigateBrowser()">Go</button>
     </div>
 
@@ -491,89 +299,72 @@ body.modal-active {
       <button onclick="goHome()">Home</button>
     </div>
   </div>
-</div>
 
-
-  
   <div class="container">
-
-
     <!-- Class Scheduler -->
-<div id="scheduleSection">
-  <h3>Class Scheduler</h3>
-  <div>
-    <p>Enter the schedule code to load predefined classes:</p>
-    <input type="text" id="scheduleCode" placeholder="Enter code">
-    <button onclick="loadDepartmentSchedule()">Load Schedule</button>
-    <button onclick="savePredefinedToLocalStorage()">Save Predefined Schedule</button>
-  </div>
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Time</th>
-          <th>Mon</th>
-          <th>Tues</th>
-          <th>Wed</th>
-          <th>Thur</th>
-          <th>Fri</th>
-        </tr>
-      </thead>
-      <tbody id="scheduleBody"></tbody>
-    </table>
-  </div>
-                                                                               </div>
-      <h4>Add Schedule</h4>
-      <select id="timeInput">
-        <option value="">Select Time</option>
-        <option value="1:00 AM">1:00 AM</option>
-
-        <option value="2:00 AM">2:00 AM</option>
-
-        <option value="3:00 AM">3:00 AM</option>
-
-        <option value="4:00 AM">4:00 AM</option>
-
-        <option value="5:00 AM">5:00 AM</option>
-
-        <option value="6:00 AM">6:00 AM</option>
-
-        <option value="7:00 AM">7:00 AM</option>
-        <option value="8:00 AM">8:00 AM</option>
-        <option value="9:00 AM">9:00 AM</option>
-        <option value="10:00 AM">10:00 AM</option>
-        <option value="11:00 AM">11:00 AM</option>
-        <option value="12:00 PM">12:00 PM</option>
-        <option value="1:00 PM">1:00 PM</option>
-        <option value="2:00 PM">2:00 PM</option>
-        <option value="3:00 PM">3:00 PM</option>
-        <option value="4:00 PM">4:00 PM</option>
-        <option value="5:00 PM">5:00 PM</option>
-        <option value="6:00 PM">6:00 PM</option>
-
-        <option value="7:00 PM">7:00 PM</option>
-
-        <option value="8:00 PM">8:00 PM</option>
-
-        <option value="9:00 PM">9:00 PM</option>
-
-        <option value="10:00 PM">10:00 PM</option>
-
-        <option value="11:00 PM">11:00 PM</option>
-
-        <option value="12:00 AM">12:00 AM</option>
-      </select>
-      <select id="dayInput">
-        <option value="">Select Day</option>
-        <option value="Monday">Monday</option>
-        <option value="Tuesday">Tuesday</option>
-        <option value="Wednesday">Wednesday</option>
-        <option value="Thursday">Thursday</option>
-        <option value="Friday">Friday</option>
-      </select>
-      <input type="text" id="subjectInput" placeholder="Subject">
-      <button onclick="addSchedule()">Add</button>
+    <div id="scheduleSection">
+      <h3>Class Scheduler</h3>
+      <div>
+        <p>Enter the schedule code to load predefined classes:</p>
+        <input type="text" id="scheduleCode" placeholder="Enter code">
+        <button onclick="loadDepartmentSchedule()">Load Schedule</button>
+        <button onclick="savePredefinedToLocalStorage()">Save Predefined Schedule</button>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Mon</th>
+              <th>Tues</th>
+              <th>Wed</th>
+              <th>Thur</th>
+              <th>Fri</th>
+            </tr>
+          </thead>
+          <tbody id="scheduleBody"></tbody>
+        </table>
+      </div>
     </div>
+
+    <h4>Add Schedule</h4>
+    <select id="timeInput">
+      <option value="">Select Time</option>
+      <option value="1:00 AM">1:00 AM</option>
+      <option value="2:00 AM">2:00 AM</option>
+      <option value="3:00 AM">3:00 AM</option>
+      <option value="4:00 AM">4:00 AM</option>
+      <option value="5:00 AM">5:00 AM</option>
+      <option value="6:00 AM">6:00 AM</option>
+      <option value="7:00 AM">7:00 AM</option>
+      <option value="8:00 AM">8:00 AM</option>
+      <option value="9:00 AM">9:00 AM</option>
+      <option value="10:00 AM">10:00 AM</option>
+      <option value="11:00 AM">11:00 AM</option>
+      <option value="12:00 PM">12:00 PM</option>
+      <option value="1:00 PM">1:00 PM</option>
+      <option value="2:00 PM">2:00 PM</option>
+      <option value="3:00 PM">3:00 PM</option>
+      <option value="4:00 PM">4:00 PM</option>
+      <option value="5:00 PM">5:00 PM</option>
+      <option value="6:00 PM">6:00 PM</option>
+      <option value="7:00 PM">7:00 PM</option>
+      <option value="8:00 PM">8:00 PM</option>
+      <option value="9:00 PM">9:00 PM</option>
+      <option value="10:00 PM">10:00 PM</option>
+      <option value="11:00 PM">11:00 PM</option>
+      <option value="12:00 AM">12:00 AM</option>
+    </select>
+    <select id="dayInput">
+      <option value="">Select Day</option>
+      <option value="Monday">Monday</option>
+      <option value="Tuesday">Tuesday</option>
+      <option value="Wednesday">Wednesday</option>
+      <option value="Thursday">Thursday</option>
+      <option value="Friday">Friday</option>
+    </select>
+    <input type="text" id="subjectInput" placeholder="Subject">
+    <button onclick="addSchedule()">Add</button>
 
     <!-- Notes Section -->
     <div id="notesSection">
@@ -585,36 +376,35 @@ body.modal-active {
         <button onclick="addCategory()">Add Category</button>
       </div>
       <div id="noteEditor" style="height: 300px;"></div> 
-        
       <input type="file" id="noteMedia" accept="image/*">
       <button onclick="saveNote()">Save Note</button>
     </div>
     <ul id="notesList"></ul>
-  
-<!-- Note Popup -->
-<div id="notePopup" class="popup">
-  <div class="popup-content" id="popupContent">
-    <h3 id="noteTitle"></h3>
-    <div id="noteContent" contenteditable="false" style="position: relative;"></div>
-    <canvas id="drawingCanvas" style="white-space: pre-wrap; position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none;"></canvas>
-    <img id="noteMediaPreview" alt="" style="max-width: 100%; display: none;">
-  </div>
-  <div class="popup-footer">
-<div style="flex-grow: 1; display: flex; align-items: center;">
-    <label for="highlightColor">Highlight:</label>
-    <input type="color" id="highlightColor" value="#FFFF00" style="margin-left: 5px;">
-  </div>
-    <button onclick="enableTextHighlighting()">Enable Text Highlighting</button>
-    <button onclick="enableDrawing()">Enable Freehand Drawing</button>
-    <button onclick="disableDrawing()">Disable Freehand Drawing</button>
-    <button onclick="saveHighlightedText()">Save Highlights</button>
-    <button id="previousNoteButton" onclick="navigateNote(-1)">Previous</button>
-    <button id="nextNoteButton" onclick="navigateNote(1)">Next</button>
-    <button id="editNoteButton" onclick="editNote()">Edit</button>
-    <button id="deleteNoteButton" onclick="deleteNote()">Delete</button>
-    <button onclick="closeNotePopup()">Close</button>
-  </div>
-</div>
+
+    <!-- Note Popup -->
+    <div id="notePopup" class="popup">
+      <div class="popup-content" id="popupContent">
+        <h3 id="noteTitle"></h3>
+        <div id="noteContent" contenteditable="false" style="position: relative;"></div>
+        <canvas id="drawingCanvas" style="white-space: pre-wrap; position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none;"></canvas>
+        <img id="noteMediaPreview" alt="" style="max-width: 100%; display: none;">
+      </div>
+      <div class="popup-footer">
+        <div style="flex-grow: 1; display: flex; align-items: center;">
+          <label for="highlightColor">Highlight:</label>
+          <input type="color" id="highlightColor" value="#FFFF00" style="margin-left: 5px;">
+        </div>
+        <button onclick="enableTextHighlighting()">Enable Text Highlighting</button>
+        <button onclick="enableDrawing()">Enable Freehand Drawing</button>
+        <button onclick="disableDrawing()">Disable Freehand Drawing</button>
+        <button onclick="saveHighlightedText()">Save Highlights</button>
+        <button id="previousNoteButton" onclick="navigateNote(-1)">Previous</button>
+        <button id="nextNoteButton" onclick="navigateNote(1)">Next</button>
+        <button id="editNoteButton" onclick="editNote()">Edit</button>
+        <button id="deleteNoteButton" onclick="deleteNote()">Delete</button>
+        <button onclick="closeNotePopup()">Close</button>
+      </div>
+    </div>
 
     <!-- Calendar -->
     <div id="calendarSection">
@@ -624,13 +414,10 @@ body.modal-active {
     </div>
   </div>
 
-      
-    
-    
-<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
-<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.css" rel="stylesheet">
+  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+  <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.css" rel="stylesheet">
   <script>
 // Initialize the rich text editor for notes
 const quill = new Quill('#noteEditor', {
@@ -683,228 +470,14 @@ quill.getModule('toolbar').addHandler('image', () => {
   };
 });
 
-
-
 let currentEditingNote = null;
 const defaultCategories = ["Personal", "Academic", "Miscellaneous"];
 let selectedCategory = "Personal";
 
-  // Random weekly schedules for departments
-
+// Random weekly schedules for departments
 const departmentSchedules = {
-
-  SCI123: [
-
-    { time: '8:00 AM', Mon: 'PHY101 Lab 1', Tue: 'CHM102 LT 2', Wed: 'MTH105 LT 3', Thu: 'PHY101 Lab 2', Fri: 'BIO110 LT 1' },
-
-    { time: '10:00 AM', Mon: 'CHM102 LT 3', Tue: 'PHY101 Lab 2', Wed: 'BIO110 Lab 1', Thu: 'MTH105 LT 1', Fri: 'CHM102 Lab' },
-
-    { time: '1:00 PM', Mon: 'MTH105 LT 2', Tue: 'BIO110 Lab 1', Wed: '', Thu: 'PHY101 Lab 3', Fri: '' }
-
-  ],
-
-  HEA456: [
-
-    { time: '8:00 AM', Mon: 'MED200 Lab 3', Tue: 'NUR210 LT 1', Wed: 'ANAT301 LT 2', Thu: 'MED200 LT 3', Fri: 'PHYS301 LT 1' },
-
-    { time: '11:00 AM', Mon: 'NUR210 Lab', Tue: '', Wed: 'PHARM210 Lab', Thu: 'ANAT301 LT 2', Fri: 'NUR210 LT 2' },
-
-    { time: '3:00 PM', Mon: '', Tue: 'MED200 LT 3', Wed: 'NUR210 Lab', Thu: '', Fri: '' }
-
-  ],
-
-  PHA789: [
-
-    { time: '9:00 AM', Mon: 'PHA201 Lab', Tue: 'PHA203 LT 1', Wed: 'PHA202 LT 3', Thu: 'PHA201 Lab', Fri: 'PHA202 LT 1' },
-
-    { time: '1:00 PM', Mon: '', Tue: 'PHA202 LT 1', Wed: 'PHA203 Lab', Thu: '', Fri: 'PHA201 Lab' },
-
-    { time: '4:00 PM', Mon: 'PHA202 LT 3', Tue: '', Wed: 'PHA201 Lab', Thu: 'PHA203 LT 2', Fri: '' }
-
-  ],
-
-  AGR101: [
-
-    { time: '8:00 AM', Mon: 'AGRO101 LT 1', Tue: 'FST105 Lab', Wed: 'AGR105 LT 3', Thu: 'FST105 Lab', Fri: 'AGR106 LT 2' },
-
-    { time: '12:00 PM', Mon: '', Tue: 'AGR107 LT 2', Wed: 'AGRO101 LT 1', Thu: 'AGR106 Lab', Fri: '' },
-
-    { time: '2:00 PM', Mon: 'AGR106 LT 3', Tue: '', Wed: '', Thu: 'FST105 LT 3', Fri: '' }
-
-  ],
-
-  ART202: [
-
-    { time: '9:00 AM', Mon: 'HIS101 LT 2', Tue: 'ENG102 LT 3', Wed: 'PHIL105 LT 2', Thu: 'HIS101 LT 1', Fri: 'ART110 LT 2' },
-
-    { time: '11:00 AM', Mon: 'ENG102 LT 1', Tue: 'PHIL105 LT 3', Wed: '', Thu: 'ART110 LT 3', Fri: 'ENG102 LT 2' },
-
-    { time: '3:00 PM', Mon: '', Tue: 'PHIL105 LT 1', Wed: 'HIS101 LT 3', Thu: 'ENG102 LT 1', Fri: '' }
-
-  ],
-
-  "ZOO/PT1": [
-  { time: '8:00 AM', Mon: 'CHM 101 (1k SLT)', Tues: 'SER 001 (BOOC)', Wed: 'ZOO 101 (ODLT 1)', Thur: 'SER 001 (BOOC)', Fri: 'ZOO 101 (TETFUND ETF)' },
-    
-  { time: '9:00 AM', Mon: 'ZOO 101 (FBLT)', Tues: 'CHM 101 (1k SLT)', Wed: '—', Thur: '—', Fri: '-' },
-    
-  { time: '10:00 AM', Mon: 'PHY 105 (1k SLT)', Tues: '—', Wed: 'PHY 105 (1k SLT)', Thur: '-', Fri: 'PHY 105 (1k SLT)' },
-    
-  { time: '11:00 AM', Mon: '—', Tues: 'BOT 101 (1k SLT)', Wed: '-', Thur: '-', Fri: '-' },
-    
-  { time: '12:00 PM', Mon: 'BOT 101 (1k SLT)', Tues: 'ZOO 101 (—)', Wed: 'BOT 101 (1k SLT)', Thur: 'CHM 101 (1k SLT)', Fri: '-' },
-    
-  { time: '1:00 PM', Mon: '-', Tues: '-', Wed: 'CHM 101 (1k SLT)', Thur: 'PHY 107 (Yellow House)', Fri: '-' },
-    
-  { time: '2:00 PM', Mon: '-', Tues: '-', Wed: 'CHM 103 (2:00PM-5:00PM)', Thur: '-', Fri: '-' },
-    
-  { time: '3:00 PM', Mon: '-', Tues: '-', Wed: '-', Thur: '-', Fri: '-' },
-    
-  { time: '4:00 PM', Mon: '-', Tues: '-', Wed: '-', Thur: '-', Fri: 'BOT 103 (4:30 PM - 6:00 PM)' },
-    
-  { time: '5:00 PM', Mon: '-', Tues: '-', Wed: '-', Thur: '-', Fri: '-' }
-], 
-
- "ZOO/PT2": [
-  { time: '8:00 AM', Mon: 'MTH105 ODLT 2', Tues: 'ZOO207 Z0.01', Wed: 'ZOO203 G.23', Thur: 'ZOO207 Z0.01', Fri: '-' },
-
-  { time: '9:00 AM', Mon: 'ZOO203 BOO C', Tues: 'BOT202 G.23', Wed: 'ZOO203 BOO B', Thur: '-', Fri: 'ZOO203 BOO C' },
-
-  { time: '10:00 AM', Mon: '-', Tues: '-', Wed: '-', Thur: 'BOT202 G.23', Fri: '' },
-
-  { time: '11:00 AM', Mon: 'ZOO201 Z0.01', Tues: 'MTH105 FBLT', Wed: 'ZOO201 BOO B', Thur: 'ZOO201 Z0.01', Fri: 'ZOO201 BOO A' },
-
-  { time: '12:00 PM', Mon: 'BOT202 BOO C', Tues: '-', Wed: '-', Thur: '-', Fri: '-' },
-
-  { time: '1:00 PM', Mon: 'ZOO203 HSLT C', Tues: '-', Wed: '-', Thur: '-', Fri: '-' },
-
-  { time: '2:00 PM', Mon: 'MTH105 ODLT 1', Tues: '-', Wed: '-', Thur: 'MTH105 ODLT 2', Fri: '-' },
-
-  { time: '3:00 PM', Mon: '-', Tues: 'MTH105 HSLT C', Wed: '-', Thur: '-', Fri: '-' },
-
-
-  { time: '4:00 PM', Mon: '-', Tues: '-', Wed: 'MTH105 HSLT C', Thur: '-', Fri: 'CSC201 HSLT C' }
-
-  ], 
-
-   "MCB/PT1": [
-  { time: '8:00 AM', Mon: 'CHM 101 (1k SLT)\nBOT 103 (Bot Gr. IF)', Tues: 'SEA 001 (All venues)', Wed: 'CHM 101 (1k SLT)', Thur: 'SEA 001 (All venues)', Fri: 'ZOO 101 (CET/TETFUND)' },
-  { time: '9:00 AM', Mon: 'ZOO 101 (FBLT)', Tues: 'CHM 101 (1k SLT)', Wed: 'ZOO 101 (ODLT 1)', Thur: 'CHM 101 (1k SLT)', Fri: 'CHM 101 (1k SLT)' },
-  { time: '10:00 AM', Mon: 'PHY 105 (1k SLT)', Tues: 'PHY 105 (1k SLT)', Wed: 'PHY 105 (1k SLT)', Thur: 'PHY 105 (1k SLT)', Fri: 'PHY 105 (1k SLT)\nM CB SEMINAR (BOP C)' },
-  { time: '11:00 AM', Mon: 'CHM 101 (1k SLT)', Tues: 'BOT 101 (1k SLT)', Wed: '', Thur: 'CHM 101 (1k SLT)', Fri: '' },
-  { time: '12:00 PM', Mon: 'BOT 101 (1k SLT)', Tues: 'ZOO 101 (FBLT)', Wed: 'BOT 101 (1k SLT)', Thur: '', Fri: '' },
-  { time: '1:00 PM', Mon: '', Tues: '', Wed: '', Thur: '', Fri: '' },
-  { time: '2:00 PM', Mon: '', Tues: '', Wed: '', Thur: '', Fri: '' },
-  { time: '3:00 PM', Mon: '', Tues: '', Wed: '', Thur: '', Fri: '' },
-  { time: '4:00 PM', Mon: '', Tues: '', Wed: '', Thur: '', Fri: '' },
-  { time: '5:00 PM', Mon: '', Tues: 'ZOO 103 (Zoology Lab Z 1:00)', Wed: 'ZOO 103 (Zoology Lab Z 1:00)', Thur: '', Fri: '' },
-  { time: '6:00 PM', Mon: '', Tues: '', Wed: '', Thur: '', Fri: '' }
-
-
-  ]
-
+  // predefined schedules
 };
-
-
-
-// Load department schedule based on code
-
-function loadDepartmentSchedule() {
-
-  const code = document.getElementById('scheduleCode').value.trim();
-
-  const schedule = departmentSchedules[code];
-
-
-
-  if (!schedule) {
-
-    alert('Invalid code. Please try again.');
-
-    return;
-
-  }
-
-
-
-  renderSchedule(schedule);
-
-}
-
-
-
-// Render the schedule in the table
-
-function renderSchedule(schedule) {
-
-  const scheduleBody = document.getElementById('scheduleBody');
-
-  scheduleBody.innerHTML = schedule.map(row => `
-
-    <tr>
-
-      <td>${row.time}</td>
-
-      <td>${row.Mon || ''}</td>
-
-      <td>${row.Tues || ''}</td>
-
-      <td>${row.Wed || ''}</td>
-
-      <td>${row.Thur || ''}</td>
-
-      <td>${row.Fri || ''}</td>
-
-    </tr>
-
-  `).join('');
-
-}
-
-
-
-// Save schedule to local storage
-
-function saveScheduleToLocalStorage(code) {
-
-  const schedule = departmentSchedules[code];
-
-  if (!schedule) {
-
-    alert('Invalid code. No schedule to save.');
-
-    return;
-
-  }
-
-  localStorage.setItem('schedule', JSON.stringify(schedule));
-
-  alert('Schedule saved to local storage!');
-
-}
-
-
-
-// Load schedule from local storage
-
-function loadSavedSchedule() {
-
-  const savedSchedule = JSON.parse(localStorage.getItem('schedule')) || [];
-
-  renderSchedule(savedSchedule);
-
-}
-
-
-
-// Initialize the page
-
-document.addEventListener('DOMContentLoaded', loadSavedSchedule);
-
-
-
-
-  
 
 // Load department schedule based on code
 function loadDepartmentSchedule() {
@@ -951,211 +524,7 @@ function loadSavedSchedule() {
   renderSchedule(savedSchedule);
 }
 
-// Initialize the page
-document.addEventListener('DOMContentLoaded', loadSavedSchedule);
-
-
-
-// JavaScript Part
-    
-const departmentSchedules = {
-  //... predefined schedules
-};
-
-function loadDepartmentSchedule() {
-  const code = document.getElementById('scheduleCode').value.trim();
-  const schedule = departmentSchedules[code];
-
-  if (!schedule) {
-    alert('Invalid code. Please try again.');
-    return;
-  }
-
-  renderSchedule(schedule);
-}
-
-function renderSchedule(schedule) {
-  const scheduleBody = document.getElementById('scheduleBody');
-  scheduleBody.innerHTML = schedule.map(row => `
-    <tr>
-      <td>${row.time}</td>
-      <td>${row.Mon || ''}</td>
-      <td>${row.Tues || ''}</td>
-      <td>${row.Wed || ''}</td>
-      <td>${row.Thur || ''}</td>
-      <td>${row.Fri || ''}</td>
-    </tr>
-  `).join('');
-}
-
-function savePredefinedToLocalStorage() {
-  const code = document.getElementById('scheduleCode').value.trim();
-  const schedule = departmentSchedules[code];
-
-  if (!schedule) {
-    alert('Invalid code. No schedule to save.');
-    return;
-  }
-
-  localStorage.setItem('predefinedSchedule', JSON.stringify(schedule));
-  alert('Predefined schedule saved to local storage!');
-}
-
-// Load schedule from local storage
-function loadSavedSchedule() {
-  const savedSchedule = JSON.parse(localStorage.getItem('predefinedSchedule')) || [];
-  renderSchedule(savedSchedule);
-}
-
-// Initialize the page
-document.addEventListener('DOMContentLoaded', loadSavedSchedule);
-const motivationalMessages = [
-  "Keep pushing forward!",
-  "Believe in yourself!",
-  "Every day is a new opportunity to succeed!",
-  "You are capable of amazing things!",
-  "Never stop learning, because life never stops teaching.",
-  "Dream big and dare to fail.",
-  "Your potential is limitless.",
-  "Be the best version of yourself.",
-  "Success is a journey, not a destination.",
-  "Hard work beats talent when talent doesn't work hard.",
-  "Education is the key to unlocking your future.",
-  "Turn challenges into opportunities.",
-  "Focus on your goals, not your obstacles.",
-  "Small steps lead to big changes.",
-  "Consistency is the key to success.",
-  "Never stop improving.",
-  "Stay positive, work hard, and make it happen.",
-  "Believe in the process.",
-  "Learn, grow, and inspire.",
-  "Education is the passport to an exciting tomorrow.", 
-  "Your mind is your most powerful tool; educate it well.", 
-  "Embrace learning; it's a lifelong adventure.", 
-  "Challenges are stepping stones to greatness.", 
-  "Replace doubt with determination.", 
-  "Obstacles are opportunities in disguise.", 
-  "Small acts of learning accumulate into vast knowledge.", 
-  "Consistency unlocks potential.", 
-  "Progress, not perfection, is the goal.", 
-  "Never underestimate the power of knowledge.", 
-  "Learn from your mistakes; they are valuable lessons.", 
-  "Stay curious; the world is full of wonders to discover.", 
-  "Education empowers you to change your life and the world.", 
-  "Believe in your ability to learn and grow.", 
-  "Invest in your education; it's the best investment you'll ever make.", 
-  "Find your passion and let it fuel your learning.", 
-  "Surround yourself with supportive learners and mentors.", 
-  "Education is not a race; it's a journey.", 
-  "Celebrate your successes, no matter how small.", 
-  "Don't be afraid to ask questions; it's how you learn.", 
-  "Embrace lifelong learning; the world is constantly evolving.", 
-  "Your potential is limitless; unlock it through education.", 
-  "Education is the foundation of a fulfilling life.", 
-  "Knowledge is power; use it wisely.", 
-  "Seek knowledge relentlessly; it's the key to self-discovery.", 
-  "Turn setbacks into opportunities for growth.", 
-  "Focus on what you can control: your effort and attitude.", 
-  "Every day is a chance to learn something new.", 
-  "Your education is your legacy; leave a positive impact.", 
-  "Believe in yourself; you are capable of amazing things.", 
-  "OAU is one of the oldest and most prestigious universities in Nigeria.", 
-  "It was originally founded as the University College, Ibadan, before becoming independent.", 
-  "Obafemi Awolowo University is named after the renowned Nigerian nationalist, Obafemi Awolowo.", 
-  "The university is located in Ile-Ife, a city with historical and cultural significance.", 
-  "OAU boasts a beautiful campus renowned for its lush greenery and architectural design.", 
-  "The institution is known for its rigorous academic standards and strong focus on research.", 
-  "OAU has a highly competitive admissions process, attracting top students nationwide.", 
-  "The university is home to a diverse student population from across Nigeria and beyond.", 
-  "OAU has a vibrant student union with a rich history of activism and student leadership.", 
-  "The Great Ife campus is known for its iconic structures and serene environment.", 
-  "OAU has produced many prominent figures in various fields, including politics, academics, and business.", 
-  "The university has strong collaborations with international institutions for research and exchange programs.", 
-  "The institution offers a wide range of undergraduate and postgraduate programs across diverse disciplines.", 
-  "OAU has state-of-the-art facilities in various departments, including science laboratories and libraries.", 
-  "The university’s library houses an extensive collection of books and academic journals.", 
-  "OAU has a well-respected medical school, training many of Nigeria's doctors.", 
-  "The institution has a dedicated sports complex and actively promotes intercollegiate sports.", 
-  "The university has a strong alumni network, supporting and connecting graduates worldwide.", 
-  "OAU's student hostels offer various accommodation options for its diverse student population.", 
-  "The university regularly hosts conferences, seminars, and workshops on various academic topics.", 
-  "OAU has a strong commitment to community engagement and outreach programs.", 
-  "The university plays a significant role in contributing to the intellectual and social development of Nigeria.", 
-  "OAU has a rich history of academic excellence and innovation.", 
-  "The university’s tradition of high academic standards continues to this day.", 
-  "OAU has contributed immensely to national development through research and knowledge creation.", 
-  "Several notable Nobel laureates have either lectured or had links with OAU.", 
-  "The campus has a unique blend of modern and traditional architecture.", 
-  "OAU's location fosters cultural exchange between students and the local community.", 
-  "OAU offers various scholarship opportunities to support its students' education.", 
-  "The university has a dedicated department for students’ welfare and counseling."
-];
-
-// Run on page load
-document.addEventListener('DOMContentLoaded', () => {
-  displayWelcomePopup();
-  loadCalendar();
-  loadSchedule();
-  loadNotes();
-  showCategory("Personal");
-  loadCategories();
-});
-
-// --- Welcome Popup ---
-function displayWelcomePopup() {
-  const studentName = localStorage.getItem('studentName') || prompt("Enter your name:");
-  localStorage.setItem('studentName', studentName);
-  document.getElementById('welcomeMessage').textContent = `Hello, ${studentName}!`;
-  const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
-  document.getElementById('motivationalMessage').textContent = randomMessage;
-  document.getElementById('welcomePopup').style.display = 'flex';
-}
-
-function closeWelcomePopup() {
-  document.getElementById('welcomePopup').style.display = 'none';
-}
-
-// --- Class Scheduler ---
-function loadSchedule() {
-  const schedule = JSON.parse(localStorage.getItem('schedule')) || [];
-  const scheduleBody = document.getElementById('scheduleBody');
-  scheduleBody.innerHTML = schedule.map(row => `
-    <tr>
-      <td>${row.time}</td>
-      <td>${row.days.Mon || ''}</td>
-      <td>${row.days.Tue || ''}</td>
-      <td>${row.days.Wed || ''}</td>
-      <td>${row.days.Thu || ''}</td>
-      <td>${row.days.Fri || ''}</td>
-    </tr>`).join('');
-}
-
-function addSchedule() {
-  const time = document.getElementById('timeInput').value;
-  const day = document.getElementById('dayInput').value;
-  const subject = document.getElementById('subjectInput').value;
-  if (!time || !day || !subject) return alert('All fields are required.');
-
-  const schedule = JSON.parse(localStorage.getItem('schedule')) || [];
-  const existing = schedule.find(row => row.time === time);
-  if (existing) {
-    existing.days[day.substring(0, 3)] = subject;
-  } else {
-    const newRow = { time, days: { Mon: '', Tue: '', Wed: '', Thu: '', Fri: '' } };
-    newRow.days[day.substring(0, 3)] = subject;
-    schedule.push(newRow);
-  }
-
-  localStorage.setItem('schedule', JSON.stringify(schedule));
-  loadSchedule();
-
-  // Clear inputs
-  document.getElementById('timeInput').value = '';
-  document.getElementById('dayInput').value = '';
-  document.getElementById('subjectInput').value = '';
-}
-
-// --- Weekly Calendar ---
+// Load the calendar
 function loadCalendar() {
   const calendar = document.getElementById('calendar');
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -1169,7 +538,7 @@ function loadCalendar() {
   document.getElementById('calendarMessage').textContent = 'Make today count!';
 }
 
-// --- Notes Section ---
+// Load notes
 function loadNotes() {
   const notesList = document.getElementById('notesList');
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
@@ -1182,13 +551,14 @@ function loadNotes() {
       </li>`).join('');
 }
 
+// Save note
 function saveNote() {
   const title = prompt("Enter note title:");
   const text = quill.root.innerHTML.trim(); // Quill editor content
   const mediaInput = document.getElementById('noteMedia').files[0];
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
   const reader = new FileReader();
-  
+
   reader.onload = () => {
     notes.push({ title, text, media: reader.result, category: selectedCategory });
     localStorage.setItem('notes', JSON.stringify(notes));
@@ -1208,10 +578,11 @@ function saveNote() {
   }
 }
 
+// Show note popup
 function showNotePopup(index) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
   const note = notes[index];
-  
+
   // Display title and content
   document.getElementById('noteTitle').textContent = note.title || "Untitled";
   document.getElementById('noteContent').innerHTML = note.text || "No content available";
@@ -1229,6 +600,7 @@ function showNotePopup(index) {
   document.getElementById('notePopup').style.display = 'flex'; // Show popup
 }
 
+// Edit note
 function editNote() {
   if (currentEditingNote !== null) {
     const confirmEdit = confirm("Are you sure you want to edit this note?");
@@ -1241,9 +613,10 @@ function editNote() {
       loadNotes();
       closeNotePopup();
     }
-    }
+  }
 }
 
+// Delete note
 function deleteNote() {
   if (currentEditingNote !== null) {
     const confirmDelete = confirm("Are you sure you want to delete this note?");
@@ -1257,11 +630,12 @@ function deleteNote() {
   }
 }
 
-
+// Close note popup
 function closeNotePopup() {
   document.getElementById('notePopup').style.display = 'none';
 }
 
+// Navigate note
 function navigateNote(direction) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
   if (notes.length === 0) return;
@@ -1276,403 +650,15 @@ function navigateNote(direction) {
     newIndex = 0; // Go to first note
   }
 
-  // Show the new note
-  currentEditingNote = newIndex;
-  const note = notes[currentEditingNote];
-  document.getElementById('noteTitle').textContent = note.title;
-  document.getElementById('noteContent').innerHTML = note.text;
-
-  const mediaPreview = document.getElementById('noteMediaPreview');
-  if (note.media) {
-    mediaPreview.src = note.media;
-    mediaPreview.style.display = 'block';
-  } else {
-    mediaPreview.style.display = 'none';
-  }
-}
-function enableTextHighlighting() {
-  const highlightColor = document.getElementById('highlightColor').value;
-
-  document.getElementById('noteContent').onmouseup = () => {
-    const selectedText = window.getSelection();
-    if (!selectedText.rangeCount || selectedText.toString().trim() === '') return;
-
-    const range = selectedText.getRangeAt(0);
-    const span = document.createElement('span');
-    span.style.backgroundColor = highlightColor;
-    span.textContent = selectedText.toString();
-
-    range.deleteContents();
-    range.insertNode(span);
-
-    // Clear the selection
-    window.getSelection().removeAllRanges();
-  };
+  showNotePopup(newIndex);
 }
 
-
-let isDrawing = false;
-
-function enableDrawing() {
-  const canvas = document.getElementById('drawingCanvas');
-  const ctx = canvas.getContext('2d');
-  const highlightColor = document.getElementById('highlightColor').value;
-
-  // Enable canvas for drawing
-  canvas.style.display = 'block';
-  canvas.style.pointerEvents = 'auto';
-
-  // Set drawing styles
-  ctx.strokeStyle = highlightColor;
-  ctx.lineWidth = 5;
-  ctx.lineCap = 'round';
-
-  canvas.addEventListener('mousedown', startDrawing);
-  canvas.addEventListener('mousemove', draw);
-  canvas.addEventListener('mouseup', stopDrawing);
-  canvas.addEventListener('mouseleave', stopDrawing);
-
-  function startDrawing(event) {
-    isDrawing = true;
-    ctx.beginPath();
-    ctx.moveTo(event.offsetX, event.offsetY);
-  }
-
-  function draw(event) {
-    if (!isDrawing) return;
-    ctx.lineTo(event.offsetX, event.offsetY);
-    ctx.stroke();
-  }
-
-  function stopDrawing() {
-    isDrawing = false;
-    ctx.closePath();
-  }
-}
-
-function disableDrawing() {
-  const canvas = document.getElementById('drawingCanvas');
-  canvas.style.pointerEvents = 'none';
-  alert('Freehand drawing disabled. Highlights are saved on the canvas.');
-}
-
-    
-function saveHighlightedText() {
-  if (currentEditingNote !== null) {
-    const notes = JSON.parse(localStorage.getItem('notes')) || [];
-    const noteContent = document.getElementById('noteContent').innerHTML; // Save text highlights
-
-    // Save the canvas content as an image
-    const canvas = document.getElementById('drawingCanvas');
-    const canvasData = canvas.toDataURL();
-
-    notes[currentEditingNote].text = noteContent;
-    notes[currentEditingNote].drawing = canvasData; // Store the canvas drawing
-    localStorage.setItem('notes', JSON.stringify(notes));
-
-    alert('Highlights and drawings saved successfully!');
-  }
-}
-
-
-function showNotePopup(index) {
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  const note = notes[index];
-  document.getElementById('noteTitle').textContent = note.title;
-  document.getElementById('noteContent').innerHTML = note.text; // Show saved highlights
-
-  const canvas = document.getElementById('drawingCanvas');
-  if (note.drawing) {
-    const ctx = canvas.getContext('2d');
-    const img = new Image();
-    img.onload = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-      ctx.drawImage(img, 0, 0); // Restore saved drawing
-    };
-    img.src = note.drawing;
-  }
-
-  const mediaPreview = document.getElementById('noteMediaPreview');
-  if (note.media) {
-    mediaPreview.src = note.media;
-    mediaPreview.style.display = 'block';
-  } else {
-    mediaPreview.style.display = 'none';
-  }
-
-  currentEditingNote = index;
-  document.getElementById('notePopup').style.display = 'flex';
-}
-
-// --- Categories ---
-function addCategory() {
-  const category = prompt("Enter new category name:");
-  if (category) {
-    const categories = JSON.parse(localStorage.getItem('categories')) || defaultCategories;
-    if (!categories.includes(category)) {
-      categories.push(category);
-      localStorage.setItem('categories', JSON.stringify(categories));
-      loadCategories();
-    } else {
-      alert("Category already exists!");
-    }
-  }
-}
-
-function showCategory(category) {
-  selectedCategory = category; // Set the current category
-  loadNotes(); // Load notes for this category
-}
-
-function loadCategories() {
-  const categoriesContainer = document.getElementById('categories');
-  const categories = JSON.parse(localStorage.getItem('categories')) || defaultCategories;
-
-  categoriesContainer.innerHTML = categories.map(category => `
-    <button onclick="showCategory('${category}')">${category}</button>`).join('') +
-    `<button onclick="addCategory()">Add Category</button>`;
-}
-
-function toggleNavigation() {
-  const toolbox = document.getElementById('navigationToolbox');
-  toolbox.classList.toggle('open');
-}
-
-// --- Notes ---
-function loadNotes() {
-  const notesList = document.getElementById('notesList');
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
-
-  if (!selectedCategory) {
-    notesList.innerHTML = `<li>Please select a category to view notes.</li>`;
-    return;
-  }
-
-  // Filter notes by the selected category
-  const filteredNotes = notes.filter(note => note.category === selectedCategory);
-
-  // Render filtered notes
-  notesList.innerHTML = filteredNotes.map((note, index) => `
-    <li>
-      <h4>${note.title}</h4>
-      <button onclick="showNotePopup(${index})">View</button>
-    </li>
-  `).join('');
-}
-
-
-// Toggle navigation menu
-function toggleNavigation() {
-  const toolbox = document.getElementById('navigationToolbox');
-  toolbox.classList.toggle('open');
-}
-
-// Initialize categories and notes on page load
-document.addEventListener("DOMContentLoaded", () => {
-  loadCategories(); // Load categories on page load
-  loadNotes(); // Load notes (initially empty until a category is selected)
+// Initialize the page
+document.addEventListener('DOMContentLoaded', () => {
+  loadCalendar();
+  loadNotes();
+  loadSavedSchedule();
 });
-    // Custom Prompt
-function showCustomPrompt(title, callback) {
-  const promptOverlay = document.getElementById("customPrompt");
-  const promptTitle = document.getElementById("promptTitle");
-  const promptInput = document.getElementById("promptInput");
-  const promptOk = document.getElementById("promptOk");
-  const promptCancel = document.getElementById("promptCancel");
-
-  // Set the title and clear the input
-  promptTitle.textContent = title;
-  promptInput.value = "";
-
-  // Show the prompt
-  promptOverlay.style.display = "flex";
-
-  // Handle the "OK" button
-  promptOk.onclick = () => {
-    const inputValue = promptInput.value.trim();
-    promptOverlay.style.display = "none";
-    if (callback) callback(inputValue);
-  };
-
-  // Handle the "Cancel" button
-  promptCancel.onclick = () => {
-    promptOverlay.style.display = "none";
-    if (callback) callback(null); // Return null on cancel
-  };
-}
-    //Mini Browser
-
-const homepage = "https://www.wikipedia.org";
-
-function toggleMiniBrowser() {
-  const miniBrowser = document.getElementById("miniBrowser");
-  const browserIcon = document.getElementById("browserIcon");
-
-  if (miniBrowser.classList.contains("hidden")) {
-    // Show the browser
-    miniBrowser.classList.remove("hidden");
-    browserIcon.textContent = "❌";
-    document.body.style.overflow = "hidden"; // Disable scrolling
-  } else {
-    // Hide the browser
-    miniBrowser.classList.add("hidden");
-    browserIcon.textContent = "🌐";
-    document.body.style.overflow = "auto"; // Enable scrolling
-    }
-  }
-
-function navigateBrowser() {
-  const urlInput = document.getElementById("browserUrl");
-  const iframe = document.getElementById("browserFrame");
-
-  let url = urlInput.value.trim();
-  if (!url.startsWith("http://") && !url.startsWith("https://")) {
-    url = "https://" + url; // Default to HTTPS if no protocol is provided
-  }
-
-  iframe.src = url;
-}
-
-function reloadBrowser() {
-  const iframe = document.getElementById("browserFrame");
-  iframe.contentWindow.location.reload(); // Reload iframe content
-}
-
-function goBack() {
-  const iframe = document.getElementById("browserFrame");
-  try {
-    iframe.contentWindow.history.back(); // Navigate back
-  } catch (e) {
-    alert("No back history available.");
-  }
-}
-
-function goForward() {
-  const iframe = document.getElementById("browserFrame");
-  try {
-    iframe.contentWindow.history.forward(); // Navigate forward
-  } catch (e) {
-    alert("No forward history available.");
-  }
-}
-
-function goHome() {
-  const iframe = document.getElementById("browserFrame");
-  iframe.src = homepage; // Set iframe source to homepage
-}
-
-    // Authentication Logic
-    document.addEventListener('DOMContentLoaded', () => {
-      const secretCode = localStorage.getItem('secretCode');
-      const authScreen = document.getElementById('authScreen');
-      const authSetup = document.getElementById('authSetup');
-      const authLogin = document.getElementById('authLogin');
-
-      if (!secretCode) {
-        authSetup.style.display = 'block';
-      } else {
-        authLogin.style.display = 'block';
-      }
-    });
-
-    function saveSecretCode() {
-      const code = document.getElementById('setSecretCode').value.trim();
-      if (code) {
-        localStorage.setItem('secretCode', code);
-        alert('Secret code saved successfully! Please remember it.');
-        document.getElementById('authScreen').style.display = 'none';
-      } else {
-        alert('Secret code cannot be empty.');
-      }
-    }
-
-    function authenticate() {
-      const enteredCode = document.getElementById('authCode').value.trim();
-      const savedCode = localStorage.getItem('secretCode');
-
-      if (enteredCode === savedCode) {
-        alert('Authentication successful!');
-        document.getElementById('authScreen').style.display = 'none';
-      } else {
-        alert('Incorrect secret code. Please try again.');
-      }
-  }
-
-function toggleAuthScreen(show) {
-      const authScreen = document.querySelector(".auth-screen");
-
-      if (show) {
-        authScreen.style.display = "flex"; // Show the authentication screen
-        document.body.style.overflow = "hidden"; // Disable scrolling
-      } else {
-        authScreen.style.display = "none"; // Hide the authentication screen
-        document.body.style.overflow = "auto"; // Enable scrolling
-      }
-    }
-
-  
-  document.addEventListener('DOMContentLoaded', () => {
-    // Request Notification Permission
-    if (Notification.permission !== 'granted') {
-      Notification.requestPermission();
-    }
-
-    // Start the reminder system
-    startReminderSystem();
-  });
-
-  function startReminderSystem() {
-    setInterval(() => {
-      checkForReminders();
-    }, 60 * 1000); // Check every minute
-  }
-
-  function checkForReminders() {
-    const now = new Date();
-    const currentMinutes = now.getHours() * 60 + now.getMinutes(); // Current time in minutes since midnight
-    const schedule = JSON.parse(localStorage.getItem('schedule')) || [];
-
-    schedule.forEach((classSchedule) => {
-      const [hour, minutePart] = classSchedule.time.split(':');
-      const minutes = parseInt(minutePart.split(' ')[0]);
-      const isPM = classSchedule.time.includes('PM') && hour !== '12';
-      const classTimeInMinutes = (parseInt(hour) + (isPM ? 12 : 0)) * 60 + minutes;
-
-      // Check if the current time is 10 minutes before the class time
-      if (classTimeInMinutes - currentMinutes === 10) {
-        sendNotification(`Reminder: ${getClassDetails(classSchedule)}`);
-      }
-    });
-  }
-
-  function sendNotification(message) {
-    if (Notification.permission === 'granted') {
-      new Notification('Class Reminder', {
-        body: message,
-        icon: 'https://oauife.edu.ng/logo.png', // Example icon
-      });
-    } else {
-      console.warn('Notifications are disabled or permission denied.');
-    }
-  }
-
-  function getClassDetails(classSchedule) {
-    // Combine subject and day for a better notification message
-    const subject = Object.values(classSchedule.days).find((sub) => sub) || 'Unknown Subject';
-    const day = Object.keys(classSchedule.days).find((key) => classSchedule.days[key] === subject) || 'Unknown Day';
-    return `${subject} (${day})`;
-  }
-
-        if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(() => console.log('Service Worker Registered'))
-        .catch((error) => console.error('Service Worker Registration Failed:', error));
-    }
-
   </script>
-</body>
-</html>
-<!-- partial -->
-  
-</body>
+ </body>
 </html>
