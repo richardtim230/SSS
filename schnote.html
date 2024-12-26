@@ -306,32 +306,31 @@
 </div>
 
 
-  <div class="container">
-    <!-- Class Scheduler -->
-    <div id="scheduleSection">
-      <h3>Class Scheduler</h3>
-      <div>
-        <p>Enter the schedule code to load predefined classes:</p>
-        <input type="text" id="scheduleCode" placeholder="Enter code">
-        <button onclick="loadDepartmentSchedule()">Load Schedule</button>
-        <button onclick="savePredefinedToLocalStorage()">Save Predefined Schedule</button>
-      </div>
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th>Time</th>
-              <th>Mon</th>
-              <th>Tues</th>
-              <th>Wed</th>
-              <th>Thur</th>
-              <th>Fri</th>
-            </tr>
-          </thead>
-          <tbody id="scheduleBody"></tbody>
-        </table>
-      </div>
-    </div>
+<div id="scheduleSection">
+  <h3>Class Scheduler</h3>
+  <div>
+    <p>Enter the schedule title and code to load predefined classes:</p>
+    <input type="text" id="scheduleTitle" placeholder="Enter title">
+    <input type="text" id="scheduleCode" placeholder="Enter code">
+    <button onclick="loadDepartmentSchedule()">Load Schedule</button>
+    <button onclick="savePredefinedToLocalStorage()">Save Predefined Schedule</button>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Mon</th>
+          <th>Tues</th>
+          <th>Wed</th>
+          <th>Thur</th>
+          <th>Fri</th>
+        </tr>
+      </thead>
+      <tbody id="scheduleBody"></tbody>
+    </table>
+  </div>
+</div>
 
     <h4>Add Schedule</h4>
     <select id="timeInput">
@@ -559,6 +558,37 @@ function loadDepartmentSchedule() {
 }
 
 // Save schedule to local storage with title
+
+// Add schedule to the table
+function addSchedule() {
+  const time = document.getElementById('timeInput').value.trim();
+  const day = document.getElementById('dayInput').value.trim();
+  const subject = document.getElementById('subjectInput').value.trim();
+
+  if (!time || !day || !subject) {
+    alert('Please fill in all fields to add a schedule.');
+    return;
+  }
+
+  const scheduleBody = document.getElementById('scheduleBody');
+  const newRow = document.createElement('tr');
+  newRow.innerHTML = `
+    <td>${time}</td>
+    <td>${day === 'Monday' ? subject : ''}</td>
+    <td>${day === 'Tuesday' ? subject : ''}</td>
+    <td>${day === 'Wednesday' ? subject : ''}</td>
+    <td>${day === 'Thursday' ? subject : ''}</td>
+    <td>${day === 'Friday' ? subject : ''}</td>
+  `;
+  scheduleBody.appendChild(newRow);
+
+  // Clear inputs
+  document.getElementById('timeInput').value = '';
+  document.getElementById('dayInput').value = '';
+  document.getElementById('subjectInput').value = '';
+}
+
+// Save schedule to local storage with title
 function savePredefinedToLocalStorage() {
   const title = document.getElementById('scheduleTitle').value.trim();
   const code = document.getElementById('scheduleCode').value.trim();
@@ -586,8 +616,12 @@ function loadSavedSchedule() {
   const scheduleBody = document.getElementById('scheduleBody');
   scheduleBody.innerHTML = '';
 
-  Object.keys(savedSchedules).forEach(code => {
-    renderSchedule(savedSchedules[code]);
+  Object.keys(savedSchedules).forEach(title => {
+    const titleRow = document.createElement('tr');
+    titleRow.innerHTML = `<td colspan="6" style="font-weight:bold; text-align:center;">${title}</td>`;
+    scheduleBody.appendChild(titleRow);
+
+    renderSchedule(savedSchedules[title]);
   });
 }
 
@@ -605,29 +639,9 @@ function renderSchedule(schedule) {
     </tr>
   `).join('');
 }
-// Add schedule to the table
-function addSchedule() {
-  const time = document.getElementById('timeInput').value.trim();
-  const day = document.getElementById('dayInput').value.trim();
-  const subject = document.getElementById('subjectInput').value.trim();
 
-  if (!time || !day || !subject) {
-    alert('Please fill in all fields to add a schedule.');
-    return;
-  }
 
-  const scheduleBody = document.getElementById('scheduleBody');
-  const newRow = document.createElement('tr');
-  newRow.innerHTML = `
-    <td>${time}</td>
-    <td>${day === 'Monday' ? subject : ''}</td>
-    <td>${day === 'Tuesday' ? subject : ''}</td>
-    <td>${day === 'Wednesday' ? subject : ''}</td>
-    <td>${day === 'Thursday' ? subject : ''}</td>
-    <td>${day === 'Friday' ? subject : ''}</td>
-  `;
-  scheduleBody.appendChild(newRow);
-
+    
   // Clear inputs
   document.getElementById('timeInput').value = '';
   document.getElementById('dayInput').value = '';
