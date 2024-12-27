@@ -630,7 +630,6 @@ const departmentSchedules = {
   ]
 };
 
-// Load department schedule based on code
 function loadDepartmentSchedule() {
   const code = document.getElementById('scheduleCode').value.trim();
   const schedule = departmentSchedules[code];
@@ -641,6 +640,20 @@ function loadDepartmentSchedule() {
   }
 
   renderSchedule(schedule);
+}
+
+function renderSchedule(schedule) {
+  const predefinedScheduleBody = document.getElementById('predefinedScheduleBody');
+  predefinedScheduleBody.innerHTML = schedule.map(row => `
+    <tr>
+      <td>${row.time}</td>
+      <td>${row.Mon || ''}</td>
+      <td>${row.Tues || ''}</td>
+      <td>${row.Wed || ''}</td>
+      <td>${row.Thur || ''}</td>
+      <td>${row.Fri || ''}</td>
+    </tr>
+  `).join('');
 }
 
 // Modified addSchedule function to add rows to the manual schedule table and save to local storage
