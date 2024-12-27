@@ -875,7 +875,7 @@ function loadNotes() {
         <button onclick="showNotePopup(${index})">View</button>
        <button onclick="generateQRCode(${index})">Generate QR Code</button>
 <div id="qrcode-${index}"></div>
-      <button onclick="startQRScan()">Scan QR Code</button>
+<button onclick="startQRScan()">Scan QR Code</button>
 <div id="qr-reader" style="width:500px"></div>
       </li>`).join('');
 }
@@ -922,10 +922,10 @@ function generateQRCode(index) {
   const qrCodeContainer = document.getElementById(`qrcode-${index}`);
   qrCodeContainer.innerHTML = "";
   QRCode.toCanvas(qrCodeContainer, JSON.stringify(note), function (error) {
-    if (error) console.error(error);
-    console.log('QR code generated successfully!');
+    if (error) console.error('Error generating QR code:', error);
+    else console.log('QR code generated successfully!');
   });
-}
+    }
 
 // Scan
 
@@ -940,15 +940,15 @@ function startQRScan() {
     (decodedText, decodedResult) => {
       const sharedNote = JSON.parse(decodedText);
       saveReceivedNote(sharedNote);
-      html5QrCode.stop();
+      html5QrCode.stop().then(() => console.log('QR Code scanning stopped.'));
     },
     (errorMessage) => {
-      console.error(errorMessage);
+      console.error('QR Code scanning failed:', errorMessage);
     }
   ).catch((err) => {
-    console.error(err);
+    console.error('Unable to start QR Code scanning:', err);
   });
-}
+    }
 
 function saveReceivedNote(note) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
