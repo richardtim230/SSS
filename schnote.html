@@ -873,19 +873,10 @@ function loadNotes() {
       <li>
         <h4>${note.title}</h4>
         <button onclick="showNotePopup(${index})">View</button>
-       <button onclick="startQRScan()">Scan QR Code</button>
+       <button onclick="generateQRCode(${index})">Generate QR Code</button>
+<div id="qrcode-${index}"></div>
+<button onclick="startQRScan()">Scan QR Code</button>
 <div id="qr-reader" style="width:500px"></div>
-notes.forEach((note, index) => {
-  const button = document.createElement('button');
-  button.innerText = 'Generate QR Code';
-  button.addEventListener('click', () => generateQRCode(index));
-  container.appendChild(button);
-
-  const qrDiv = document.createElement('div');
-  qrDiv.id = `qrcode-${index}`;
-  container.appendChild(qrDiv);
-});
-
       </li>`).join('');
 }
 //Share Notes
@@ -925,25 +916,12 @@ function receiveNote() {
   loadNotes(); // Reload notes to display the new shared note
 }
     
-const container = document.getElementById('container');
-const notes = JSON.parse(localStorage.getItem('notes')) || [{ text: "Sample Note 1" }, { text: "Sample Note 2" }];
-
-notes.forEach((note, index) => {
-  const button = document.createElement('button');
-  button.innerText = 'Generate QR Code';
-  button.addEventListener('click', () => generateQRCode(index));
-  container.appendChild(button);
-
-  const qrDiv = document.createElement('div');
-  qrDiv.id = `qrcode-${index}`;
-  container.appendChild(qrDiv);
-});
-
 function generateQRCode(index) {
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
   const note = notes[index];
   const qrCodeContainer = document.getElementById(`qrcode-${index}`);
   qrCodeContainer.innerHTML = "";
-  QRCode.toCanvas(qrCodeContainer, JSON.stringify(note), (error) => {
+  QRCode.toCanvas(qrCodeContainer, JSON.stringify(note), function (error) {
     if (error) console.error('Error generating QR code:', error);
     else console.log('QR code generated successfully!');
   });
@@ -953,24 +931,23 @@ function startQRScan() {
   const html5QrCode = new Html5Qrcode("qr-reader");
   html5QrCode.start(
     { facingMode: "environment" },
-    { fps: 10, qrbox: 250 },
-    (decodedText) => {
-      console.log('Scanned:', decodedText);
-      const note = JSON.parse(decodedText);
-      saveReceivedNote(note);
+    {
+      fps: 10,
+      qrbox: 250
+    },
+    (decodedText, decodedResult) => {
+      console.log('QR Code scanned successfully:', decodedText);
+      const sharedNote = JSON.parse(decodedText);
+      saveReceivedNote(sharedNote);
       html5QrCode.stop();
+    },
+    (errorMessage) => {
+      console.error('QR Code scanning failed:', errorMessage);
     }
   ).catch((err) => {
-    console.error('Failed to start QR scanner:', err);
+    console.error('Unable to start QR Code scanning:', err);
   });
 }
-
-function saveReceivedNote(note) {
-  notes.push(note);
-  localStorage.setItem('notes', JSON.stringify(notes));
-  console.log('Note saved:', note);
-}
-
     
 //Mini Browser
 
@@ -1144,10 +1121,3 @@ function navigateNote(direction) {
   </script>
  </body>
 </html>
-
-
-
-<button onclick="startQRScan()">Scan QR Code</button>
-<div id="qr-reader" style="width:500px"></div>
-<button onclick="startQRScan()">Scan QR Code</button>
-<div id="qr-reader" style="width:500px"></div>
