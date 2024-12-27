@@ -834,7 +834,6 @@ function showNotePopup(index) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
   const note = notes[index];
 
-  // Display title and content
   document.getElementById('noteTitle').textContent = note.title || "Untitled";
   document.getElementById('noteContent').innerHTML = note.text || "No content available";
 
@@ -847,11 +846,13 @@ function showNotePopup(index) {
     mediaPreview.style.display = 'none';
   }
 
-  currentEditingNote = index; // Track the current note being edited
-  document.getElementById('notePopup').style.display = 'flex'; // Show popup
+  currentEditingNote = index;
+  document.getElementById('notePopup').style.display = 'flex';
 }
 
 // Load notes
+<ul id="notesList"></ul>
+
 function loadNotes() {
   const notesList = document.getElementById('notesList');
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
@@ -861,10 +862,46 @@ function loadNotes() {
       <li>
         <h4>${note.title}</h4>
         <button onclick="showNotePopup(${index})">View</button>
+        <button onclick="shareNote(${index})">Share</button>
       </li>`).join('');
 }
+//Share Notes
+function shareNote(index) {
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  const note = notes[index];
 
+  const shareData = {
+    title: note.title,
+    text: note.text,
+    url: window.location.href
+  };
 
+  if (navigator.share) {
+    navigator.share(shareData).then(() => {
+      console.log('Note shared successfully');
+    }).catch((error) => {
+      console.error('Error sharing note:', error);
+    });
+  } else {
+    alert('Sharing is not supported on this browser.');
+  }
+}
+//Receive Notes
+function receiveNote() {
+  // This function should be called when the app detects a shared note
+  const sharedNote = {
+    title: "Shared Note Title",
+    text: "Shared note content",
+    media: null, // Handle media if shared
+    category: "Shared"
+  };
+
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  notes.push(sharedNote);
+  localStorage.setItem('notes', JSON.stringify(notes));
+  loadNotes(); // Reload notes to display the new shared note
+}
+  
 
 //Mini Browser
 
@@ -1078,7 +1115,6 @@ function navigateNote(direction) {
   </script>
  </body>
 </html>
-
 
 
 
