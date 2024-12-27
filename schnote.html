@@ -784,7 +784,14 @@ function renderSchedule(schedule) {
 }
 
 
-
+// Initialize the page
+document.addEventListener('DOMContentLoaded', () => {
+  loadCalendar();
+  loadNotes();
+  loadSavedSchedule();
+  loadCategories(); // Add this line to load categories on page load
+  loadManualSchedules(); // Add this line to load manual schedules on page load
+});
     
 // Save note
 function saveNote() {
