@@ -772,20 +772,7 @@ function loadSavedSchedule() {
     renderSchedule(savedSchedules[title]);
   });
 }
-//Render Schedule
-    function renderSchedule(schedule) {
-  const predefinedScheduleBody = document.getElementById('predefinedScheduleBody');
-  predefinedScheduleBody.innerHTML = schedule.map(row => `
-    <tr>
-      <td>${row.time}</td>
-      <td>${row.Mon || ''}</td>
-      <td>${row.Tues || ''}</td>
-      <td>${row.Wed || ''}</td>
-      <td>${row.Thur || ''}</td>
-      <td>${row.Fri || ''}</td>
-    </tr>
-  `).join('');
-}
+
 
     
 // Save note
