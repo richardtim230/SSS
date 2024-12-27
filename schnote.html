@@ -779,7 +779,7 @@ function savePredefinedToLocalStorage() {
 // Load schedule from local storage
     document.addEventListener("DOMContentLoaded", async () => {
   try {
-    await loadSavedSchedule();
+    await loadSavedSchedules();
     console.log('Saved schedule loaded successfully');
   } catch (error) {
     console.error('Error in loadSavedSchedule:', error);
