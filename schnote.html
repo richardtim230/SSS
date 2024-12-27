@@ -1029,13 +1029,12 @@ function navigateNote(direction) {
 
 
 
-// Initialize the page
-document.addEventListener('DOMContentLoaded', () => {
-  loadCalendar();
-  loadNotes();
+document.addEventListener("DOMContentLoaded", () => {
+  loadManualSchedules();
   loadSavedSchedule();
-  loadCategories(); // Add this line to load categories on page load
-  loadManualSchedules(); // Add this line to load manual schedules on page load
+  loadCategories();
+  loadNotes(); // Ensure notes are also loaded
+  loadCalendar();
 });
   </script>
  </body>
