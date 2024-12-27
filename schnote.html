@@ -729,6 +729,12 @@ function savePredefinedToLocalStorage() {
   }
 
   const savedSchedules = JSON.parse(localStorage.getItem('savedSchedules')) || {};
+
+  if (savedSchedules[title]) {
+    alert('This schedule is already saved.');
+    return;
+  }
+
   savedSchedules[title] = schedule;
   localStorage.setItem('savedSchedules', JSON.stringify(savedSchedules));
   alert('Schedule saved to local storage!');
