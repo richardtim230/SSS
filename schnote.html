@@ -833,7 +833,8 @@ function saveNote() {
 function showNotePopup(index) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
   const note = notes[index];
-
+  
+  // Display title and content
   document.getElementById('noteTitle').textContent = note.title || "Untitled";
   document.getElementById('noteContent').innerHTML = note.text || "No content available";
 
@@ -851,8 +852,16 @@ function showNotePopup(index) {
 }
 
 // Load notes
-<ul id="notesList"></ul>
 
+    document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    await loadNotes();
+    console.log('Notes loaded successfully');
+  } catch (error) {
+    console.error('Error in loadNotes:', error);
+  }
+});
+    
 function loadNotes() {
   const notesList = document.getElementById('notesList');
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
@@ -986,28 +995,7 @@ function loadCalendar() {
   document.getElementById('calendarMessage').textContent = 'Make today count!';
 }
     
-// Load notes
 
-    document.addEventListener("DOMContentLoaded", async () => {
-  try {
-    await loadNotes();
-    console.log('Notes loaded successfully');
-  } catch (error) {
-    console.error('Error in loadNotes:', error);
-  }
-});
-
-function loadNotes() {
-  const notesList = document.getElementById('notesList');
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  notesList.innerHTML = notes
-    .filter(note => note.category === selectedCategory)
-    .map((note, index) => `
-      <li>
-        <h4>${note.title}</h4>
-        <button onclick="showNotePopup(${index})">View</button>
-      </li>`).join('');
-}
 
 // Save note
 function saveNote() {
@@ -1036,27 +1024,6 @@ function saveNote() {
   }
 }
 
-// Show note popup
-function showNotePopup(index) {
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  const note = notes[index];
-
-  // Display title and content
-  document.getElementById('noteTitle').textContent = note.title || "Untitled";
-  document.getElementById('noteContent').innerHTML = note.text || "No content available";
-
-  // Handle media preview
-  const mediaPreview = document.getElementById('noteMediaPreview');
-  if (note.media) {
-    mediaPreview.src = note.media;
-    mediaPreview.style.display = 'block';
-  } else {
-    mediaPreview.style.display = 'none';
-  }
-
-  currentEditingNote = index; // Track the current note being edited
-  document.getElementById('notePopup').style.display = 'flex'; // Show popup
-}
 
 // Edit note
 function editNote() {
