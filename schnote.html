@@ -915,8 +915,48 @@ function receiveNote() {
   localStorage.setItem('notes', JSON.stringify(notes));
   loadNotes(); // Reload notes to display the new shared note
 }
-  
+  // Generate QRCode
+function generateQRCode(index) {
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  const note = notes[index];
+  const qrCodeContainer = document.getElementById(`qrcode-${index}`);
+  qrCodeContainer.innerHTML = "";
+  QRCode.toCanvas(qrCodeContainer, JSON.stringify(note), function (error) {
+    if (error) console.error(error);
+    console.log('QR code generated successfully!');
+  });
+}
 
+// Scan
+
+function startQRScan() {
+  const html5QrCode = new Html5Qrcode("qr-reader");
+  html5QrCode.start(
+    { facingMode: "environment" },
+    {
+      fps: 10,
+      qrbox: 250
+    },
+    (decodedText, decodedResult) => {
+      const sharedNote = JSON.parse(decodedText);
+      saveReceivedNote(sharedNote);
+      html5QrCode.stop();
+    },
+    (errorMessage) => {
+      console.error(errorMessage);
+    }
+  ).catch((err) => {
+    console.error(err);
+  });
+}
+
+function saveReceivedNote(note) {
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  notes.push(note);
+  localStorage.setItem('notes', JSON.stringify(notes));
+  loadNotes();
+}
+    
 //Mini Browser
 
 const homepage = "https://www.wikipedia.org";
@@ -1083,46 +1123,7 @@ function navigateNote(direction) {
   showNotePopup(newIndex);
 }
     
-function generateQRCode(index) {
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  const note = notes[index];
-  const qrCodeContainer = document.getElementById(`qrcode-${index}`);
-  qrCodeContainer.innerHTML = "";
-  QRCode.toCanvas(qrCodeContainer, JSON.stringify(note), function (error) {
-    if (error) console.error(error);
-    console.log('QR code generated successfully!');
-  });
-}
 
-
-
-function startQRScan() {
-  const html5QrCode = new Html5Qrcode("qr-reader");
-  html5QrCode.start(
-    { facingMode: "environment" },
-    {
-      fps: 10,
-      qrbox: 250
-    },
-    (decodedText, decodedResult) => {
-      const sharedNote = JSON.parse(decodedText);
-      saveReceivedNote(sharedNote);
-      html5QrCode.stop();
-    },
-    (errorMessage) => {
-      console.error(errorMessage);
-    }
-  ).catch((err) => {
-    console.error(err);
-  });
-}
-
-function saveReceivedNote(note) {
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  notes.push(note);
-  localStorage.setItem('notes', JSON.stringify(notes));
-  loadNotes();
-}
 
     
   </script>
