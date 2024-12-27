@@ -779,16 +779,16 @@ function savePredefinedToLocalStorage() {
 // Load schedule from local storage
     document.addEventListener("DOMContentLoaded", async () => {
   try {
-    await loadSavedSchedules();
-    console.log('Saved schedule loaded successfully');
+    await loadSavedSchedule();
+    console.log('Saved schedules loaded successfully');
   } catch (error) {
     console.error('Error in loadSavedSchedule:', error);
   }
 });
-    
+
 function loadSavedSchedule() {
   const savedSchedules = JSON.parse(localStorage.getItem('savedSchedules')) || {};
-  const scheduleBody = document.getElementById('scheduleBody');
+  const scheduleBody = document.getElementById('predefinedScheduleBody');
   scheduleBody.innerHTML = '';
 
   Object.keys(savedSchedules).forEach(title => {
@@ -799,7 +799,6 @@ function loadSavedSchedule() {
     renderSchedule(savedSchedules[title]);
   });
 }
-
 
     
 // Save note
