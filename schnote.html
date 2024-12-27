@@ -760,20 +760,7 @@ function loadSavedSchedule() {
   });
 }
 
-// Render the schedule in the table
-function renderSchedule(schedule) {
-  const scheduleBody = document.getElementById('scheduleBody');
-  scheduleBody.innerHTML += schedule.map(row => `
-    <tr>
-      <td>${row.time}</td>
-      <td>${row.Mon || ''}</td>
-      <td>${row.Tues || ''}</td>
-      <td>${row.Wed || ''}</td>
-      <td>${row.Thur || ''}</td>
-      <td>${row.Fri || ''}</td>
-    </tr>
-  `).join('');
-}
+
     
 // Save note
 function saveNote() {
