@@ -562,41 +562,7 @@ quill.getModule('toolbar').addHandler('image', () => {
     categoriesDiv.appendChild(addCategoryButton);
   }
 
-  // New function to save manually added schedules to local storage
-  function saveManualSchedulesToLocalStorage() {
-    const manualSchedules = [];
-    document.querySelectorAll('#manualScheduleBody tr').forEach(row => {
-      const cells = row.querySelectorAll('td');
-      manualSchedules.push({
-        time: cells[0].textContent,
-        Mon: cells[1].textContent,
-        Tues: cells[2].textContent,
-        Wed: cells[3].textContent,
-        Thur: cells[4].textContent,
-        Fri: cells[5].textContent
-      });
-    });
-    localStorage.setItem('manualSchedules', JSON.stringify(manualSchedules));
-  }
 
-  // New function to load manually added schedules from local storage
-  function loadManualSchedules() {
-    const manualSchedules = JSON.parse(localStorage.getItem('manualSchedules')) || [];
-    const scheduleBody = document.getElementById('manualScheduleBody');
-    scheduleBody.innerHTML = '';
-    manualSchedules.forEach(schedule => {
-      const newRow = document.createElement('tr');
-      newRow.innerHTML = `
-        <td>${schedule.time}</td>
-        <td>${schedule.Mon || ''}</td>
-        <td>${schedule.Tues || ''}</td>
-        <td>${schedule.Wed || ''}</td>
-        <td>${schedule.Thur || ''}</td>
-        <td>${schedule.Fri || ''}</td>
-      `;
-      scheduleBody.appendChild(newRow);
-    });
-  }
  
 
 // Random weekly schedules for departments
@@ -742,7 +708,43 @@ function savePredefinedToLocalStorage() {
   localStorage.setItem('savedSchedules', JSON.stringify(savedSchedules));
   alert('Schedule saved to local storage!');
 }
+    
+  // New function to save manually added schedules to local storage
+  function saveManualSchedulesToLocalStorage() {
+    const manualSchedules = [];
+    document.querySelectorAll('#manualScheduleBody tr').forEach(row => {
+      const cells = row.querySelectorAll('td');
+      manualSchedules.push({
+        time: cells[0].textContent,
+        Mon: cells[1].textContent,
+        Tues: cells[2].textContent,
+        Wed: cells[3].textContent,
+        Thur: cells[4].textContent,
+        Fri: cells[5].textContent
+      });
+    });
+    localStorage.setItem('manualSchedules', JSON.stringify(manualSchedules));
+  }
 
+  // New function to load manually added schedules from local storage
+  function loadManualSchedules() {
+    const manualSchedules = JSON.parse(localStorage.getItem('manualSchedules')) || [];
+    const scheduleBody = document.getElementById('manualScheduleBody');
+    scheduleBody.innerHTML = '';
+    manualSchedules.forEach(schedule => {
+      const newRow = document.createElement('tr');
+      newRow.innerHTML = `
+        <td>${schedule.time}</td>
+        <td>${schedule.Mon || ''}</td>
+        <td>${schedule.Tues || ''}</td>
+        <td>${schedule.Wed || ''}</td>
+        <td>${schedule.Thur || ''}</td>
+        <td>${schedule.Fri || ''}</td>
+      `;
+      scheduleBody.appendChild(newRow);
+    });
+  }
+    
 // Load schedule from local storage
 function loadSavedSchedule() {
   const savedSchedules = JSON.parse(localStorage.getItem('savedSchedules')) || {};
