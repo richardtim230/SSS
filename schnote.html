@@ -864,159 +864,90 @@ function showNotePopup(index) {
   }
 });
     
-
-function loadNotes(selectedCategory = null) {
+function loadNotes() {
   const notesList = document.getElementById('notesList');
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
   notesList.innerHTML = notes
-    .filter(note => !selectedCategory || note.category === selectedCategory)
+    .filter(note => note.category === selectedCategory)
     .map((note, index) => `
       <li>
         <h4>${note.title}</h4>
         <button onclick="showNotePopup(${index})">View</button>
-        <button onclick="generateQRCode(${index})">Generate QR Code</button>
-        <div id="qrcode-${index}"></div>
-        <button onclick="startQRScan(${index})">Scan QR Code</button>
-        <div id="qr-reader-${index}" style="width:500px"></div>
-        <button onclick="shareNote(${index})">Share Note</button>
-      </li>
-    `).join('');
+       <button onclick="generateQRCode(${index})">Generate QR Code</button>
+<div id="qrcode-${index}"></div>
+<button onclick="startQRScan()">Scan QR Code</button>
+<div id="qr-reader" style="width:500px"></div>
+      </li>`).join('');
 }
-
-// Show Note Popup
-function showNotePopup(index) {
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  const note = notes[index];
-  if (!note) {
-    console.error('Note not found at index:', index);
-    return;
-  }
-  alert(`Title: ${note.title}\nText: ${note.text}`);
-}
-
-// Generate QR Code for a Note
-function generateQRCode(index) {
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  const note = notes[index];
-  const qrCodeContainer = document.getElementById(`qrcode-${index}`);
-  
-  if (!note) {
-    console.error('Note not found at index:', index);
-    return;
-  }
-
-  qrCodeContainer.innerHTML = ""; // Clear any existing QR Code
-  QRCode.toCanvas(qrCodeContainer, JSON.stringify(note), (error) => {
-    if (error) {
-      console.error('Error generating QR code:', error);
-    } else {
-      console.log('QR code generated successfully!');
-    }
-  });
-}
-
-// Start QR Code Scanning
-function startQRScan(index) {
-  const qrReaderId = `qr-reader-${index}`;
-  const qrReaderElement = document.getElementById(qrReaderId);
-  
-  if (!qrReaderElement) {
-    console.error('QR Reader element not found:', qrReaderId);
-    return;
-  }
-
-  const html5QrCode = new Html5Qrcode(qrReaderId);
-  html5QrCode.start(
-    { facingMode: "environment" },
-    { fps: 10, qrbox: 250 },
-    (decodedText) => {
-      console.log('QR Code scanned successfully:', decodedText);
-      try {
-        const sharedNote = JSON.parse(decodedText);
-        saveReceivedNote(sharedNote);
-        html5QrCode.stop();
-      } catch (error) {
-        console.error('Failed to parse QR Code data:', error);
-      }
-    },
-    (errorMessage) => {
-      console.warn('QR Code scanning failed:', errorMessage);
-    }
-  ).catch((err) => {
-    console.error('Unable to start QR Code scanning:', err);
-  });
-}
-
-// Save Received Note
-function saveReceivedNote(note) {
-  if (!note || !note.title) {
-    console.error('Invalid note data received');
-    return;
-  }
-
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  notes.push(note);
-  localStorage.setItem('notes', JSON.stringify(notes));
-  console.log('Note saved:', note);
-  loadNotes(); // Reload notes to display the new shared note
-}
-
-// Share Note
+//Share Notes
 function shareNote(index) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
   const note = notes[index];
-  
-  if (!note) {
-    console.error('Note not found at index:', index);
-    return;
-  }
 
   const shareData = {
     title: note.title,
-    text: note.text || '',
+    text: note.text,
     url: window.location.href
   };
 
   if (navigator.share) {
-    navigator.share(shareData)
-      .then(() => console.log('Note shared successfully'))
-      .catch((error) => console.error('Error sharing note:', error));
+    navigator.share(shareData).then(() => {
+      console.log('Note shared successfully');
+    }).catch((error) => {
+      console.error('Error sharing note:', error);
+    });
   } else {
     alert('Sharing is not supported on this browser.');
   }
 }
-
-// Receive Note (Simulated for Testing)
+//Receive Notes
 function receiveNote() {
+  // This function should be called when the app detects a shared note
   const sharedNote = {
     title: "Shared Note Title",
     text: "Shared note content",
-    media: null,
+    media: null, // Handle media if shared
     category: "Shared"
   };
 
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
   notes.push(sharedNote);
   localStorage.setItem('notes', JSON.stringify(notes));
-  console.log('Shared note received:', sharedNote);
-  loadNotes(); // Reload to display new note
+  loadNotes(); // Reload notes to display the new shared note
+}
+    
+function generateQRCode(index) {
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  const note = notes[index];
+  const qrCodeContainer = document.getElementById(`qrcode-${index}`);
+  qrCodeContainer.innerHTML = "";
+  QRCode.toCanvas(qrCodeContainer, JSON.stringify(note), function (error) {
+    if (error) console.error('Error generating QR code:', error);
+    else console.log('QR code generated successfully!');
+  });
 }
 
-// Initialize Default Notes for Testing
-function initializeNotes() {
-  if (!localStorage.getItem('notes')) {
-    const defaultNotes = [
-      { title: "Note 1", text: "This is the first note", category: "General" },
-      { title: "Note 2", text: "This is the second note", category: "Work" }
-    ];
-    localStorage.setItem('notes', JSON.stringify(defaultNotes));
-  }
-  loadNotes();
+function startQRScan() {
+  const html5QrCode = new Html5Qrcode("qr-reader");
+  html5QrCode.start(
+    { facingMode: "environment" },
+    {
+      fps: 10,
+      qrbox: 250
+    },
+    (decodedText, decodedResult) => {
+      console.log('QR Code scanned successfully:', decodedText);
+      const sharedNote = JSON.parse(decodedText);
+      saveReceivedNote(sharedNote);
+      html5QrCode.stop();
+    },
+    (errorMessage) => {
+      console.error('QR Code scanning failed:', errorMessage);
+    }
+  ).catch((err) => {
+    console.error('Unable to start QR Code scanning:', err);
+  });
 }
-
-// Start the app
-initializeNotes();
-
     
 //Mini Browser
 
