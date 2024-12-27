@@ -524,27 +524,6 @@ quill.getModule('toolbar').addHandler('image', () => {
 });
 
 
-  const defaultCategories = ["Personal", "Academic", "Miscellaneous"];
-  let selectedCategory = "Personal";
-
-  function showCategory(category) {
-    selectedCategory = category;
-    loadNotes(); // Function to load notes based on the selected category
-  }
-
-  function addCategory() {
-    const newCategory = prompt("Enter new category name:");
-    if (newCategory && !defaultCategories.includes(newCategory)) {
-      defaultCategories.push(newCategory);
-      // Update the categories section with the new category button
-      const categoriesDiv = document.getElementById('categories');
-      const newButton = document.createElement('button');
-      newButton.textContent = newCategory;
-      newButton.onclick = () => showCategory(newCategory);
-      categoriesDiv.insertBefore(newButton, categoriesDiv.lastElementChild);
-    }
-  }
-
   const defaultCategories = JSON.parse(localStorage.getItem('categories')) || ["Personal", "Academic", "Miscellaneous"];
   let selectedCategory = "Personal";
 
@@ -618,58 +597,7 @@ quill.getModule('toolbar').addHandler('image', () => {
       scheduleBody.appendChild(newRow);
     });
   }
-
-  // Modified addSchedule function to add rows to the manual schedule table and save to local storage
-  function addSchedule() {
-    const time = document.getElementById('timeInput').value.trim();
-    const day = document.getElementById('dayInput').value.trim();
-    const subject = document.getElementById('subjectInput').value.trim();
-
-    if (!time || !day || !subject) {
-      alert('Please fill in all fields to add a schedule.');
-      return;
-    }
-
-    const scheduleBody = document.getElementById('manualScheduleBody');
-    const newRow = document.createElement('tr');
-    newRow.innerHTML = `
-      <td>${time}</td>
-      <td>${day === 'Monday' ? subject : ''}</td>
-      <td>${day === 'Tuesday' ? subject : ''}</td>
-      <td>${day === 'Wednesday' ? subject : ''}</td>
-      <td>${day === 'Thursday' ? subject : ''}</td>
-      <td>${day === 'Friday' ? subject : ''}</td>
-    `;
-    scheduleBody.appendChild(newRow);
-
-    // Save to local storage
-    saveManualSchedulesToLocalStorage();
-
-    // Clear inputs
-    document.getElementById('timeInput').value = '';
-    document.getElementById('dayInput').value = '';
-    document.getElementById('subjectInput').value = '';
-  }
-
-  function switchScheduleTables() {
-    const predefinedScheduleWrapper = document.getElementById('predefinedScheduleWrapper');
-    const manualScheduleWrapper = document.getElementById('manualScheduleWrapper');
-    if (predefinedScheduleWrapper.classList.contains('hidden')) {
-      predefinedScheduleWrapper.classList.remove('hidden');
-      manualScheduleWrapper.classList.add('hidden');
-    } else {
-      predefinedScheduleWrapper.classList.add('hidden');
-      manualScheduleWrapper.classList.remove('hidden');
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    loadCalendar();
-    loadNotes();
-    loadSavedSchedule();
-    loadCategories();
-    loadManualSchedules(); // Load manually added schedules on page load
-  });
+ 
 
 // Random weekly schedules for departments
 const departmentSchedules = {
@@ -749,34 +677,49 @@ function loadDepartmentSchedule() {
   renderSchedule(schedule);
 }
 
-// Add schedule to the table
-function addSchedule() {
-  const time = document.getElementById('timeInput').value.trim();
-  const day = document.getElementById('dayInput').value.trim();
-  const subject = document.getElementById('subjectInput').value.trim();
+// Modified addSchedule function to add rows to the manual schedule table and save to local storage
+  function addSchedule() {
+    const time = document.getElementById('timeInput').value.trim();
+    const day = document.getElementById('dayInput').value.trim();
+    const subject = document.getElementById('subjectInput').value.trim();
 
-  if (!time || !day || !subject) {
-    alert('Please fill in all fields to add a schedule.');
-    return;
+    if (!time || !day || !subject) {
+      alert('Please fill in all fields to add a schedule.');
+      return;
+    }
+
+    const scheduleBody = document.getElementById('manualScheduleBody');
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+      <td>${time}</td>
+      <td>${day === 'Monday' ? subject : ''}</td>
+      <td>${day === 'Tuesday' ? subject : ''}</td>
+      <td>${day === 'Wednesday' ? subject : ''}</td>
+      <td>${day === 'Thursday' ? subject : ''}</td>
+      <td>${day === 'Friday' ? subject : ''}</td>
+    `;
+    scheduleBody.appendChild(newRow);
+
+    // Save to local storage
+    saveManualSchedulesToLocalStorage();
+
+    // Clear inputs
+    document.getElementById('timeInput').value = '';
+    document.getElementById('dayInput').value = '';
+    document.getElementById('subjectInput').value = '';
   }
 
-  const scheduleBody = document.getElementById('scheduleBody');
-  const newRow = document.createElement('tr');
-  newRow.innerHTML = `
-    <td>${time}</td>
-    <td>${day === 'Monday' ? subject : ''}</td>
-    <td>${day === 'Tuesday' ? subject : ''}</td>
-    <td>${day === 'Wednesday' ? subject : ''}</td>
-    <td>${day === 'Thursday' ? subject : ''}</td>
-    <td>${day === 'Friday' ? subject : ''}</td>
-  `;
-  scheduleBody.appendChild(newRow);
-
-  // Clear inputs
-  document.getElementById('timeInput').value = '';
-  document.getElementById('dayInput').value = '';
-  document.getElementById('subjectInput').value = '';
-}
+    function switchScheduleTables() {
+    const predefinedScheduleWrapper = document.getElementById('predefinedScheduleWrapper');
+    const manualScheduleWrapper = document.getElementById('manualScheduleWrapper');
+    if (predefinedScheduleWrapper.classList.contains('hidden')) {
+      predefinedScheduleWrapper.classList.remove('hidden');
+      manualScheduleWrapper.classList.add('hidden');
+    } else {
+      predefinedScheduleWrapper.classList.add('hidden');
+      manualScheduleWrapper.classList.remove('hidden');
+    }
+  }
 
 // Save schedule to local storage with title
 function savePredefinedToLocalStorage() {
@@ -1094,10 +1037,12 @@ function navigateNote(direction) {
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', () => {
-  loadCalendar();
-  loadNotes();
-  loadSavedSchedule();
-});
+    loadCalendar();
+    loadNotes();
+    loadSavedSchedule();
+    loadCategories();
+    loadManualSchedules(); // Load manually added schedules on page load
+  });
 
   
   </script>
