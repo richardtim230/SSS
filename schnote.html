@@ -523,6 +523,15 @@ quill.getModule('toolbar').addHandler('image', () => {
   };
 });
 
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    await loadCategories();
+    console.log('Categories loaded successfully');
+  } catch (error) {
+    console.error('Error in loadCategories:', error);
+  }
+});
+
 
   const defaultCategories = JSON.parse(localStorage.getItem('categories')) || ["Personal", "Academic", "Miscellaneous"];
   let selectedCategory = "Personal";
@@ -740,6 +749,15 @@ function savePredefinedToLocalStorage() {
   }
 
   // New function to load manually added schedules from local storage
+    document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    await loadManualSchedules();
+    console.log('Manual schedules loaded successfully');
+  } catch (error) {
+    console.error('Error in loadManualSchedules:', error);
+  }
+});
+
   function loadManualSchedules() {
     const manualSchedules = JSON.parse(localStorage.getItem('manualSchedules')) || [];
     const scheduleBody = document.getElementById('manualScheduleBody');
@@ -759,6 +777,15 @@ function savePredefinedToLocalStorage() {
   }
     
 // Load schedule from local storage
+    document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    await loadSavedSchedule();
+    console.log('Saved schedule loaded successfully');
+  } catch (error) {
+    console.error('Error in loadSavedSchedule:', error);
+  }
+});
+    
 function loadSavedSchedule() {
   const savedSchedules = JSON.parse(localStorage.getItem('savedSchedules')) || {};
   const scheduleBody = document.getElementById('scheduleBody');
@@ -899,6 +926,16 @@ function goHome() {
 }
     
 // Calendar functions
+
+    document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    await loadCalendar();
+    console.log('Calendar loaded successfully');
+  } catch (error) {
+    console.error('Error in loadCalendar:', error);
+  }
+});
+
 function loadCalendar() {
   const calendar = document.getElementById('calendar');
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -913,6 +950,16 @@ function loadCalendar() {
 }
     
 // Load notes
+
+    document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    await loadNotes();
+    console.log('Notes loaded successfully');
+  } catch (error) {
+    console.error('Error in loadNotes:', error);
+  }
+});
+
 function loadNotes() {
   const notesList = document.getElementById('notesList');
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
@@ -1027,19 +1074,11 @@ function navigateNote(direction) {
   showNotePopup(newIndex);
 }
 
-    document.addEventListener("DOMContentLoaded", async () => {
-  try {
-    await loadManualSchedules();
-    await loadSavedSchedules();
-    await loadCategories();
-    await loadNotes();
-    await loadCalendar(); // Ensure this comes last if it depends on others
-  } catch (error) {
-    console.error("Error in initialization:", error);
-  }
-});
-
-
+    
   </script>
  </body>
 </html>
+
+
+
+
