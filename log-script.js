@@ -258,6 +258,36 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('userName').innerText = user.fullName;
 
 });
+// Update User Profile
+function updateProfile() {
+  const user = JSON.parse(localStorage.getItem('user')) || {};
+
+  user.fullName = document.getElementById('profileFullNameInput').value || user.fullName;
+  user.email = document.getElementById('profileEmailInput').value || user.email;
+  user.phone = document.getElementById('profilePhoneInput').value || user.phone;
+  user.department = document.getElementById('profileDepartmentInput').value || user.department;
+  user.level = document.getElementById('profileLevelInput').value || user.level;
+  const newPassword = document.getElementById('profilePasswordInput').value;
+  if (newPassword) {
+    user.password = newPassword;
+  }
+
+  const profilePictureInput = document.getElementById('profilePictureInput').files[0];
+  if (profilePictureInput) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      user.profilePicture = reader.result;
+      localStorage.setItem('user', JSON.stringify(user));
+      alert('Profile updated successfully!');
+      displayUserInfo();
+    };
+    reader.readAsDataURL(profilePictureInput);
+  } else {
+    localStorage.setItem('user', JSON.stringify(user));
+    alert('Profile updated successfully!');
+    displayUserInfo();
+  }
+}
 
 // Display User Information on Profile Page
 function displayUserInfo() {
@@ -268,6 +298,19 @@ function displayUserInfo() {
   document.getElementById('profilePhone').innerText = user.phone || 'Not provided';
   document.getElementById('profileDepartment').innerText = user.department || 'Not provided';
   document.getElementById('profileLevel').innerText = user.level || 'Not provided';
+  
+  document.getElementById('profileFullNameInput').value = user.fullName || '';
+  document.getElementById('profileEmailInput').value = user.email || '';
+  document.getElementById('profilePhoneInput').value = user.phone || '';
+  document.getElementById('profileDepartmentInput').value = user.department || '';
+  document.getElementById('profileLevelInput').value = user.level || '';
+
+  if (user.profilePicture) {
+    document.getElementById('profilePictureDisplay').src = user.profilePicture;
+    document.getElementById('profilePictureDisplay').style.display = 'block';
+  } else {
+    document.getElementById('profilePictureDisplay').style.display = 'none';
+  }
 }
 
 // Load User Information on Page Load
@@ -275,6 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
   displayUserInfo();
   displayCourses();
 });
+
 
 document.getElementById('contactAdminBtn').addEventListener('click', () => {
   window.location.href = 'https://wa.me/2349155127634';
