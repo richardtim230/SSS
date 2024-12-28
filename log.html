@@ -191,20 +191,49 @@
   <p>Update your personal information and settings here.</p>
   
   <h3>User Information</h3>
-  <p><strong>Full Name:</strong> <span id="profileFullName"></span></p>
-  <p><strong>Email:</strong> <span id="profileEmail"></span></p>
-  <p><strong>Phone:</strong> <span id="profilePhone"></span></p>
-  <p><strong>Department:</strong> <span id="profileDepartment"></span></p>
-  <p><strong>Level:</strong> <span id="profileLevel"></span></p>
+  <form id="profileForm">
+    <label>
+      <strong>Full Name:</strong>
+      <input type="text" id="profileFullNameInput" placeholder="Enter full name">
+    </label>
+    <label>
+      <strong>Email:</strong>
+      <input type="email" id="profileEmailInput" placeholder="Enter email">
+    </label>
+    <label>
+      <strong>Phone:</strong>
+      <input type="tel" id="profilePhoneInput" placeholder="Enter phone number">
+    </label>
+    <label>
+      <strong>Department:</strong>
+      <input type="text" id="profileDepartmentInput" placeholder="Enter department">
+    </label>
+    <label>
+      <strong>Level:</strong>
+      <input type="text" id="profileLevelInput" placeholder="Enter level">
+    </label>
+    <label>
+      <strong>Password:</strong>
+      <input type="password" id="profilePasswordInput" placeholder="Enter new password">
+    </label>
+    <label>
+      <strong>Profile Picture:</strong>
+      <input type="file" id="profilePictureInput" accept="image/*">
+    </label>
+    <button type="button" onclick="updateProfile()">Update Profile</button>
+  </form>
+
+  <img id="profilePictureDisplay" alt="Profile Picture" style="max-width: 100px; display: none;">
 
   <div class="section-navigation">
     <button onclick="navigateToSection('dashboard')">Go to Dashboard</button>
     <button onclick="navigateToSection('courses')">Go to Courses</button>
     <button onclick="navigateToSection('support')">Go to Support</button>
-<button onclick="navigateToSection('schnote.html')">Go to Main App<button>
+    <button onclick="navigateToSection('schnote.html')">Go to Main App</button>
+  </div>
 
   <button class="homepage-btn" onclick="navigateToSection('home')">🏠 Back to Home</button>
-      </section>
+</section>
     
     <section id="courses">
   <h2>📚 Courses</h2>
