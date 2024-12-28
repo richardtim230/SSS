@@ -813,6 +813,12 @@ function loadSavedSchedule() {
 // Save note
 function saveNote() {
   const title = prompt("Enter note title:");
+
+  if (!title.trim()) {
+    alert("Please enter a title for the note.");
+    return;
+  }
+
   const text = quill.root.innerHTML.trim(); // Quill editor content
   const mediaInput = document.getElementById('noteMedia').files[0];
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
