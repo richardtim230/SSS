@@ -231,7 +231,7 @@ main {
   width: 90%;
 
   animation: fadeIn 0.8s ease-in-out;
-
+height: 95%
 }
 
 .welcome-container h1 {
@@ -422,7 +422,7 @@ section p {
 
 section {
 
-  height: 100vh; /* Fit to screen height */
+  height: 93%; /* Fit to screen height */
 
   overflow-y: auto; /* Enable vertical scrolling if content exceeds */
 
@@ -482,7 +482,7 @@ section p {
 
   flex-wrap: wrap;
 
-  gap: 15px;
+  gap: 10px;
 
   margin-top: 20px;
 
