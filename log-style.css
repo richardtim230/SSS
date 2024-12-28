@@ -8,7 +8,7 @@ body, html {
 
   font-family: 'Poppins', sans-serif;
 
-  overflow: auto;
+  overflow: hidden;
 
   background: linear-gradient(to bottom, #1e3c72, #2a5298);
 
@@ -431,6 +431,7 @@ section {
   overflow-y: auto; /* Enable vertical scrolling if content exceeds */
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   margin-bottom: 30px;
+  height: 80vh;
 }
 /* Header Spacing */
 
@@ -644,9 +645,6 @@ section p {
   padding: 20px;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
   font-family: 'Arial', sans-serif;
- overflow-y: auto;
-  height: 90%;
-
 }
 
 /* Profile picture styling */
