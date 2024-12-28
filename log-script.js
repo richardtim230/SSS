@@ -184,6 +184,7 @@ function closeWelcomePage() {
 
 function navigateToSection(section) {
   document.querySelector('main').style.display = 'block';
+  document.getElementById('welcomePage').classList.remove('active'); // Ensure welcome page is hidden
 
   // Check if section is likely a URL (contains a period for relative URLs or starts with http/https for absolute URLs)
   if (section.includes('.') || section.startsWith('http://') || section.startsWith('https://')) {
