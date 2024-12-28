@@ -185,13 +185,21 @@
       <button class="homepage-btn" onclick="navigateToSection('schnote.html')">🏠 Back to Home</button>
 
     </section>
-
 <section id="profile">
   <h2>👤 Profile</h2>
   <p>Update your personal information and settings here.</p>
   
   <h3>User Information</h3>
-  <form id="profileForm">
+  <p><strong>Full Name:</strong> <span id="profileFullName"></span></p>
+  <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+  <p><strong>Phone:</strong> <span id="profilePhone"></span></p>
+  <p><strong>Department:</strong> <span id="profileDepartment"></span></p>
+  <p><strong>Level:</strong> <span id="profileLevel"></span></p>
+  <img id="profilePictureDisplay" alt="Profile Picture" style="max-width: 100px; display: none;">
+
+  <button onclick="showUpdateProfileForm()">Update Profile</button>
+
+  <form id="profileForm" style="display: none;">
     <label>
       <strong>Full Name:</strong>
       <input type="text" id="profileFullNameInput" placeholder="Enter full name">
@@ -222,8 +230,6 @@
     </label>
     <button type="button" onclick="updateProfile()">Update Profile</button>
   </form>
-
-  <img id="profilePictureDisplay" alt="Profile Picture" style="max-width: 100px; display: none;">
 
   <div class="section-navigation">
     <button onclick="navigateToSection('dashboard')">Go to Dashboard</button>
