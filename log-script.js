@@ -297,3 +297,24 @@ document.addEventListener('DOMContentLoaded', () => {
 document.getElementById('contactAdminBtn').addEventListener('click', () => {
   window.location.href = 'https://wa.me/2349155127634';
 });
+
+
+// Update Profile
+function updateProfile() {
+  const user = JSON.parse(localStorage.getItem('user')) || {};
+
+  user.fullName = document.getElementById('profileFullNameInput').value;
+  user.email = document.getElementById('profileEmailInput').value;
+  user.phone = document.getElementById('profilePhoneInput').value;
+  user.department = document.getElementById('profileDepartmentInput').value;
+  user.level = document.getElementById('profileLevelInput').value;
+  user.password = document.getElementById('profilePasswordInput').value;
+
+  localStorage.setItem('user', JSON.stringify(user));
+
+  alert('Profile updated successfully!');
+  displayUserInfo(); // Refresh displayed user info
+}
+
+// Attach updateProfile function to the update button
+document.getElementById('profileForm').querySelector('button[type="button"]').addEventListener('click', updateProfile);
