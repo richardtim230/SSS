@@ -418,28 +418,20 @@ section p {
 
 }
 
+
+
 /* Section Styling */
-
 section {
-
-  height: 93%; /* Fit to screen height */
-
-  overflow-y: auto; /* Enable vertical scrolling if content exceeds */
-
-  padding: 30px 20px;
-
-  box-sizing: border-box;
-
-  margin-bottom: 30px;
-
-  background: linear-gradient(to bottom, #ffffff, #f4f6f9);
-
+  padding: 30px;
+  margin: 20px auto;
+  max-width: 800px;
   border-radius: 10px;
-
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
+  background: #f8f9fa;
+  min-height: 100vh; /* Ensure section takes up full viewport height */
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
 }
-
 /* Header Spacing */
 
 section h2 {
@@ -653,6 +645,7 @@ section p {
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
   font-family: 'Arial', sans-serif;
   overflow-y: auto;
+  height: 90%;
 }
 
 /* Profile picture styling */
