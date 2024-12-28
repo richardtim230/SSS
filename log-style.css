@@ -431,7 +431,7 @@ section {
   overflow-y: auto; /* Enable vertical scrolling if content exceeds */
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   margin-bottom: 30px;
-  height: 80vh;
+  height: 70vh;
 }
 /* Header Spacing */
 
@@ -645,6 +645,7 @@ section p {
   padding: 20px;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
   font-family: 'Arial', sans-serif;
+  height: 90%;
 }
 
 /* Profile picture styling */
@@ -669,13 +670,13 @@ section p {
 #profile p.description {
   text-align: center;
   color: #777;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 /* User information */
 #profile .user-info {
-  text-align: center;
-  margin-bottom: 20px;
+  text-align: left;
+  margin-bottom: 10px;
 }
 
 #profile .user-info p {
