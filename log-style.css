@@ -641,26 +641,62 @@ section p {
   border-radius: 5px;
   }
 /* Profile Section Styling */
-#profile h3 {
-  margin-top: 20px;
-  font-size: 1.5rem;
+#profile {
+  background: linear-gradient(to bottom right, #ff7e5f, #feb47b);
+  padding: 30px;
+  margin: 20px auto;
+  max-width: 800px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
-  color: #333;
-  margin-bottom: 10px;
 }
 
-#profile p {
-  font-size: 1rem;
-  color: #555;
-  line-height: 1.6;
-  margin-bottom: 10px;
-  text-align: left;
+#profile h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #fff;
 }
 
-#profile span {
-  color: #333;
-  font-weight: bold;
-  }
+#profileForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#profileForm label {
+  width: 100%;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+#profileForm input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+#profileForm button {
+  background: #4facfe;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#profileForm button:hover {
+  background: #00f2fe;
+}
+
+#profilePictureDisplay {
+  max-width: 150px;
+  border-radius: 50%;
+  margin-top: 20px;
+  border: 5px solid #fff;
+}
 #contactAdminBtn {
   background: #25d366;
   color: white;
