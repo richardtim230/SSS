@@ -258,35 +258,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('userName').innerText = user.fullName;
 
 });
-// Update User Profile
-function updateProfile() {
-  const user = JSON.parse(localStorage.getItem('user')) || {};
-
-  user.fullName = document.getElementById('profileFullNameInput').value || user.fullName;
-  user.email = document.getElementById('profileEmailInput').value || user.email;
-  user.phone = document.getElementById('profilePhoneInput').value || user.phone;
-  user.department = document.getElementById('profileDepartmentInput').value || user.department;
-  user.level = document.getElementById('profileLevelInput').value || user.level;
-  const newPassword = document.getElementById('profilePasswordInput').value;
-  if (newPassword) {
-    user.password = newPassword;
-  }
-
-  const profilePictureInput = document.getElementById('profilePictureInput').files[0];
-  if (profilePictureInput) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      user.profilePicture = reader.result;
-      localStorage.setItem('user', JSON.stringify(user));
-      alert('Profile updated successfully!');
-      displayUserInfo();
-    };
-    reader.readAsDataURL(profilePictureInput);
-  } else {
-    localStorage.setItem('user', JSON.stringify(user));
-    alert('Profile updated successfully!');
-    displayUserInfo();
-  }
+// Show Update Profile Form
+function showUpdateProfileForm() {
+  document.getElementById('profileForm').style.display = 'block';
 }
 
 // Display User Information on Profile Page
