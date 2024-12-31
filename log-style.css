@@ -824,14 +824,14 @@ section p {
 }
 
 .tour-image {
-  width: 85%;
-  height: 60%;
+  width: 60%;
+  height: 50%;
   margin-bottom: 20px;
 }
 
 .tour-image img {
-  width: 100%;
-  height: 100%;
+  width: 60%;
+  height: 50%;
   object-fit: cover;
   border-radius: 25px;
 }
@@ -866,28 +866,28 @@ section p {
   transition: background 0.3s ease;
 }
 
-#prev-btn {
+#prevs-btn {
   background: #ccc;
 }
 
-#prev-btn:hover {
+#prevs-btn:hover {
   background: #bbb;
 }
 
-#next-btn {
+#nexts-btn {
   background: #4caf50;
   color: #fff;
 }
 
-#next-btn:hover {
+#nexts-btn:hover {
   background: #388e3c;
 }
 
-#close-btn {
+#closes-btn {
   background: #f44336;
   color: #fff;
 }
 
-#close-btn:hover {
+#closes-btn:hover {
   background: #d32f2f;
 }
