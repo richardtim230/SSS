@@ -6,6 +6,90 @@ function debounce(func, delay) {
     timeout = setTimeout(() => func(...args), delay);
   };
 }
+// Tour Data
+const tourSteps = [
+  {
+    title: "Welcome to Students Support System",
+    description: "Get started with our intuitive dashboard and tools.",
+    image: "logo.png"
+  },
+  {
+    title: "CLASS SCHEDULES AND NOTE MAKING",
+    description: "Manage your class schedules, personal reading timetable and taking of notes. Also contains inbuilt browser for browsing lecture materials.",
+    image: "classsch.jpg"
+  },
+  {
+    title: "Academic Archives",
+    description: "Access and manage your school course materials in a simplified and comprehensive format. Each lecture topics contains quick quizzes for instant testing of knowledge",
+    image: "arch.jpg"
+  },
+  {
+    title: "PRACTICE QUESTIONS AND ANSWERS",
+    description: "Access Unlimited Past Questions and preview answers with detailed explanations.",
+    image: "practice.jpg"
+  },
+  {
+    title: "Online Games",
+    description: "You don't have to feel bored as a result of too much reading!📖, take a break by playing our online games which are fun and educative!.",
+    image: "onlineg.jpg"
+  },
+  {
+    title: "School Portal",
+    description: "Access and manage your school E-portal here! You don't have to go away from the 'Students Support System'! .",
+    image: "schepo.jpg"
+  },
+  {
+    title: "GPA AND CGPA CALCULATOR",
+    description: "Get assistance with instance calculation of your CGPA! It's completely free and private.",
+    image: "cgp.jpg"
+  }
+];
+
+let currentStep = 0;
+
+// DOM Elements
+const tourTitle = document.getElementById('tour-title');
+const tourDescription = document.getElementById('tour-description');
+const tourImage = document.getElementById('tour-image');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+const closeBtn = document.getElementById('close-btn');
+const overlay = document.getElementById('tour-overlay');
+
+// Initialize Tour
+function showStep(step) {
+  const { title, description, image } = tourSteps[step];
+  tourTitle.innerText = title;
+  tourDescription.innerText = description;
+  tourImage.src = image;
+
+  // Toggle Button Visibility
+  prevBtn.style.display = step === 0 ? 'none' : 'inline-block';
+  nextBtn.style.display = step === tourSteps.length - 1 ? 'none' : 'inline-block';
+}
+
+// Event Listeners
+nextBtn.addEventListener('click', () => {
+  if (currentStep < tourSteps.length - 1) {
+    currentStep++;
+    showStep(currentStep);
+  }
+});
+
+prevBtn.addEventListener('click', () => {
+  if (currentStep > 0) {
+    currentStep--;
+    showStep(currentStep);
+  }
+});
+
+closeBtn.addEventListener('click', () => {
+  overlay.style.display = 'none';
+  document.body.style.overflow = 'auto';
+});
+
+// Start Tour
+showStep(currentStep);
 
 window.addEventListener('load', () => {
   // Show the first notification on page load
