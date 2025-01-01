@@ -6,6 +6,74 @@ function debounce(func, delay) {
     timeout = setTimeout(() => func(...args), delay);
   };
 }
+
+// Celebration Animation Script
+
+// Generate random sparkles
+
+const sparklesContainer = document.querySelector('.sparkles');
+
+const confettiContainer = document.querySelector('.confetti');
+
+// Create sparkles
+
+function createSparkles() {
+
+  for (let i = 0; i < 50; i++) {
+
+    const sparkle = document.createElement('span');
+
+    sparkle.style.left = `${Math.random() * 100}vw`;
+
+    sparkle.style.top = `${Math.random() * 100}vh`;
+
+    sparkle.style.animationDuration = `${Math.random() * 3 + 1}s`;
+
+    sparklesContainer.appendChild(sparkle);
+
+  }
+
+}
+
+// Create confetti
+
+function createConfetti() {
+
+  for (let i = 0; i < 100; i++) {
+
+    const confettiPiece = document.createElement('span');
+
+    confettiPiece.style.left = `${Math.random() * 100}vw`;
+
+    confettiPiece.style.animationDuration = `${Math.random() * 3 + 2}s`;
+
+    confettiPiece.style.animationDelay = `${Math.random()}s`;
+
+    confettiContainer.appendChild(confettiPiece);
+
+  }
+
+}
+
+// Auto-hide celebration after 10 seconds
+
+setTimeout(() => {
+
+  const celebrationOverlay = document.getElementById('celebration-overlay');
+
+  celebrationOverlay.style.display = 'none';
+
+  document.body.style.overflow = 'auto'; // Enable scrolling
+
+}, 120000);
+
+// Initialize animations
+
+createSparkles();
+
+createConfetti();
+
+
 // Tour Data
 const tourSteps = [
     {
