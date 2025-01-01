@@ -8,6 +8,11 @@ function debounce(func, delay) {
 }
 // Tour Data
 const tourSteps = [
+    {
+    title: "HAPPY NEW YEAR!",
+    description: "Welcome to the year 2025! A year filled with diverse opportunities.",
+    image: "Happy New Year 2024 Instagram Post_1735703147472.jpg"
+  },
   {
     title: "Welcome to Students Support System",
     description: "Get started with our intuitive dashboard and tools.",
