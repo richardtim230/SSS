@@ -277,8 +277,10 @@ header h2 {
 
 /* Footer Widget */
 #educational-footer {
-  position: relative; /* Stays at the bottom of the page */
+  position: fixed; /* Stays at the bottom of the page */
   width: 100%;
+    left: 0;
+    right: 0; 
   background: radial-gradient(circle, #1e1e2e, #121212);
   color: #fff;
   text-align: center;
