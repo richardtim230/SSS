@@ -269,34 +269,40 @@ header h2 {
     background: #d9534f; /* Darker red for hover */
 }
 
-/* Widget Container */
-#educational-widget {
-  position: fixed; /* Or use absolute for more control */
-  bottom: 20px; /* Adjust as needed */
-  right: 20px; /* Adjust as needed */
-  width: 300px; /* Set a fixed width for the widget */
+
+.main-content {
+  
+  min-height: calc(100vh - 100px); /* Ensures space for footer */
+}
+
+/* Footer Widget */
+#educational-footer {
+  position: relative; /* Stays at the bottom of the page */
+  width: 100%;
   background: radial-gradient(circle, #1e1e2e, #121212);
   color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
-  z-index: 998;
+  text-align: center;
+  padding: 20px 10px;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5);
+  z-index: 9999;
   font-family: Arial, sans-serif;
+  box-sizing: border-box;
 }
 
 /* Widget Header */
 .widget-header {
   background: linear-gradient(90deg, #ff9800, #ff3d00, #ff6f61);
   padding: 10px;
-  text-align: center;
   font-size: 1.2rem;
   font-weight: bold;
   color: #fff;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  display: inline-block;
 }
 
 /* Widget Content */
 .widget-content {
-  padding: 20px;
   text-align: center;
 }
 
@@ -335,6 +341,7 @@ header h2 {
   0% { opacity: 1; }
   100% { opacity: 0; }
 }
+
 
 
 /* Notification covers 90% of the screen */
