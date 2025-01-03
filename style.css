@@ -269,6 +269,73 @@ header h2 {
     background: #d9534f; /* Darker red for hover */
 }
 
+/* Widget Container */
+#educational-widget {
+  position: fixed; /* Or use absolute for more control */
+  bottom: 20px; /* Adjust as needed */
+  right: 20px; /* Adjust as needed */
+  width: 300px; /* Set a fixed width for the widget */
+  background: radial-gradient(circle, #1e1e2e, #121212);
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  z-index: 998;
+  font-family: Arial, sans-serif;
+}
+
+/* Widget Header */
+.widget-header {
+  background: linear-gradient(90deg, #ff9800, #ff3d00, #ff6f61);
+  padding: 10px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* Widget Content */
+.widget-content {
+  padding: 20px;
+  text-align: center;
+}
+
+.educational-text {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0;
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.educational-text-exit {
+  animation: vibrate 1s ease-in, fadeOut 1s ease-out;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes vibrate {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+  75% { transform: translateX(-2px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
 
 /* Notification covers 90% of the screen */
 .notification {
