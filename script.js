@@ -6,6 +6,53 @@ function debounce(func, delay) {
     timeout = setTimeout(() => func(...args), delay);
   };
 }
+// Array of Educational Messages
+const messages = [
+  "Education is the most powerful weapon to change the world.",
+  "Knowledge is power. Stay curious!",
+  "Learning is a treasure that follows its owner everywhere.",
+  "Mistakes are proof that you are trying.",
+  "Education is not preparation for life; it is life itself.",
+  "Never stop learning because life never stops teaching.",
+  "The beautiful thing about learning is that no one can take it away from you.",
+  "Your mind is your greatest asset—invest in it.",
+  "Teachers open the door, but you must walk through it.",
+  "Reading is to the mind what exercise is to the body."
+];
+
+// Initialize Variables
+let currentMessageIndex = 0;
+const messageElement = document.getElementById('educational-message');
+
+// Function to Display a Message
+function displayMessage(index) {
+  // Set the message
+  messageElement.textContent = messages[index];
+
+  // Add entry animation
+  messageElement.classList.add('educational-text');
+  
+  // Remove entry animation after 9 seconds and add exit animation
+  setTimeout(() => {
+    messageElement.classList.remove('educational-text');
+    messageElement.classList.add('educational-text-exit');
+  }, 9000);
+
+  // Clean up exit animation for the next cycle
+  setTimeout(() => {
+    messageElement.classList.remove('educational-text-exit');
+  }, 10000);
+}
+
+// Initialize the First Message
+displayMessage(currentMessageIndex);
+
+// Cycle Through Messages Every 10 Seconds
+setInterval(() => {
+  currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+  displayMessage(currentMessageIndex);
+}, 10000);
+
 
 // Celebration Animation Script
 
