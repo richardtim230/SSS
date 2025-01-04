@@ -23,7 +23,7 @@ justify-content: center;
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
   color: white;
         font-weight: bold;
-    padding: 1.2em;
+    padding: 1.0em;
 border-radius: 8px;
 
     
@@ -612,7 +612,7 @@ h1 {
 
   height: 100%;
 
-  background: radial-gradient(circle, #1e1e2e, #121212);
+  background: radial-gradient(circle, #1e1e2e, blue);
 
   display: flex;
 
@@ -644,7 +644,7 @@ h1 {
 
 .celebration-text {
 
-  font-size: 3.5rem;
+  font-size: 2.5rem;
 
   font-weight: bold;
 
@@ -662,7 +662,7 @@ h1 {
 
 .celebration-subtext {
 
-  font-size: 1.8rem;
+  font-size: 1.5rem;
 
   margin-top: 10px;
 
