@@ -12,6 +12,7 @@ const messages = [
   "Knowledge is power. Stay curious!",
   "Learning is a treasure that follows its owner everywhere.",
   "Mistakes are proof that you are trying.",
+  " What do you know about Hon Richard D'Prof?.", 
   "Education is not preparation for life; it is life itself.",
   "Never stop learning because life never stops teaching.",
   "The beautiful thing about learning is that no one can take it away from you.",
@@ -123,11 +124,7 @@ createConfetti();
 
 // Tour Data
 const tourSteps = [
-    {
-    title: "HAPPY NEW YEAR!",
-    description: "Welcome to the year 2025! A year filled with diverse opportunities.",
-    image: "Happy New Year 2024 Instagram Post_1735703147472.jpg"
-  },
+    
   {
     title: "Welcome to Students Support System",
     description: "Get started with our intuitive dashboard and tools.",
