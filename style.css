@@ -894,18 +894,7 @@ h1 {
 }
 
 
-.app-header {
-  background-color: #1a237e;
-  color: white;
-  padding: 15px;
-  display: flex;
-  align-items: center;
-  position: fixed; /* Added fixed positioning */
-  top: 0; /* Aligns the header to the top edge of the screen */
-  left: 0; /* Aligns the header to the left edge of the screen */
-  width: 100%; /* Ensures it covers the entire width */
-  z-index: 1000; /* Ensures it's on top of other elements */
-}
+
 
 .menu-icon {
   cursor: pointer;
@@ -926,20 +915,6 @@ h1 {
   transition: all 0.3s ease;
 }
 
-.app-title {
-  flex-grow: 1;
-  text-align: center;
-}
-
-.app-title h1 {
-  margin-bottom: 5px;
-  font-size: 2em;
-}
-
-.app-title p {
-  margin: 2px 0;
-  font-size: 0.9em;
-}
 
 .side-nav {
   height: 100%;
