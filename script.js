@@ -6,6 +6,24 @@ function debounce(func, delay) {
     timeout = setTimeout(() => func(...args), delay);
   };
 }
+
+function toggleMenu() {
+  const sideNav = document.getElementById('sideNav');
+  sideNav.classList.toggle('active');
+}
+
+document.addEventListener('click', function(event) {
+  const sideNav = document.getElementById('sideNav');
+  const menuIcon = document.querySelector('.menu-icon');
+
+  // Check if the click is outside the menu and not on the menu icon
+  if (sideNav.classList.contains('active') &&
+      !sideNav.contains(event.target) &&
+       !menuIcon.contains(event.target)) {
+      sideNav.classList.remove('active');
+
+  }
+});
 // Array of Educational Messages
 const messages = [
   "Education is the most powerful weapon to change the world.",
