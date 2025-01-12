@@ -893,3 +893,119 @@ h1 {
 
 }
 
+.app-header {
+    background-color: #1a237e;
+    color: white;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    position: relative; /* To position the menu icon */
+}
+
+.menu-icon {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 20px;
+    width: 30px;
+    margin-right: 20px;
+    position: absolute;
+    left: 10px;
+
+}
+
+.menu-icon span {
+    width: 100%;
+    height: 3px;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+.app-title {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.app-title h1 {
+    margin-bottom: 5px;
+    font-size: 2em;
+}
+
+.app-title p {
+    margin: 2px 0;
+    font-size: 0.9em;
+}
+
+.side-nav {
+    height: 100%;
+    width: 250px;
+    background-color: white;
+    position: fixed;
+    left: -250px;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: left 0.3s ease;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+}
+
+.side-nav .nav-header {
+  padding-bottom: 30px;
+  border-bottom: 1px solid #ddd;
+}
+
+.side-nav .nav-header .nav-title{
+    text-align: center;
+}
+.side-nav ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.side-nav ul li {
+  list-style: none;
+}
+
+.side-nav a {
+    padding: 15px;
+    text-decoration: none;
+    color: #333;
+    display: block;
+    transition: background-color 0.2s ease;
+     position: relative;
+}
+.side-nav a span{
+    display: inline-block;
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+}
+.side-nav a:hover{
+    background-color: #f2f2f2;
+}
+.side-nav a.active-nav{
+    background-color: #ddd;
+    font-weight: bold;
+}
+
+.side-nav a.active-nav:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 5px;
+    background-color: #1a237e;
+
+}
+
+.side-nav.active {
+    left: 0;
+}
+
+
+.main-content {
+   padding: 20px;
+}
