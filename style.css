@@ -893,61 +893,66 @@ h1 {
 
 }
 
+
 .app-header {
-    background-color: #1a237e;
-    color: white;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    position: relative; /* To position the menu icon */
+  background-color: #1a237e;
+  color: white;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  position: fixed; /* Added fixed positioning */
+  top: 0; /* Aligns the header to the top edge of the screen */
+  left: 0; /* Aligns the header to the left edge of the screen */
+  width: 100%; /* Ensures it covers the entire width */
+  z-index: 1000; /* Ensures it's on top of other elements */
 }
 
 .menu-icon {
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 20px;
-    width: 30px;
-    margin-right: 20px;
-    position: absolute;
-    left: 10px;
-
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 20px;
+  width: 30px;
+  margin-right: 20px;
+  position: absolute;
+  left: 10px;
 }
 
 .menu-icon span {
-    width: 100%;
-    height: 3px;
-    background-color: white;
-    transition: all 0.3s ease;
+  width: 100%;
+  height: 3px;
+  background-color: white;
+  transition: all 0.3s ease;
 }
 
 .app-title {
-    flex-grow: 1;
-    text-align: center;
+  flex-grow: 1;
+  text-align: center;
 }
 
 .app-title h1 {
-    margin-bottom: 5px;
-    font-size: 2em;
+  margin-bottom: 5px;
+  font-size: 2em;
 }
 
 .app-title p {
-    margin: 2px 0;
-    font-size: 0.9em;
+  margin: 2px 0;
+  font-size: 0.9em;
 }
 
 .side-nav {
-    height: 100%;
-    width: 250px;
-    background-color: white;
-    position: fixed;
-    left: -250px;
-    top: 0;
-    overflow-x: hidden;
-    padding-top: 60px;
-    transition: left 0.3s ease;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+  height: 100%;
+  width: 250px;
+  background-color: white;
+  position: fixed;
+  left: -250px;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: left 0.3s ease;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    z-index: 1001; /* Ensure it's above the header */
 }
 
 .side-nav .nav-header {
@@ -955,9 +960,10 @@ h1 {
   border-bottom: 1px solid #ddd;
 }
 
-.side-nav .nav-header .nav-title{
-    text-align: center;
+.side-nav .nav-header .nav-title {
+  text-align: center;
 }
+
 .side-nav ul {
   padding-left: 0;
   margin-top: 0;
@@ -969,43 +975,45 @@ h1 {
 }
 
 .side-nav a {
-    padding: 15px;
-    text-decoration: none;
-    color: #333;
-    display: block;
-    transition: background-color 0.2s ease;
-     position: relative;
+  padding: 15px;
+  text-decoration: none;
+  color: #333;
+  display: block;
+  transition: background-color 0.2s ease;
+    position: relative;
 }
-.side-nav a span{
-    display: inline-block;
-    margin-right: 10px;
-    width: 20px;
-    height: 20px;
+
+.side-nav a span {
+  display: inline-block;
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
 }
-.side-nav a:hover{
-    background-color: #f2f2f2;
+
+.side-nav a:hover {
+  background-color: #f2f2f2;
 }
-.side-nav a.active-nav{
-    background-color: #ddd;
-    font-weight: bold;
+
+.side-nav a.active-nav {
+  background-color: #ddd;
+  font-weight: bold;
 }
 
 .side-nav a.active-nav:before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 5px;
-    background-color: #1a237e;
-
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 5px;
+  background-color: #1a237e;
 }
 
 .side-nav.active {
-    left: 0;
+  left: 0;
 }
 
-
 .main-content {
-   padding: 20px;
+  padding: 20px;
+    padding-top: 80px; /* Added padding to make sure it isn't hidden below the header */
 }
