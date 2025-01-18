@@ -30,7 +30,7 @@ body, html {
   height: 100px;
   margin: 0 auto 20px;
   border-radius: 50%;
-  background-image: url('logo.png');
+  background: white;
   color: #2a2a72;
   display: flex;
   align-items: center;
@@ -51,7 +51,7 @@ body, html {
 
 /* Welcome Screen */
 .welcome-screen h2 {
-  font-size: 1.7rem;
+  font-size: 1.3rem;
   margin-bottom: 10px;
   color: #ffe500;
 }
