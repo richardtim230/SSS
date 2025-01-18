@@ -6,28 +6,30 @@ document.addEventListener("DOMContentLoaded", () => {
   const loadingScreen = document.querySelector(".loading-screen");
   const institutionName = document.getElementById("institutionName");
   const countdownElement = document.getElementById("countdown");
+  const loadingLogo = document.getElementById("loadingLogo");
 
-  // Predefined access codes with links
+  // Predefined access codes with links and logos
   const institutions = {
-    "CODE123": { name: "OBAFEMI AWOLOWO UNIVERSITY", link: "oau-index.html.htm" },
-    "CODE456": { name: "Institution B", link: "institution-b.html" },
-    "CODE789": { name: "Institution C", link: "institution-c.html" },
-    "CODE101": { name: "Institution D", link: "institution-d.html" },
-    "CODE202": { name: "Institution E", link: "institution-e.html" },
+    "CODE123": { name: "OBAFEMI AWOLOWO UNIVERSITY", link: "oau-index.html.htm", logo: "logo.png" },
+    "CODE456": { name: "Institution B", link: "institution-b.html", logo: "logoB.png" },
+    "CODE789": { name: "Institution C", link: "institution-c.html", logo: "logoC.png" },
+    "CODE101": { name: "Institution D", link: "institution-d.html", logo: "logoD.png" },
+    "CODE202": { name: "Institution E", link: "institution-e.html", logo: "logoE.png" },
   };
 
   submitButton.addEventListener("click", () => {
     const enteredCode = accessCodeInput.value.trim();
 
     if (institutions[enteredCode]) {
-      const { name, link } = institutions[enteredCode];
+      const { name, link, logo } = institutions[enteredCode];
 
       // Show loading screen
       welcomeScreen.style.display = "none";
       loadingScreen.style.display = "block";
 
-      // Set institution name
+      // Set institution name and logo
       institutionName.textContent = `Welcome to ${name}`;
+      loadingLogo.src = logo;
 
       // Countdown logic
       let countdown = 10;
