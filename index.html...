@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Students Support System</title>
+  <link rel="stylesheet" href="global-styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Welcome Screen -->
+    <div class="welcome-screen">
+      <div class="logo">
+        <h1>📚 Students Support System</h1>
+      </div>
+      <div  class="card">
+  <!-- Logo Placeholder -->
+  <div class="logo-placeholder">
+    logo.png
+  </div>
+        <h2>Welcome!</h2>
+        <p>Enter your institutional access code to proceed:</p>
+        <input type="text" id="accessCode" placeholder="Enter Access Code">
+        <button id="submitCode">Submit</button>
+        <p id="errorMessage"></p>
+      </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" style="display: none;">
+      <div class="logo">
+        <h1 id="institutionName">Welcome!</h1>
+      </div>
+      <div class="card">
+        <p class="loading-text">Preparing your experience...</p>
+        <div class="countdown-container">
+          <div class="countdown">
+            <span id="countdown">10</span>
+          </div>
+          <p>seconds remaining</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
