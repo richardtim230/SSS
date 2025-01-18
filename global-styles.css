@@ -51,7 +51,7 @@ body, html {
 
 /* Welcome Screen */
 .welcome-screen h2 {
-  font-size: 1.3rem;
+  font-size: 1.6rem;
   margin-bottom: 10px;
   color: #ffe500;
 }
@@ -125,6 +125,10 @@ body, html {
 .loading-screen .loading-text {
   font-size: 1.0rem;
   margin-bottom: 20px;
+}
+
+.loading-screen .logo h1 {
+  font-size: 1.3rem; /* Adjust this value to your desired font size */
 }
 
 .countdown-container {
