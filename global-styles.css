@@ -30,7 +30,7 @@ body, html {
   height: 100px;
   margin: 0 auto 20px;
   border-radius: 50%;
-  background: #ffffff;
+  background-image: 'logo.png';
   color: #2a2a72;
   display: flex;
   align-items: center;
@@ -51,7 +51,7 @@ body, html {
 
 /* Welcome Screen */
 .welcome-screen h2 {
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   margin-bottom: 10px;
   color: #ffe500;
 }
@@ -65,7 +65,7 @@ body, html {
 /* Input Field */
 #welcome-screen input, 
 #accessCode {
-  width: 100%;
+  width: 80%;
   padding: 12px;
   font-size: 1rem;
   border: 2px solid transparent;
