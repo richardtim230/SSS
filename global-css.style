@@ -1,0 +1,147 @@
+/* Reset styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #2a2a72, #009ffd);
+  color: white;
+  overflow: hidden;
+}
+
+/* Smooth animations */
+* {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Container for content */
+.container {
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+}
+
+/* Logo Placeholder */
+.logo-placeholder {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #2a2a72;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Card design for welcome and loading screens */
+.card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px; /* Increased padding */
+  border-radius: 15px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+/* Welcome Screen */
+.welcome-screen h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: #ffe500;
+}
+
+.welcome-screen p {
+  font-size: 1rem;
+  margin-bottom: 15px;
+  color: #d4e5f3;
+}
+
+/* Input Field */
+#welcome-screen input, 
+#accessCode {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: #f0f4ff;
+  color: #2a2a72;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  outline: none;
+  transition: all 0.3s ease;
+  margin-bottom: 20px; /* Added spacing between input and button */
+}
+
+#welcome-screen input:focus, 
+#accessCode:focus {
+  border-color: #ffe500;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(255, 229, 0, 0.6);
+}
+
+/* Button */
+#welcome-screen button, 
+#submitCode {
+  width: 100%;
+  background: linear-gradient(90deg, #ffe500, #ffc800);
+  border: none;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #2a2a72;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+#welcome-screen button:hover, 
+#submitCode:hover {
+  background: linear-gradient(90deg, #ffc800, #ff8c00);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+#welcome-screen button:active, 
+#submitCode:active {
+  transform: translateY(2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Error Message */
+#errorMessage {
+  color: #ff4d4d;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+/* Loading Screen */
+.loading-screen .loading-text {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.countdown-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.countdown {
+  background: #ffe500;
+  color: #2a2a72;
+  font-size: 2.5rem;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
