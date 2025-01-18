@@ -51,7 +51,7 @@ body, html {
 
 /* Welcome Screen */
 .welcome-screen h2 {
-  font-size: 1.0rem;
+  font-size: 1.7rem;
   margin-bottom: 10px;
   color: #ffe500;
 }
@@ -123,7 +123,7 @@ body, html {
 
 /* Loading Screen */
 .loading-screen .loading-text {
-  font-size: 1.2rem;
+  font-size: 1.0rem;
   margin-bottom: 20px;
 }
 
