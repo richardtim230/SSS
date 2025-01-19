@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "CODE123": { name: "OBAFEMI AWOLOWO UNIVERSITY", link: "oau-index.html.htm", logo: "logo.png" },
     "CODE456": { name: "Federal University of Technology, Akure", link: "futa-index.html.htm", logo: "futa-logo.png" },
     "CODE789": { name: "Federal University, Oye-Ekiti", link: "fuoye-index.html.htm", logo: "fuoye-logo.png" },
-    "CODE101": { name: "University of Ibadan", link: "ibadan-index.html.htm", logo: "ibadan-logo.png" },
+    "CODE101": { name: "University of Ibadan", link: "ibadan-index.html.htm", logo: "AddText_01-19-12.49.34 (1).png" },
     "CODE102": { name: "University of Ilorin", link: "ilorin-index.html.htm", logo: "ibadan-logo.png" },
     "CODE103": { name: "University of Benin", link: "benin-index.html.htm", logo: "ibadan-logo.png" },
     "CODE104": { name: "LAUTECH, Ogbomoso", link: "lautech-index.html.htm", logo: "ibadan-logo.png" },
