@@ -105,7 +105,7 @@ const tourSteps = [
   {
     title: "Welcome to Students Support System",
     description: "Get started with our intuitive dashboard and tools.",
-    image: "logo.png"
+    image: "favicon1.png"
   },
   {
     title: "CLASS SCHEDULES AND NOTE MAKING",
