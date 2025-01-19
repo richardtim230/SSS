@@ -75,69 +75,28 @@ setInterval(() => {
 
 // Celebration Animation Script
 
-// Generate random sparkles
+document.addEventListener("DOMContentLoaded", () => {
+  const splashScreen = document.getElementById("splashScreen");
+  const app = document.getElementById("app");
 
-const sparklesContainer = document.querySelector('.sparkles');
+  // Institution details
+  const institutionDetails = {
+    name: "OBAFEMI AWOLOWO UNIVERSITY",
+    address: "123 Main Street, City, Country",
+  };
 
-const confettiContainer = document.querySelector('.confetti');
+  // Set institution details
+  document.getElementById("institutionName").textContent = institutionDetails.name;
+  document.getElementById("institutionAddress").textContent = institutionDetails.address;
 
-// Create sparkles
+  // Display splash screen for 10 seconds
+  setTimeout(() => {
+    splashScreen.style.display = "none"; // Hide splash screen
+    app.style.display = "block"; // Show main app
+    document.body.style.overflow = "auto"; // Re-enable scrolling
+  }, 10000); // 10 seconds
+});
 
-function createSparkles() {
-
-  for (let i = 0; i < 50; i++) {
-
-    const sparkle = document.createElement('span');
-
-    sparkle.style.left = `${Math.random() * 100}vw`;
-
-    sparkle.style.top = `${Math.random() * 100}vh`;
-
-    sparkle.style.animationDuration = `${Math.random() * 3 + 1}s`;
-
-    sparklesContainer.appendChild(sparkle);
-
-  }
-
-}
-
-// Create confetti
-
-function createConfetti() {
-
-  for (let i = 0; i < 100; i++) {
-
-    const confettiPiece = document.createElement('span');
-
-    confettiPiece.style.left = `${Math.random() * 100}vw`;
-
-    confettiPiece.style.animationDuration = `${Math.random() * 3 + 2}s`;
-
-    confettiPiece.style.animationDelay = `${Math.random()}s`;
-
-    confettiContainer.appendChild(confettiPiece);
-
-  }
-
-}
-
-// Auto-hide celebration after 10 seconds
-
-setTimeout(() => {
-
-  const celebrationOverlay = document.getElementById('celebration-overlay');
-
-  celebrationOverlay.style.display = 'none';
-
-  document.body.style.overflow = 'auto'; // Enable scrolling
-
-}, 120000);
-
-// Initialize animations
-
-createSparkles();
-
-createConfetti();
 
 
 // Tour Data
