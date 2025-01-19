@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const countdownElement = document.getElementById("countdown");
   const loadingLogo = document.getElementById("loadingLogo");
 
-  // Predefined access codes with links and logos
   const institutions = {
     "OAU-NG123": { name: "OBAFEMI AWOLOWO UNIVERSITY", link: "oau-index.html.htm", logo: "logo.png" },
     "FUTA.NG123": { name: "Federal University of Technology, Akure", link: "futa-index.html.htm", logo: "futa-logo.png" },
@@ -21,6 +20,18 @@ document.addEventListener("DOMContentLoaded", () => {
     "CODE106": { name: "University of Ibadan", link: "institution-d.html", logo: "ibadan-logo.png" },
     "CODE202": { name: "Institution E", link: "institution-e.html", logo: "logoE.png" },
   };
+
+  // Retrieve refresh count and validation status from localStorage
+  let refreshCount = parseInt(localStorage.getItem("refreshCount") || "0");
+  const isAccessCodeValid = localStorage.getItem("isAccessCodeValid") === "true";
+
+  if (isAccessCodeValid && refreshCount < 5) {
+    // Skip access code validation and show welcome page directly
+    showLoadingScreen();
+  } else {
+    // Show access code input screen
+    welcomeScreen.style.display = "block";
+  }
 
   submitButton.addEventListener("click", () => {
     const enteredCode = accessCodeInput.value.trim();
@@ -35,6 +46,10 @@ document.addEventListener("DOMContentLoaded", () => {
       // Set institution name and logo
       institutionName.textContent = `Welcome to ${name}`;
       loadingLogo.src = logo;
+
+      // Reset refresh count and set access code validation status
+      localStorage.setItem("refreshCount", "0");
+      localStorage.setItem("isAccessCodeValid", "true");
 
       // Countdown logic
       let countdown = 10;
@@ -52,4 +67,31 @@ document.addEventListener("DOMContentLoaded", () => {
       errorMessage.textContent = "Invalid access code. Please try again.";
     }
   });
+
+  // Increment refresh count on each page load
+  refreshCount += 1;
+  localStorage.setItem("refreshCount", refreshCount.toString());
+
+  function showLoadingScreen() {
+    // Show loading screen
+    welcomeScreen.style.display = "none";
+    loadingScreen.style.display = "block";
+
+    // Set institution name and logo
+    institutionName.textContent = "Welcome";
+    loadingLogo.src = "logo.png";
+
+    // Countdown logic
+    let countdown = 10;
+    const countdownInterval = setInterval(() => {
+      countdown -= 1;
+      countdownElement.textContent = countdown;
+
+      if (countdown === 0) {
+        clearInterval(countdownInterval);
+        // Redirect to the institutional page (default link)
+        window.location.href = "default-index.html";
+      }
+    }, 1000);
+  }
 });
