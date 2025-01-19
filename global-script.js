@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "FUTA.NG123": { name: "Federal University of Technology, Akure", link: "futa-index.html.htm", logo: "futa-logo.png" },
     "FUOYE-NG": { name: "Federal University, Oye-Ekiti", link: "fuoye-index.html.htm", logo: "fuoye-logo.png" },
     "UNIBAD-NG12": { name: "University of Ibadan", link: "ibadan-index.html.htm", logo: "AddText_01-19-12.49.34 (1).png" },
-    "UNILORIN-123": { name: "University of Ilorin", link: "ilorin-index.html.htm", logo: "ibadan-logo.png" },
+    "UNILORIN-123": { name: "University of Ilorin", link: "ilorin-index.html.htm", logo: "logo-footer-1~2.png" },
     "CODE103": { name: "University of Benin", link: "benin-index.html.htm", logo: "UNIBEN-logto.png" },
     "CODE104": { name: "LAUTECH, Ogbomoso", link: "lautech-index.html.htm", logo: "favicon1.png" },
     "CODE105": { name: "University of Nigeria, Nsukka", link: "institution-d.html", logo: "ibadan-logo.png" },
