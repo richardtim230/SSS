@@ -11,12 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // Predefined access codes with links and logos
   const institutions = {
     "CODE123": { name: "OBAFEMI AWOLOWO UNIVERSITY", link: "oau-index.html.htm", logo: "logo.png" },
-    "CODE456": { name: "Federal University of Technology, Akure", link: "institution-b.html", logo: "futa-logo.png" },
-    "CODE789": { name: "Federal University, Oye-Ekiti", link: "institution-c.html", logo: "fuoye-logo.png" },
-    "CODE101": { name: "University of Ibadan", link: "institution-d.html", logo: "ibadan-logo.png" },
-    "CODE102": { name: "University of Ilorin", link: "institution-d.html", logo: "ibadan-logo.png" },
-    "CODE103": { name: "University of Benin", link: "institution-d.html", logo: "ibadan-logo.png" },
-    "CODE104": { name: "LAUTECH, Ogbomoso", link: "institution-d.html", logo: "ibadan-logo.png" },
+    "CODE456": { name: "Federal University of Technology, Akure", link: "futa-index.html.htm", logo: "futa-logo.png" },
+    "CODE789": { name: "Federal University, Oye-Ekiti", link: "fuoye-index.html.htm", logo: "fuoye-logo.png" },
+    "CODE101": { name: "University of Ibadan", link: "ibadan-index.html.htm", logo: "ibadan-logo.png" },
+    "CODE102": { name: "University of Ilorin", link: "ilorin-index.html.htm", logo: "ibadan-logo.png" },
+    "CODE103": { name: "University of Benin", link: "benin-index.html.htm", logo: "ibadan-logo.png" },
+    "CODE104": { name: "LAUTECH, Ogbomoso", link: "lautech-index.html.htm", logo: "ibadan-logo.png" },
     "CODE105": { name: "University of Nigeria, Nsukka", link: "institution-d.html", logo: "ibadan-logo.png" },
     "CODE106": { name: "University of Ibadan", link: "institution-d.html", logo: "ibadan-logo.png" },
     "CODE202": { name: "Institution E", link: "institution-e.html", logo: "logoE.png" },
