@@ -21,13 +21,14 @@ document.addEventListener("DOMContentLoaded", () => {
     "CODE202": { name: "Institution E", link: "institution-e.html", logo: "logoE.png" },
   };
 
-  // Retrieve refresh count and validation status from localStorage
+  // Retrieve refresh count, validation status, and institution link from localStorage
   let refreshCount = parseInt(localStorage.getItem("refreshCount") || "0");
   const isAccessCodeValid = localStorage.getItem("isAccessCodeValid") === "true";
+  const institutionLink = localStorage.getItem("institutionLink");
 
-  if (isAccessCodeValid && refreshCount < 5) {
+  if (isAccessCodeValid && refreshCount < 5 && institutionLink) {
     // Skip access code validation and show welcome page directly
-    showLoadingScreen();
+    showLoadingScreen(institutionLink);
   } else {
     // Show access code input screen
     welcomeScreen.style.display = "block";
@@ -50,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Reset refresh count and set access code validation status
       localStorage.setItem("refreshCount", "0");
       localStorage.setItem("isAccessCodeValid", "true");
+      localStorage.setItem("institutionLink", link);
 
       // Countdown logic
       let countdown = 10;
@@ -72,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
   refreshCount += 1;
   localStorage.setItem("refreshCount", refreshCount.toString());
 
-  function showLoadingScreen() {
+  function showLoadingScreen(link) {
     // Show loading screen
     welcomeScreen.style.display = "none";
     loadingScreen.style.display = "block";
@@ -89,8 +91,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (countdown === 0) {
         clearInterval(countdownInterval);
-        // Redirect to the institutional page (default link)
-        window.location.href = "default-index.html";
+        // Redirect to the institutional page
+        window.location.href = link;
       }
     }, 1000);
   }
