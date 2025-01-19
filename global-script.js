@@ -21,14 +21,16 @@ document.addEventListener("DOMContentLoaded", () => {
     "CODE202": { name: "Institution E", link: "institution-e.html", logo: "logoE.png" },
   };
 
-  // Retrieve refresh count, validation status, and institution link from localStorage
+  // Retrieve refresh count, validation status, and institution data from localStorage
   let refreshCount = parseInt(localStorage.getItem("refreshCount") || "0");
   const isAccessCodeValid = localStorage.getItem("isAccessCodeValid") === "true";
   const institutionLink = localStorage.getItem("institutionLink");
+  const institutionNameStored = localStorage.getItem("institutionName");
+  const institutionLogo = localStorage.getItem("institutionLogo");
 
   if (isAccessCodeValid && refreshCount < 5 && institutionLink) {
     // Skip access code validation and show welcome page directly
-    showLoadingScreen(institutionLink);
+    showLoadingScreen(institutionNameStored, institutionLogo, institutionLink);
   } else {
     // Show access code input screen
     welcomeScreen.style.display = "block";
@@ -52,6 +54,8 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("refreshCount", "0");
       localStorage.setItem("isAccessCodeValid", "true");
       localStorage.setItem("institutionLink", link);
+      localStorage.setItem("institutionName", name);
+      localStorage.setItem("institutionLogo", logo);
 
       // Countdown logic
       let countdown = 10;
@@ -74,14 +78,14 @@ document.addEventListener("DOMContentLoaded", () => {
   refreshCount += 1;
   localStorage.setItem("refreshCount", refreshCount.toString());
 
-  function showLoadingScreen(link) {
+  function showLoadingScreen(name, logo, link) {
     // Show loading screen
     welcomeScreen.style.display = "none";
     loadingScreen.style.display = "block";
 
     // Set institution name and logo
-    institutionName.textContent = "Welcome";
-    loadingLogo.src = "logo.png";
+    institutionName.textContent = `Welcome to ${name}`;
+    loadingLogo.src = logo;
 
     // Countdown logic
     let countdown = 10;
