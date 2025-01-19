@@ -602,6 +602,86 @@ h1 {
 
 }
 
+
+
+/* Smooth animations */
+* {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Splash Screen */
+.splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #2a2a72, #009ffd);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100000; /* Ensure it stays above all content */
+}
+
+.splash-content {
+  text-align: center;
+}
+
+.splash-content h1 {
+  font-size: 2rem;
+  margin: 10px 0;
+  color: #ffe500;
+}
+
+.splash-content h2 {
+  font-size: 1.5rem;
+  margin: 5px 0;
+  color: #f0f4ff;
+}
+
+.splash-content p {
+  font-size: 1rem;
+  color: #d4e5f3;
+  margin-bottom: 20px;
+}
+
+/* Loader */
+.loader {
+  width: 50px;
+  height: 50px;
+  border: 6px solid #ffffff;
+  border-top: 6px solid #ffe500;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Logo Placeholder */
+.logo-placeholder {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #2a2a72;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
 /* Celebration Overlay */
 
 #celebration-overlay {
