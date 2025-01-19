@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Institution details
   const institutionDetails = {
     name: "OBAFEMI AWOLOWO UNIVERSITY",
-    address: "123 Main Street, City, Country",
+    address: "Ile Ife, Osun State, Nigeria",
   };
 
   // Set institution details
