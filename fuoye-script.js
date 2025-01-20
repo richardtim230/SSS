@@ -6,6 +6,27 @@ function debounce(func, delay) {
     timeout = setTimeout(() => func(...args), delay);
   };
 }
+// JavaScript code to change header images randomly
+document.addEventListener('DOMContentLoaded', () => {
+  const images = document.querySelectorAll('.header-image');
+  let currentIndex = 0;
+
+  function changeImage() {
+    images[currentIndex].classList.remove('active');
+
+    // Get a random index different from the current one
+    let nextIndex;
+    do {
+      nextIndex = Math.floor(Math.random() * images.length);
+    } while (nextIndex === currentIndex);
+
+    images[nextIndex].classList.add('active');
+    currentIndex = nextIndex;
+  }
+
+  // Change image every 5 seconds (5000 milliseconds)
+  setInterval(changeImage, 5000);
+});
 
 function toggleMenu() {
   const sideNav = document.getElementById('sideNav');
