@@ -17,7 +17,7 @@ body {
 header.hero {
 justify-content: center;
     text-align: center;  
-  background-image: url('./mobile-bg.jpg');
+  
   width: 89%;
   background-size: 100% 100%;
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
@@ -27,8 +27,6 @@ justify-content: center;
 border-radius: 8px;
     position: center;
     height: 60%;
-
-    
 }
 
 header h1 {
@@ -48,7 +46,18 @@ header h2 {
     margin-bottom: 0.8em;
 
 }
+/* Add this CSS to your stylesheet */
+.header-image {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
 
+.header-image.active {
+  opacity: 1;
+    }
 .intro {
 
     text-align: left;
