@@ -844,11 +844,12 @@ function saveNote() {
   }
 }
 
+let currentEditingNote = -1; // Initialize currentEditingNote variable
+
 function showNotePopup(index) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
   const filteredNotes = notes.filter(note => note.category === selectedCategory);
   const note = filteredNotes[index];
-
 
   // Display title and content
   document.getElementById('noteTitle').textContent = note.title || "Untitled";
@@ -1071,19 +1072,28 @@ function saveNote() {
 
 // Edit note
 function editNote() {
-  if (currentEditingNote !== null) {
-    const confirmEdit = confirm("Are you sure you want to edit this note?");
-    if (confirmEdit) {
-      const notes = JSON.parse(localStorage.getItem('notes')) || [];
-      const note = notes[currentEditingNote];
-      quill.root.innerHTML = note.text;
-      notes.splice(currentEditingNote, 1);
-      localStorage.setItem('notes', JSON.stringify(notes));
-      loadNotes();
-      closeNotePopup();
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  const filteredNotes = notes.filter(note => note.category === selectedCategory);
+  const note = filteredNotes[currentEditingNote];
+
+  // Load the note into the editor for editing
+  if (note) {
+    quill.root.innerHTML = note.text || "";
+    document.getElementById('noteTitle').textContent = note.title || "Untitled";
+
+    // Handle media preview if any
+    const mediaPreview = document.getElementById('noteMediaPreview');
+    if (note.media) {
+      mediaPreview.src = note.media;
+      mediaPreview.style.display = 'block';
+    } else {
+      mediaPreview.style.display = 'none';
     }
   }
-}
+
+  // Hide the popup after editing is done
+  document.getElementById('notePopup').style.display = 'none';
+    }
 
 // Delete note
 function deleteNote() {
