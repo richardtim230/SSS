@@ -327,6 +327,26 @@
 .prompt-actions button:hover {
   background-color: #ddd;
 }
+  /* Blur the background when modal is active */
+  body.modal-active {
+    overflow: hidden; /* Prevent scrolling */
+    filter: blur(2px); /* Optional blur effect */
+  }
+
+  /* Modal-specific styles */
+  #customPromptModal input {
+    transition: border-color 0.3s ease;
+  }
+
+  #customPromptModal input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+
+  #customPromptModal button:hover {
+    opacity: 0.9;
+  }
+
 
   </style>
 </head>
@@ -337,14 +357,18 @@
   </header>
 
   <!-- Custom Prompt Modal -->
-<div id="customPromptModal" style="display: none; position: fixed; top: 20%; left: 50%; transform: translate(-50%, -20%); width: 300px; background: white; border: 1px solid #ccc; border-radius: 8px; z-index: 1000; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.2);">
-  <h3 style="margin-top: 0;">Enter Note Title</h3>
-  <input id="customPromptInput" type="text" placeholder="Note title..." style="width: 100%; padding: 8px; margin-top: 10px; border: 1px solid #ccc; border-radius: 4px;">
-  <div style="margin-top: 15px; text-align: right;">
-    <button onclick="closeCustomPrompt(false)" style="padding: 8px 12px; margin-right: 5px; border: none; background: #ccc; border-radius: 4px;">Cancel</button>
-    <button onclick="closeCustomPrompt(true)" style="padding: 8px 12px; border: none; background: #007bff; color: white; border-radius: 4px;">OK</button>
+<div id="customPromptModal" style="display: none; position: fixed; top: 20%; left: 50%; transform: translate(-50%, -20%); width: 400px; background: white; border-radius: 10px; z-index: 2000; box-shadow: 0 10px 20px rgba(0,0,0,0.25);">
+  <div style="padding: 20px; font-family: Arial, sans-serif; text-align: center;">
+    <h3 style="margin: 0; font-size: 20px; font-weight: bold; color: #333;">Enter Note Title</h3>
+    <p style="font-size: 14px; color: #555; margin-top: 8px;">Please provide a title for your note</p>
+    <input id="customPromptInput" type="text" placeholder="Note title..." maxlength="50" style="width: 80%; padding: 10px; margin-top: 15px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px;">
+    <div style="margin-top: 20px; display: flex; justify-content: space-between;">
+      <button onclick="closeCustomPrompt(false)" style="padding: 10px 20px; background: #f0f0f0; border: none; border-radius: 5px; font-size: 14px; color: #333; cursor: pointer;">Cancel</button>
+      <button onclick="closeCustomPrompt(true)" style="padding: 10px 20px; background: #007bff; border: none; border-radius: 5px; font-size: 14px; color: white; cursor: pointer;">Save</button>
+    </div>
   </div>
 </div>
+
 
 
   <!-- Browser Icon -->
@@ -1151,15 +1175,16 @@ function saveNote() {
     
 let customPromptCallback = null;
 
-// Open the custom prompt
+// Open the custom prompt modal
 function openCustomPrompt(callback) {
   customPromptCallback = callback;
-  document.getElementById('customPromptModal').style.display = 'block';
+  document.getElementById('customPromptModal').style.display = 'block'; // Show modal
   document.getElementById('customPromptInput').value = ''; // Clear input
   document.getElementById('customPromptInput').focus(); // Focus on the input field
+  document.body.classList.add('modal-active'); // Prevent background scrolling
 }
 
-// Close the custom prompt
+// Close the custom prompt modal
 function closeCustomPrompt(isConfirmed) {
   const modal = document.getElementById('customPromptModal');
   const input = document.getElementById('customPromptInput').value.trim();
@@ -1171,7 +1196,9 @@ function closeCustomPrompt(isConfirmed) {
   }
 
   modal.style.display = 'none'; // Hide the modal
+  document.body.classList.remove('modal-active'); // Allow background scrolling
 }
+
 
 
 // Edit note
