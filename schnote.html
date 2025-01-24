@@ -473,6 +473,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.css" rel="stylesheet">
   <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
   <script>
@@ -882,19 +883,51 @@ function showNotePopup(index) {
 function loadNotes() {
   const notesList = document.getElementById('notesList');
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  
   const filteredNotes = notes.filter(note => note.category === selectedCategory);
   
   notesList.innerHTML = filteredNotes
     .map((note, index) => `
       <li>
         <h4>${note.title}</h4>
-        <button onclick="showNotePopup(${index})">View</button>
+        <button onclick="showNotePopup('${note.id}')">View</button>
         <button onclick="generateQRCode(${index})">Generate QR Code</button>
         <div id="qrcode-${index}"></div>
-        <button onclick="startQRScan()">Scan QR Code</button>
+        <button onclick="downloadNoteAsPDF('${note.id}')">Download as PDF</button>
+        <button onclick="startQRScan()" style="background: none; border: none;">
+          <img src="path/to/icon.png" alt="Scan" style="width: 24px; height: 24px;">
+        </button>
         <div id="qr-reader" style="width:300px; height:100px;"></div>
       </li>`).join('');
 }
+
+// Download Note as PDF
+function downloadNoteAsPDF(noteId) {
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  const note = notes.find(note => note.id === noteId);
+
+  if (!note) {
+    console.error('Note not found!');
+    return;
+  }
+
+  // Generate PDF
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  // Add content to PDF
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(18);
+  doc.text(note.title, 10, 20);
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(12);
+  doc.text(note.text, 10, 30);
+
+  // Download the PDF
+  doc.save(`${note.title}.pdf`);
+}
+
 
 
 function generateQRCode(index) {
