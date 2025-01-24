@@ -883,22 +883,22 @@ function showNotePopup(index) {
 function loadNotes() {
   const notesList = document.getElementById('notesList');
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
-
+  
   const filteredNotes = notes.filter(note => note.category === selectedCategory);
-
+  
   notesList.innerHTML = filteredNotes
-    .map((note) => `
+    .map((note, index) => `
       <li>
         <h4>${note.title}</h4>
         <button onclick="showNotePopup('${note.id}')">View</button>
-        <button onclick="generateQRCode('${note.id}')">Generate QR Code</button>
-        <div id="qrcode-${note.id}"></div>
+        <button onclick="generateQRCode(${index})">Generate QR Code</button>
+        <div id="qrcode-${index}"></div>
         <button onclick="downloadNoteAsPDF('${note.id}')">Download as PDF</button>
-      </li>
-    `).join('');
+        <div id="qr-reader" style="width:300px; height:100px;"></div>
+      </li>`).join('');
 }
-// Download PDF
 
+// Download Note as PDF
 function downloadNoteAsPDF(noteId) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
   const note = notes.find(note => note.id === noteId);
@@ -908,26 +908,23 @@ function downloadNoteAsPDF(noteId) {
     return;
   }
 
-  // Import jsPDF
+  // Generate PDF
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
-  // Set Title
+  // Add content to PDF
   doc.setFont("helvetica", "bold");
   doc.setFontSize(18);
-  doc.text(note.title, 10, 20); // Title at (x: 10, y: 20)
+  doc.text(note.title, 10, 20);
 
-  // Set Note Content
   doc.setFont("helvetica", "normal");
   doc.setFontSize(12);
+  doc.text(note.text, 10, 30);
 
-  // Break content into multiple lines if it's long
-  const content = doc.splitTextToSize(note.text, 180); // Wrap text to 180px width
-  doc.text(content, 10, 40); // Content starts at (x: 10, y: 40)
-
-  // Save PDF with the title as the filename
+  // Download the PDF
   doc.save(`${note.title}.pdf`);
 }
+
 
 
 function generateQRCode(index) {
@@ -1156,8 +1153,6 @@ function navigateNote(direction) {
   showNotePopup(newIndex);
 }
     
-
-
     
   </script>
  </body>
