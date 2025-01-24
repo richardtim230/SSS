@@ -883,20 +883,19 @@ function showNotePopup(index) {
 function loadNotes() {
   const notesList = document.getElementById('notesList');
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  
   const filteredNotes = notes.filter(note => note.category === selectedCategory);
   
   notesList.innerHTML = filteredNotes
     .map((note, index) => `
       <li>
         <h4>${note.title}</h4>
-        <button onclick="showNotePopup('${note.id}')">View</button>
+        <button onclick="showNotePopup(${index})">View</button>
         <button onclick="generateQRCode(${index})">Generate QR Code</button>
         <div id="qrcode-${index}"></div>
-        <button onclick="downloadNoteAsPDF('${note.id}')">Download as PDF</button>
+      
         <div id="qr-reader" style="width:300px; height:100px;"></div>
       </li>`).join('');
-}
+  }
 
 // Download Note as PDF
 function downloadNoteAsPDF(noteId) {
