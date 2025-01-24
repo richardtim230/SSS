@@ -878,21 +878,99 @@ function showNotePopup(index) {
 });
     
 
+let selectedCategory = []; // Default category
+
 function loadNotes() {
   const notesList = document.getElementById('notesList');
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  notesList.innerHTML = notes
-    .filter(note => note.category === selectedCategory)
+  
+  const filteredNotes = notes.filter(note => note.category === selectedCategory);
+  
+  notesList.innerHTML = filteredNotes
     .map((note, index) => `
       <li>
         <h4>${note.title}</h4>
-        <button onclick="showNotePopup(${index})">View</button>
+        <button onclick="showNotePopup('${note.id}')">View</button>
         <button onclick="generateQRCode(${index})">Generate QR Code</button>
         <div id="qrcode-${index}"></div>
         <button onclick="startQRScan()">Scan QR Code</button>
-        <div id="qr-reader" style="width:500px"></div>
+        <div id="qr-reader" style="width:300px; height:300px;"></div>
       </li>`).join('');
 }
+
+function showNotePopup(noteId) {
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  const note = notes.find(note => note.id === noteId); // Find by unique ID
+
+  if (note) {
+    alert(`Title: ${note.title}\nContent: ${note.text}`);
+  } else {
+    console.error('Note not found!');
+  }
+}
+
+function addNewNote(title, text, category) {
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  const newNote = {
+    id: Date.now().toString(), // Unique ID for the note
+    title,
+    text,
+    category
+  };
+  notes.push(newNote);
+  localStorage.setItem('notes', JSON.stringify(notes));
+  loadNotes();
+}
+
+function generateQRCode(index) {
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  const note = notes[index];
+  const qrCodeContainer = document.getElementById(`qrcode-${index}`);
+  qrCodeContainer.innerHTML = "";
+
+  const canvas = document.createElement('canvas');
+  canvas.style.maxWidth = "100%";
+  canvas.style.height = "auto";
+  qrCodeContainer.appendChild(canvas);
+
+  QRCode.toCanvas(canvas, JSON.stringify(note), { width: 200 }, function (error) {
+    if (error) {
+      console.error('Error generating QR code:', error);
+    } else {
+      console.log('QR code generated successfully!');
+    }
+  });
+}
+
+function startQRScan() {
+  const qrReader = new Html5Qrcode("qr-reader");
+  qrReader.start(
+    { facingMode: "environment" },
+    { fps: 10, qrbox: 250 },
+    (decodedText, decodedResult) => {
+      console.log("QR Code scanned successfully:", decodedText);
+      const sharedNote = JSON.parse(decodedText);
+      saveReceivedNote(sharedNote);
+
+      qrReader.stop().then(() => {
+        document.getElementById("qr-reader").innerHTML = ""; // Clear container
+      });
+    },
+    (errorMessage) => {
+      console.warn("QR scanning error:", errorMessage);
+    }
+  ).catch(err => {
+    console.error("Failed to start QR scanner:", err);
+  });
+}
+
+function saveReceivedNote(sharedNote) {
+  const notes = JSON.parse(localStorage.getItem("notes")) || [];
+  notes.push(sharedNote);
+  localStorage.setItem("notes", JSON.stringify(notes));
+  loadNotes();
+}
+
 
 function showCategory(category) {
   selectedCategory = category;
@@ -934,47 +1012,7 @@ function receiveNote(sharedData) {
   loadNotes();
 }
 
-function generateQRCode(index) {
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  const note = notes[index];
-  const qrCodeContainer = document.getElementById(`qrcode-${index}`);
-  qrCodeContainer.innerHTML = "";
-  const canvas = document.createElement('canvas');
-  qrCodeContainer.appendChild(canvas);
 
-  QRCode.toCanvas(canvas, JSON.stringify(note), function (error) {
-    if (error) {
-      console.error('Error generating QR code:', error);
-    } else {
-      console.log('QR code generated successfully!');
-    }
-  });
-}
-
-function startQRScan() {
-  const qrReader = new Html5Qrcode("qr-reader");
-  qrReader.start(
-    { facingMode: "environment" },
-    {
-      fps: 10,
-      qrbox: 250
-    },
-    (decodedText, decodedResult) => {
-      console.log("QR Code scanned successfully:", decodedText);
-      const sharedNote = JSON.parse(decodedText);
-      saveReceivedNote(sharedNote);
-
-      qrReader.stop().then(() => {
-        document.getElementById("qr-reader").innerHTML = ""; // Clean container
-      }).catch(err => console.error("Failed to stop scanner:", err));
-    },
-    (errorMessage) => {
-      console.error("QR Code scanning failed:", errorMessage);
-    }
-  ).catch(err => {
-    console.error("Unable to start QR Code scanning:", err);
-  });
-}
 
 function saveReceivedNote(sharedNote) {
   const notes = JSON.parse(localStorage.getItem("notes") || "[]");
