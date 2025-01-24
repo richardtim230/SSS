@@ -947,18 +947,19 @@ function saveNote() {
 // Show Note Popup
 function showNotePopup(noteId) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  const note = notes.find(note => note.id === noteId);
+  const note = notes.find(note => note.id === noteId); // Find note by its unique ID
 
   if (note) {
-    currentEditingNote = noteId; // Store the current note ID
+    // Populate the popup with the note details
     document.getElementById('note-title').textContent = note.title;
-    document.getElementById('note-content').innerHTML = note.text; // Display note content
+    document.getElementById('note-content').innerHTML = note.text;
     document.getElementById('note-popup').style.display = 'block'; // Show popup
   } else {
     console.error('Note not found!');
     alert('Could not find the selected note.');
   }
 }
+
 
 // Close Note Popup
 function closeNotePopup() {
@@ -992,7 +993,7 @@ function editNote() {
 // Generate QR Code
 function generateQRCode(noteId) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  const note = notes.find(note => note.id === noteId);
+  const note = notes.find(note => note.id === noteId); // Find the note by its ID
 
   if (!note) {
     console.error('Note not found for QR Code generation!');
@@ -1014,6 +1015,7 @@ function generateQRCode(noteId) {
     }
   });
 }
+
 
 // Download Note as PDF
 function downloadNoteAsPDF(noteId) {
