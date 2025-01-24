@@ -473,6 +473,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.css" rel="stylesheet">
   <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
   <script>
 // Initialize the rich text editor for notes
@@ -951,35 +952,39 @@ function generateQRCode(index) {
 }
 
 function startQRScan() {
-  const html5QrCode = new Html5Qrcode("qr-reader");
-  html5QrCode.start(
+  const qrReader = new Html5Qrcode("qr-reader");
+  qrReader.start(
     { facingMode: "environment" },
     {
       fps: 10,
       qrbox: 250
     },
     (decodedText, decodedResult) => {
-      console.log('QR Code scanned successfully:', decodedText);
+      console.log("QR Code scanned successfully:", decodedText);
       const sharedNote = JSON.parse(decodedText);
       saveReceivedNote(sharedNote);
-      html5QrCode.stop().then(() => {
-        document.getElementById("qr-reader").innerHTML = ""; // Clear container
-      });
+
+      qrReader.stop().then(() => {
+        document.getElementById("qr-reader").innerHTML = ""; // Clean container
+      }).catch(err => console.error("Failed to stop scanner:", err));
     },
     (errorMessage) => {
-      console.error('QR Code scanning failed:', errorMessage);
+      console.error("QR Code scanning failed:", errorMessage);
     }
-  ).catch((err) => {
-    console.error('Unable to start QR Code scanning:', err);
+  ).catch(err => {
+    console.error("Unable to start QR Code scanning:", err);
   });
 }
 
 function saveReceivedNote(sharedNote) {
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  const notes = JSON.parse(localStorage.getItem("notes") || "[]");
   notes.push(sharedNote);
-  localStorage.setItem('notes', JSON.stringify(notes));
-  loadNotes();
+  localStorage.setItem("notes", JSON.stringify(notes));
+  loadNotes(); // Reload notes
 }
+
+
+
 
 //Mini Browser
 
