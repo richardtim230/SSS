@@ -473,7 +473,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.css" rel="stylesheet">
   <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
   <script>
 // Initialize the rich text editor for notes
@@ -844,13 +843,10 @@ function saveNote() {
   }
 }
 
-
-
-function showNotePopup(noteId) {
+// Show note popup
+function showNotePopup(index) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  const note = notes.find(note => note.id === noteId); // Find note by ID
-
-
+  const note = notes[index];
   
   // Display title and content
   document.getElementById('noteTitle').textContent = note.title || "Untitled";
@@ -869,227 +865,124 @@ function showNotePopup(noteId) {
   document.getElementById('notePopup').style.display = 'flex';
 }
 
-  
-  
+// Load notes
 
+    document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    await loadNotes();
+    console.log('Notes loaded successfully');
+  } catch (error) {
+    console.error('Error in loadNotes:', error);
+  }
+});
+    
+let selectedCategory = "default"; // Global variable for category
 
-// Load Notes
 function loadNotes() {
   const notesList = document.getElementById('notesList');
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
-
-  const filteredNotes = notes.filter(note => note.category === selectedCategory);
-
-  notesList.innerHTML = filteredNotes
-    .map(note => `
+  notesList.innerHTML = notes
+    .filter(note => note.category === selectedCategory)
+    .map((note, index) => `
       <li>
         <h4>${note.title}</h4>
-        <button onclick="showNotePopup('${note.id}')">View</button>
-        <button onclick="generateQRCode('${note.id}')">Generate QR Code</button>
-        <div id="qrcode-${note.id}" style="margin-top: 10px;"></div>
-        <button onclick="downloadNoteAsPDF('${note.id}')">Download as PDF</button>
-      </li>
-    `).join('');
+        <button onclick="showNotePopup(${index})">View</button>
+        <button onclick="generateQRCode(${index})">Generate QR Code</button>
+        <div id="qrcode-${index}"></div>
+        <button onclick="startQRScan()">Scan QR Code</button>
+        <div id="qr-reader" style="width:500px"></div>
+      </li>`).join('');
 }
 
-// Save Note
-function saveNote() {
-  const title = prompt("Enter note title:").trim();
-  const text = quill.root.innerHTML.trim(); // Get Quill editor content
-  const mediaInput = document.getElementById('noteMedia').files[0];
+function showCategory(category) {
+  selectedCategory = category;
+  loadNotes();
+}
+
+function shareNote(index) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  const note = notes[index];
 
-  // Validate title and content
-  if (!title) {
-    alert("Title cannot be empty!");
-    return;
-  }
-  if (!text) {
-    alert("Note content cannot be empty!");
-    return;
-  }
-
-  const reader = new FileReader();
-
-  // Function to save the note with or without media
-  const saveNoteToStorage = (media = null) => {
-    const newNote = {
-      id: Date.now().toString(), // Generate unique ID
-      title,
-      text,
-      media, // Media is either base64 or null
-      category: selectedCategory
-    };
-
-    // Save the note
-    notes.push(newNote);
-    localStorage.setItem('notes', JSON.stringify(notes));
-    loadNotes(); // Reload notes
-
-    // Clear inputs
-    quill.root.innerHTML = ''; // Clear Quill editor
-    document.getElementById('noteMedia').value = ''; // Reset file input
-    alert("Note saved successfully!");
+  const shareData = {
+    title: note.title,
+    text: note.text,
+    url: window.location.href
   };
 
-  if (mediaInput) {
-    // If media is provided, read it as Base64
-    reader.onload = () => {
-      saveNoteToStorage(reader.result); // Save with media
-    };
-    reader.readAsDataURL(mediaInput);
+  if (navigator.share) {
+    navigator.share(shareData).then(() => {
+      console.log('Note shared successfully');
+    }).catch((error) => {
+      console.error('Error sharing note:', error);
+    });
   } else {
-    // Save without media
-    saveNoteToStorage();
+    alert('Sharing is not supported on this browser.');
   }
 }
 
-// Show Note Popup
-function showNotePopup(noteId) {
+function receiveNote(sharedData) {
+  const sharedNote = sharedData || {
+    title: "Shared Note Title",
+    text: "Shared note content",
+    media: null,
+    category: "Shared"
+  };
+
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  const note = notes.find(note => note.id === noteId); // Find note by its unique ID
-
-  if (note) {
-    // Populate the popup with the note details
-    document.getElementById('note-title').textContent = note.title;
-    document.getElementById('note-content').innerHTML = note.text;
-    document.getElementById('note-popup').style.display = 'block'; // Show popup
-  } else {
-    console.error('Note not found!');
-    alert('Could not find the selected note.');
-  }
+  notes.push(sharedNote);
+  localStorage.setItem('notes', JSON.stringify(notes));
+  loadNotes();
 }
 
-
-// Close Note Popup
-function closeNotePopup() {
-  document.getElementById('note-popup').style.display = 'none';
-  currentEditingNote = null; // Reset the current editing note
-}
-
-// Edit Note
-function editNote() {
-  if (currentEditingNote !== null) {
-    const confirmEdit = confirm("Are you sure you want to edit this note?");
-    if (confirmEdit) {
-      const notes = JSON.parse(localStorage.getItem('notes')) || [];
-      const noteIndex = notes.findIndex(note => note.id === currentEditingNote);
-
-      if (noteIndex !== -1) {
-        const note = notes[noteIndex];
-        quill.setText(note.text); // Populate the Quill editor with note text
-        notes.splice(noteIndex, 1); // Remove the note (optional)
-        localStorage.setItem('notes', JSON.stringify(notes));
-        loadNotes();
-        closeNotePopup();
-      } else {
-        console.error("Note not found!");
-        alert("Could not find the note to edit.");
-      }
-    }
-  }
-}
-
-// Generate QR Code
-function generateQRCode(noteId) {
+function generateQRCode(index) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  const note = notes.find(note => note.id === noteId); // Find the note by its ID
+  const note = notes[index];
+  const qrCodeContainer = document.getElementById(`qrcode-${index}`);
+  qrCodeContainer.innerHTML = "";
+  const canvas = document.createElement('canvas');
+  qrCodeContainer.appendChild(canvas);
 
-  if (!note) {
-    console.error('Note not found for QR Code generation!');
-    alert('Could not find the note to generate QR Code.');
-    return;
-  }
-
-  // Get the QR Code container
-  const qrCodeContainer = document.getElementById(`qrcode-${noteId}`);
-  qrCodeContainer.innerHTML = ''; // Clear existing QR Code (if any)
-
-  // Generate the QR Code
-  QRCode.toCanvas(qrCodeContainer, JSON.stringify(note), { width: 200 }, (error) => {
+  QRCode.toCanvas(canvas, JSON.stringify(note), function (error) {
     if (error) {
-      console.error('Error generating QR Code:', error);
-      alert('Failed to generate QR Code.');
+      console.error('Error generating QR code:', error);
     } else {
-      console.log('QR Code generated successfully!');
+      console.log('QR code generated successfully!');
     }
   });
 }
 
-
-// Download Note as PDF
-function downloadNoteAsPDF(noteId) {
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  const note = notes.find(note => note.id === noteId);
-
-  if (!note) {
-    console.error('Note not found!');
-    alert('Could not find the note to download as PDF.');
-    return;
-  }
-
-  // Import jsPDF
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-
-  // Set Title
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(18);
-  doc.text(note.title, 10, 20); // Title at (x: 10, y: 20)
-
-  // Set Note Content
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(12);
-
-  // Break content into multiple lines if it's long
-  const content = doc.splitTextToSize(note.text, 180); // Wrap text to 180px width
-  doc.text(content, 10, 40); // Content starts at (x: 10, y: 40)
-
-  // Save PDF with the title as the filename
-  doc.save(`${note.title}.pdf`);
-}
-
 function startQRScan() {
-  Html5Qrcode.getCameras().then(cameras => {
-    if (cameras.length === 0) {
-      console.error("No cameras found.");
-    } else {
-      const cameraId = cameras[0].id;
-      const qrReader = new Html5Qrcode("qr-reader");
-
-      qrReader.start(
-        cameraId,
-        {
-          fps: 10,
-          qrbox: { width: 250, height: 250 }
-        },
-        (decodedText, decodedResult) => {
-          console.log("QR Code scanned successfully:", decodedText);
-          const sharedNote = JSON.parse(decodedText);
-          saveReceivedNote(sharedNote);
-
-          qrReader.stop().then(() => {
-            document.getElementById("qr-reader").innerHTML = ""; // Clear container
-          });
-        },
-        (errorMessage) => {
-          console.warn("QR scanning error:", errorMessage);
-        }
-      ).catch(err => {
-        console.error("Failed to start QR scanner:", err);
+  const html5QrCode = new Html5Qrcode("qr-reader");
+  html5QrCode.start(
+    { facingMode: "environment" },
+    {
+      fps: 10,
+      qrbox: 250
+    },
+    (decodedText, decodedResult) => {
+      console.log('QR Code scanned successfully:', decodedText);
+      const sharedNote = JSON.parse(decodedText);
+      saveReceivedNote(sharedNote);
+      html5QrCode.stop().then(() => {
+        document.getElementById("qr-reader").innerHTML = ""; // Clear container
       });
+    },
+    (errorMessage) => {
+      console.error('QR Code scanning failed:', errorMessage);
     }
-  }).catch(err => console.error("Error getting cameras:", err));
+  ).catch((err) => {
+    console.error('Unable to start QR Code scanning:', err);
+  });
 }
 
 function saveReceivedNote(sharedNote) {
-  const notes = JSON.parse(localStorage.getItem("notes")) || [];
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
   notes.push(sharedNote);
-  localStorage.setItem("notes", JSON.stringify(notes));
+  localStorage.setItem('notes', JSON.stringify(notes));
   loadNotes();
 }
 
-    // MiniBrowser
+//Mini Browser
 
 const homepage = "https://www.wikipedia.org";
 
@@ -1174,100 +1067,49 @@ function loadCalendar() {
     
 
 
+// Save note
 function saveNote() {
-  const title = prompt("Enter note title:").trim();
-  const text = quill.root.innerHTML.trim(); // Get Quill editor content
+  const title = prompt("Enter note title:");
+  const text = quill.root.innerHTML.trim(); // Quill editor content
   const mediaInput = document.getElementById('noteMedia').files[0];
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  
-  // Validate title and content
-  if (!title) {
-    alert("Title cannot be empty!");
-    return;
-  }
-  if (!text) {
-    alert("Note content cannot be empty!");
-    return;
-  }
-
   const reader = new FileReader();
 
-  // Function to save the note with media or without
-  const saveNoteToStorage = (media = null) => {
-    const newNote = {
-      id: Date.now().toString(), // Generate unique ID
-      title,
-      text,
-      media, // Media is either base64 or null
-      category: selectedCategory
-    };
-
-    // Save the note
-    notes.push(newNote);
+  reader.onload = () => {
+    notes.push({ title, text, media: reader.result, category: selectedCategory });
     localStorage.setItem('notes', JSON.stringify(notes));
-    loadNotes(); // Reload notes to display the new one
-
-    // Clear inputs
-    quill.root.innerHTML = ''; // Clear Quill editor
-    document.getElementById('noteMedia').value = ''; // Reset file input
-    alert("Note saved successfully!");
+    loadNotes();
+    quill.root.innerHTML = ''; // Clear editor after saving
+    document.getElementById('noteMedia').value = '';
   };
 
   if (mediaInput) {
-    // If media is provided, read it as Base64
-    reader.onload = () => {
-      saveNoteToStorage(reader.result); // Save with media
-    };
-    reader.readAsDataURL(mediaInput);
+    reader.readAsDataURL(mediaInput); // Handle media upload
   } else {
-    // Save without media
-    saveNoteToStorage();
+    notes.push({ title, text, media: null, category: selectedCategory });
+    localStorage.setItem('notes', JSON.stringify(notes));
+    loadNotes();
+    quill.root.innerHTML = ''; // Clear editor after saving
+    document.getElementById('noteMedia').value = '';
   }
 }
 
 
-
-let currentEditingNote = null; // Store the ID of the note being edited
-
-function showNotePopup(noteId) {
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  const note = notes.find(note => note.id === noteId);
-
-  if (note) {
-    currentEditingNote = noteId; // Set the ID of the current note
-    document.getElementById('note-title').textContent = note.title;
-    document.getElementById('note-content').textContent = note.text;
-    document.getElementById('note-popup').style.display = 'block';
-  } else {
-    console.error('Note not found!');
-  }
-}
-
+// Edit note
 function editNote() {
   if (currentEditingNote !== null) {
     const confirmEdit = confirm("Are you sure you want to edit this note?");
     if (confirmEdit) {
       const notes = JSON.parse(localStorage.getItem('notes')) || [];
-      const noteIndex = notes.findIndex(note => note.id === currentEditingNote);
-
-      if (noteIndex !== -1) {
-        const note = notes[noteIndex];
-
-        // Populate the Quill editor with the note text
-        quill.setText(note.text); // Correctly populate Quill
-
-        // Remove the note from the list (optional, depends on your requirements)
-        notes.splice(noteIndex, 1);
-        localStorage.setItem('notes', JSON.stringify(notes));
-        loadNotes();
-        closeNotePopup();
-      } else {
-        console.error("Note not found!");
-      }
+      const note = notes[currentEditingNote];
+      quill.root.innerHTML = note.text;
+      notes.splice(currentEditingNote, 1);
+      localStorage.setItem('notes', JSON.stringify(notes));
+      loadNotes();
+      closeNotePopup();
     }
   }
 }
-
 
 // Delete note
 function deleteNote() {
