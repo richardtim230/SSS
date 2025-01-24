@@ -877,7 +877,6 @@ function showNotePopup(index) {
   }
 });
     
-
 function loadNotes() {
   const notesList = document.getElementById('notesList');
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
@@ -890,59 +889,22 @@ function loadNotes() {
         <button onclick="generateQRCode(${index})">Generate QR Code</button>
         <div id="qrcode-${index}"></div>
         <button onclick="startQRScan()">Scan QR Code</button>
-        <div id="qr-reader" style="width:500px"></div>
+        <div id="qr-reader" style="width:300px; height:300px;"></div>
       </li>`).join('');
-}
-
-function showCategory(category) {
-  selectedCategory = category;
-  loadNotes();
-}
-
-function shareNote(index) {
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  const note = notes[index];
-
-  const shareData = {
-    title: note.title,
-    text: note.text,
-    url: window.location.href
-  };
-
-  if (navigator.share) {
-    navigator.share(shareData).then(() => {
-      console.log('Note shared successfully');
-    }).catch((error) => {
-      console.error('Error sharing note:', error);
-    });
-  } else {
-    alert('Sharing is not supported on this browser.');
-  }
-}
-
-function receiveNote(sharedData) {
-  const sharedNote = sharedData || {
-    title: "Shared Note Title",
-    text: "Shared note content",
-    media: null,
-    category: "Shared"
-  };
-
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  notes.push(sharedNote);
-  localStorage.setItem('notes', JSON.stringify(notes));
-  loadNotes();
 }
 
 function generateQRCode(index) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
   const note = notes[index];
   const qrCodeContainer = document.getElementById(`qrcode-${index}`);
-  qrCodeContainer.innerHTML = "";
+  qrCodeContainer.innerHTML = ""; // Clear existing QR codes
+
   const canvas = document.createElement('canvas');
+  canvas.style.maxWidth = "100%";
+  canvas.style.height = "auto";
   qrCodeContainer.appendChild(canvas);
 
-  QRCode.toCanvas(canvas, JSON.stringify(note), function (error) {
+  QRCode.toCanvas(canvas, JSON.stringify(note), { width: 200 }, function (error) {
     if (error) {
       console.error('Error generating QR code:', error);
     } else {
@@ -952,41 +914,46 @@ function generateQRCode(index) {
 }
 
 function startQRScan() {
-  const qrReader = new Html5Qrcode("qr-reader");
-  qrReader.start(
-    { facingMode: "environment" },
-    {
-      fps: 10,
-      qrbox: 250
-    },
-    (decodedText, decodedResult) => {
-      console.log("QR Code scanned successfully:", decodedText);
-      const sharedNote = JSON.parse(decodedText);
-      saveReceivedNote(sharedNote);
+  Html5Qrcode.getCameras().then(cameras => {
+    if (cameras.length === 0) {
+      console.error("No cameras found.");
+    } else {
+      const cameraId = cameras[0].id;
+      const qrReader = new Html5Qrcode("qr-reader");
 
-      qrReader.stop().then(() => {
-        document.getElementById("qr-reader").innerHTML = ""; // Clean container
-      }).catch(err => console.error("Failed to stop scanner:", err));
-    },
-    (errorMessage) => {
-      console.error("QR Code scanning failed:", errorMessage);
+      qrReader.start(
+        cameraId,
+        {
+          fps: 10,
+          qrbox: { width: 250, height: 250 }
+        },
+        (decodedText, decodedResult) => {
+          console.log("QR Code scanned successfully:", decodedText);
+          const sharedNote = JSON.parse(decodedText);
+          saveReceivedNote(sharedNote);
+
+          qrReader.stop().then(() => {
+            document.getElementById("qr-reader").innerHTML = ""; // Clear container
+          });
+        },
+        (errorMessage) => {
+          console.warn("QR scanning error:", errorMessage);
+        }
+      ).catch(err => {
+        console.error("Failed to start QR scanner:", err);
+      });
     }
-  ).catch(err => {
-    console.error("Unable to start QR Code scanning:", err);
-  });
+  }).catch(err => console.error("Error getting cameras:", err));
 }
 
 function saveReceivedNote(sharedNote) {
-  const notes = JSON.parse(localStorage.getItem("notes") || "[]");
+  const notes = JSON.parse(localStorage.getItem("notes")) || [];
   notes.push(sharedNote);
   localStorage.setItem("notes", JSON.stringify(notes));
-  loadNotes(); // Reload notes
+  loadNotes();
 }
 
-
-
-
-//Mini Browser
+    // MiniBrowser
 
 const homepage = "https://www.wikipedia.org";
 
