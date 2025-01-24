@@ -848,8 +848,6 @@ function showNotePopup(index) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
   const filteredNotes = notes.filter(note => note.category === selectedCategory);
   const note = filteredNotes[index];
-
-
   
   // Display title and content
   document.getElementById('noteTitle').textContent = note.title || "Untitled";
@@ -867,6 +865,9 @@ function showNotePopup(index) {
   currentEditingNote = index;
   document.getElementById('notePopup').style.display = 'flex';
 }
+
+  
+  
 
 // Load notes
 
