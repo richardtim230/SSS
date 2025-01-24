@@ -849,12 +849,6 @@ function showNotePopup(index) {
   const filteredNotes = notes.filter(note => note.category === selectedCategory);
   const note = filteredNotes[index];
 
-  if (note) {
-    alert(`Title: ${note.title}\nContent: ${note.text}`); // Replace with actual display logic
-  } else {
-    console.error('Note not found!');
-  }
-}
 
   
   // Display title and content
