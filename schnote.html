@@ -289,6 +289,45 @@
     .bottom-controls button:hover {
       background: #45a049;
     }
+
+  .prompt-overlay {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 9999;
+}
+
+.prompt-box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+}
+
+.prompt-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.prompt-actions button {
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.prompt-actions button:hover {
+  background-color: #ddd;
+}
+
   </style>
 </head>
 <body>
@@ -813,36 +852,71 @@ function loadSavedSchedule() {
     
 // Save note
 function saveNote() {
-  const title = prompt("Enter note title:");
+  // Show custom prompt for note title
+  document.getElementById('customPrompt').style.display = 'flex';
 
-  if (!title.trim()) {
-    alert("Please enter a title for the note.");
-    return;
+  const promptInput = document.getElementById('promptInput');
+  const promptOk = document.getElementById('promptOk');
+  const promptCancel = document.getElementById('promptCancel');
+
+  function handleSave() {
+    const title = promptInput.value.trim();
+
+    if (!title) {
+      alert("Please enter a title for the note.");
+      return;
+    }
+
+    const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    const duplicateNote = notes.find(note => note.title === title);
+
+    if (duplicateNote) {
+      alert("A note with this title already exists. Please use a different title.");
+      return;
+    }
+
+    const text = quill.root.innerHTML.trim(); // Quill editor content
+    const mediaInput = document.getElementById('noteMedia').files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      notes.push({ title, text, media: reader.result, category: selectedCategory });
+      localStorage.setItem('notes', JSON.stringify(notes));
+      loadNotes();
+      quill.root.innerHTML = ''; // Clear editor after saving
+      document.getElementById('noteMedia').value = '';
+    };
+
+    if (mediaInput) {
+      reader.readAsDataURL(mediaInput); // Handle media upload
+    } else {
+      notes.push({ title, text, media: null, category: selectedCategory });
+      localStorage.setItem('notes', JSON.stringify(notes));
+      loadNotes();
+      quill.root.innerHTML = ''; // Clear editor after saving
+      document.getElementById('noteMedia').value = '';
+    }
+
+    // Hide custom prompt after saving
+    document.getElementById('customPrompt').style.display = 'none';
+    // Remove event listeners to avoid duplicate calls
+    promptOk.removeEventListener('click', handleSave);
+    promptCancel.removeEventListener('click', handleCancel);
   }
 
-  const text = quill.root.innerHTML.trim(); // Quill editor content
-  const mediaInput = document.getElementById('noteMedia').files[0];
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  const reader = new FileReader();
-
-  reader.onload = () => {
-    notes.push({ title, text, media: reader.result, category: selectedCategory });
-    localStorage.setItem('notes', JSON.stringify(notes));
-    loadNotes();
-    quill.root.innerHTML = ''; // Clear editor after saving
-    document.getElementById('noteMedia').value = '';
-  };
-
-  if (mediaInput) {
-    reader.readAsDataURL(mediaInput); // Handle media upload
-  } else {
-    notes.push({ title, text, media: null, category: selectedCategory });
-    localStorage.setItem('notes', JSON.stringify(notes));
-    loadNotes();
-    quill.root.innerHTML = ''; // Clear editor after saving
-    document.getElementById('noteMedia').value = '';
+  function handleCancel() {
+    // Hide custom prompt without saving
+    document.getElementById('customPrompt').style.display = 'none';
+    // Remove event listeners to avoid duplicate calls
+    promptOk.removeEventListener('click', handleSave);
+    promptCancel.removeEventListener('click', handleCancel);
   }
+
+  // Add event listeners for the custom prompt buttons
+  promptOk.addEventListener('click', handleSave);
+  promptCancel.addEventListener('click', handleCancel);
 }
+
 
 let currentEditingNote = -1; // Initialize currentEditingNote variable
 
