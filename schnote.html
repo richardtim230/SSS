@@ -1043,49 +1043,100 @@ function loadCalendar() {
     
 
 
-// Save note
 function saveNote() {
-  const title = prompt("Enter note title:");
-  const text = quill.root.innerHTML.trim(); // Quill editor content
+  const title = prompt("Enter note title:").trim();
+  const text = quill.root.innerHTML.trim(); // Get Quill editor content
   const mediaInput = document.getElementById('noteMedia').files[0];
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  
+  // Validate title and content
+  if (!title) {
+    alert("Title cannot be empty!");
+    return;
+  }
+  if (!text) {
+    alert("Note content cannot be empty!");
+    return;
+  }
+
   const reader = new FileReader();
 
-  reader.onload = () => {
-    notes.push({ title, text, media: reader.result, category: selectedCategory });
+  // Function to save the note with media or without
+  const saveNoteToStorage = (media = null) => {
+    const newNote = {
+      id: Date.now().toString(), // Generate unique ID
+      title,
+      text,
+      media, // Media is either base64 or null
+      category: selectedCategory
+    };
+
+    // Save the note
+    notes.push(newNote);
     localStorage.setItem('notes', JSON.stringify(notes));
-    loadNotes();
-    quill.root.innerHTML = ''; // Clear editor after saving
-    document.getElementById('noteMedia').value = '';
+    loadNotes(); // Reload notes to display the new one
+
+    // Clear inputs
+    quill.root.innerHTML = ''; // Clear Quill editor
+    document.getElementById('noteMedia').value = ''; // Reset file input
+    alert("Note saved successfully!");
   };
 
   if (mediaInput) {
-    reader.readAsDataURL(mediaInput); // Handle media upload
+    // If media is provided, read it as Base64
+    reader.onload = () => {
+      saveNoteToStorage(reader.result); // Save with media
+    };
+    reader.readAsDataURL(mediaInput);
   } else {
-    notes.push({ title, text, media: null, category: selectedCategory });
-    localStorage.setItem('notes', JSON.stringify(notes));
-    loadNotes();
-    quill.root.innerHTML = ''; // Clear editor after saving
-    document.getElementById('noteMedia').value = '';
+    // Save without media
+    saveNoteToStorage();
   }
 }
 
 
-// Edit note
+
+let currentEditingNote = null; // Store the ID of the note being edited
+
+function showNotePopup(noteId) {
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  const note = notes.find(note => note.id === noteId);
+
+  if (note) {
+    currentEditingNote = noteId; // Set the ID of the current note
+    document.getElementById('note-title').textContent = note.title;
+    document.getElementById('note-content').textContent = note.text;
+    document.getElementById('note-popup').style.display = 'block';
+  } else {
+    console.error('Note not found!');
+  }
+}
+
 function editNote() {
   if (currentEditingNote !== null) {
     const confirmEdit = confirm("Are you sure you want to edit this note?");
     if (confirmEdit) {
       const notes = JSON.parse(localStorage.getItem('notes')) || [];
-      const note = notes[currentEditingNote];
-      quill.root.innerHTML = note.text;
-      notes.splice(currentEditingNote, 1);
-      localStorage.setItem('notes', JSON.stringify(notes));
-      loadNotes();
-      closeNotePopup();
+      const noteIndex = notes.findIndex(note => note.id === currentEditingNote);
+
+      if (noteIndex !== -1) {
+        const note = notes[noteIndex];
+
+        // Populate the Quill editor with the note text
+        quill.setText(note.text); // Correctly populate Quill
+
+        // Remove the note from the list (optional, depends on your requirements)
+        notes.splice(noteIndex, 1);
+        localStorage.setItem('notes', JSON.stringify(notes));
+        loadNotes();
+        closeNotePopup();
+      } else {
+        console.error("Note not found!");
+      }
     }
   }
 }
+
 
 // Delete note
 function deleteNote() {
