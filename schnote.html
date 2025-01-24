@@ -897,7 +897,7 @@ function loadNotes() {
       </li>
     `).join('');
 }
-
+// Download PDF
 
 function downloadNoteAsPDF(noteId) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
@@ -928,8 +928,6 @@ function downloadNoteAsPDF(noteId) {
   // Save PDF with the title as the filename
   doc.save(`${note.title}.pdf`);
 }
-
-
 
 
 function generateQRCode(index) {
