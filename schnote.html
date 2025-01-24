@@ -846,8 +846,10 @@ function saveNote() {
 
 function showNotePopup(index) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  const note = notes[index];
-  
+  const filteredNotes = notes.filter(note => note.category === selectedCategory);
+  const note = filteredNotes[index];
+
+
   // Display title and content
   document.getElementById('noteTitle').textContent = note.title || "Untitled";
   document.getElementById('noteContent').innerHTML = note.text || "No content available";
@@ -879,8 +881,9 @@ function showNotePopup(index) {
 function loadNotes() {
   const notesList = document.getElementById('notesList');
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  notesList.innerHTML = notes
-    .filter(note => note.category === selectedCategory)
+  const filteredNotes = notes.filter(note => note.category === selectedCategory);
+  
+  notesList.innerHTML = filteredNotes
     .map((note, index) => `
       <li>
         <h4>${note.title}</h4>
@@ -888,9 +891,10 @@ function loadNotes() {
         <button onclick="generateQRCode(${index})">Generate QR Code</button>
         <div id="qrcode-${index}"></div>
         <button onclick="startQRScan()">Scan QR Code</button>
-        <div id="qr-reader" style="width:300px; height:200px;"></div>
+        <div id="qr-reader" style="width:300px; height:100px;"></div>
       </li>`).join('');
 }
+
 
 function generateQRCode(index) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
