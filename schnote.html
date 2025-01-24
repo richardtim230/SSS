@@ -336,16 +336,16 @@
     <h2>Students Support System</h2>
   </header>
 
-  <div id="customPrompt" class="prompt-overlay">
-    <div class="prompt-box">
-      <h3 id="promptTitle">Enter Note Title</h3>
-      <input type="text" id="promptInput" placeholder="Type here..." />
-      <div class="prompt-actions">
-        <button id="promptOk">OK</button>
-        <button id="promptCancel">Cancel</button>
-      </div>
-    </div>
+  <!-- Custom Prompt Modal -->
+<div id="customPromptModal" style="display: none; position: fixed; top: 20%; left: 50%; transform: translate(-50%, -20%); width: 300px; background: white; border: 1px solid #ccc; border-radius: 8px; z-index: 1000; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.2);">
+  <h3 style="margin-top: 0;">Enter Note Title</h3>
+  <input id="customPromptInput" type="text" placeholder="Note title..." style="width: 100%; padding: 8px; margin-top: 10px; border: 1px solid #ccc; border-radius: 4px;">
+  <div style="margin-top: 15px; text-align: right;">
+    <button onclick="closeCustomPrompt(false)" style="padding: 8px 12px; margin-right: 5px; border: none; background: #ccc; border-radius: 4px;">Cancel</button>
+    <button onclick="closeCustomPrompt(true)" style="padding: 8px 12px; border: none; background: #007bff; color: white; border-radius: 4px;">OK</button>
   </div>
+</div>
+
 
   <!-- Browser Icon -->
   <button id="browserIcon" onclick="toggleMiniBrowser()">🌐 Open</button>
@@ -1118,31 +1118,15 @@ function loadCalendar() {
 
 // Save note
 function saveNote() {
-  // Show custom prompt for note title
-  document.getElementById('customPrompt').style.display = 'flex';
-
-  const promptInput = document.getElementById('promptInput');
-  const promptOk = document.getElementById('promptOk');
-  const promptCancel = document.getElementById('promptCancel');
-
-  function handleSave() {
-    const title = promptInput.value.trim();
-
+  openCustomPrompt((title) => {
     if (!title) {
-      alert("Please enter a title for the note.");
+      alert("Note title is required!");
       return;
     }
 
-    const notes = JSON.parse(localStorage.getItem('notes')) || [];
-    const duplicateNote = notes.find(note => note.title === title);
-
-    if (duplicateNote) {
-      alert("A note with this title already exists. Please use a different title.");
-      return;
-    }
-
-    const text = quill.root.innerHTML.trim(); // Quill editor content
+    const text = quill.root.innerHTML.trim(); // Get Quill editor content
     const mediaInput = document.getElementById('noteMedia').files[0];
+    const notes = JSON.parse(localStorage.getItem('notes')) || [];
     const reader = new FileReader();
 
     reader.onload = () => {
@@ -1162,25 +1146,31 @@ function saveNote() {
       quill.root.innerHTML = ''; // Clear editor after saving
       document.getElementById('noteMedia').value = '';
     }
+  });
+}
+    
+let customPromptCallback = null;
 
-    // Hide custom prompt after saving
-    document.getElementById('customPrompt').style.display = 'none';
-    // Remove event listeners to avoid duplicate calls
-    promptOk.removeEventListener('click', handleSave);
-    promptCancel.removeEventListener('click', handleCancel);
+// Open the custom prompt
+function openCustomPrompt(callback) {
+  customPromptCallback = callback;
+  document.getElementById('customPromptModal').style.display = 'block';
+  document.getElementById('customPromptInput').value = ''; // Clear input
+  document.getElementById('customPromptInput').focus(); // Focus on the input field
+}
+
+// Close the custom prompt
+function closeCustomPrompt(isConfirmed) {
+  const modal = document.getElementById('customPromptModal');
+  const input = document.getElementById('customPromptInput').value.trim();
+
+  if (isConfirmed && customPromptCallback) {
+    customPromptCallback(input); // Pass the input value to the callback
+  } else if (!isConfirmed && customPromptCallback) {
+    customPromptCallback(null); // Pass null if the user cancels
   }
 
-  function handleCancel() {
-    // Hide custom prompt without saving
-    document.getElementById('customPrompt').style.display = 'none';
-    // Remove event listeners to avoid duplicate calls
-    promptOk.removeEventListener('click', handleSave);
-    promptCancel.removeEventListener('click', handleCancel);
-  }
-
-  // Add event listeners for the custom prompt buttons
-  promptOk.addEventListener('click', handleSave);
-  promptCancel.addEventListener('click', handleCancel);
+  modal.style.display = 'none'; // Hide the modal
 }
 
 
