@@ -182,19 +182,6 @@
     .prompt-overlay, .hidden {
       display: none !important;
     }
-
-    .ql-editor .better-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-.ql-editor .better-table td, 
-.ql-editor .better-table th {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: center;
-}
-
     #calendar {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
@@ -552,11 +539,8 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://unpkg.com/quill-better-table/dist/quill-better-table.min.js"></script>
-<link href="https://unpkg.com/quill-better-table/dist/quill-better-table.min.css" rel="stylesheet">
 
   <script>
-
 // Initialize the rich text editor for notes
 const quill = new Quill('#noteEditor', {
   theme: 'snow',
@@ -573,15 +557,11 @@ const quill = new Quill('#noteEditor', {
       [{ 'indent': '-1' }, { 'indent': '+1' }], // Indentation
       [{ 'script': 'sub' }, { 'script': 'super' }], // Subscript and superscript
       [{ 'direction': 'rtl' }], // Text direction
-      ['link', 'image', 'video', 'file'], // Links, images, and videos
+      ['link', 'image', 'video'], // Links, images, and videos
       ['code-block', 'blockquote'], // Code block and blockquote
       ['formula'], // Math formulas
-      ['emoji'], // Emoji picker
-      ['undo', 'redo'], // Undo and redo buttons
-      [{ 'table': true }], // Add table functionality
       ['clean'], // Clear formatting
     ],
-    
   },
 });
 
@@ -1285,7 +1265,7 @@ function navigateNote(direction) {
 }
     window.downloadNoteWithStylingAsPDF = downloadNoteWithStylingAsPDF;
 
-    async function downloadNoteWithStylingAsPDF(index) {
+  async function downloadNoteWithStylingAsPDF(index) {
   const notes = JSON.parse(localStorage.getItem("notes")) || [];
   const filteredNotes = notes.filter(note => note.category === selectedCategory);
   const note = filteredNotes[index];
@@ -1361,12 +1341,6 @@ function navigateNote(direction) {
   } catch (error) {
     console.error("Error generating PDF:", error);
     alert("Failed to generate PDF. Please try again.");
-  }
-}
-
-  } finally {
-    // Remove temporary container
-    document.body.removeChild(tempContainer);
   }
 }
 
