@@ -1279,79 +1279,67 @@ function navigateNote(direction) {
   const pdf = new jsPDF({
     orientation: "portrait",
     unit: "pt",
-    format: "a4", // Standard page size
+    format: "a4", // Standard A4 page size
   });
 
-  // Page dimensions
+  // Page dimensions and margins
   const pageWidth = pdf.internal.pageSize.getWidth();
   const pageHeight = pdf.internal.pageSize.getHeight();
-
   const margin = 40; // Margin for content
-  const contentWidth = pageWidth - 2 * margin;
+  const headerHeight = 60; // Space reserved for header
+  const footerHeight = 40; // Space reserved for footer
+  const contentHeight = pageHeight - headerHeight - footerHeight; // Available space for content per page
 
-  // Add custom header
-  pdf.setFillColor(255, 165, 0); // Orange background
-  pdf.rect(0, 0, pageWidth, 60, "F"); // Draw rectangle for header
-  pdf.setFontSize(18);
-  pdf.setTextColor(255, 255, 255); // White text
-  pdf.text(note.title, margin, 40); // Title in header
+  // Add a styled header
+  const addHeader = (currentPage) => {
+    pdf.setFillColor(255, 165, 0); // Orange header background
+    pdf.rect(0, 0, pageWidth, headerHeight, "F"); // Header rectangle
+    pdf.setFontSize(18);
+    pdf.setTextColor(255, 255, 255); // White text for header
+    pdf.text(note.title, margin, headerHeight / 2 + 6); // Centered vertically
+  };
 
-  let currentY = 80; // Start content below the header
+  // Add a styled footer
+  const addFooter = (currentPage, totalPages) => {
+    pdf.setFontSize(10);
+    pdf.setTextColor(100);
+    pdf.text(`Page ${currentPage} of ${totalPages}`, margin, pageHeight - footerHeight / 2);
+  };
 
-  // Temporary container for rendering the note with styles
+  // Temporary container for rendering the note
   const tempContainer = document.createElement("div");
-  tempContainer.style.width = `${contentWidth}px`;
+  tempContainer.style.width = `${pageWidth - 2 * margin}px`;
   tempContainer.style.lineHeight = "1.6";
   tempContainer.style.fontFamily = "Arial, sans-serif";
-  tempContainer.style.padding = "20px";
-  tempContainer.style.backgroundColor = "white";
+  tempContainer.style.padding = "10px";
   tempContainer.innerHTML = note.text;
   document.body.appendChild(tempContainer);
 
-  // Use html2canvas to render content
   try {
     const canvas = await html2canvas(tempContainer, { scale: 2 });
-    const imgData = canvas.toDataURL("image/jpeg", 0.8); // Compress image
+    const imgData = canvas.toDataURL("image/jpeg", 0.8); // Compress the image
+    const imgWidth = pageWidth - 2 * margin;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-    const imgHeight = (canvas.height * contentWidth) / canvas.width;
-
-    // Pagination for long content
+    let position = headerHeight + margin; // Start after the header
     let heightLeft = imgHeight;
 
+    const totalPages = Math.ceil(heightLeft / contentHeight);
+    let currentPage = 1;
+
     while (heightLeft > 0) {
-      if (currentY + imgHeight > pageHeight - 60) {
-        // Add footer before adding a new page
-        pdf.setFontSize(10);
-        pdf.setTextColor(100);
-        pdf.text(`Page ${pdf.internal.getNumberOfPages()}`, pageWidth - margin, pageHeight - 20);
+      addHeader(currentPage); // Add header to each page
+      pdf.addImage(imgData, "JPEG", margin, position, imgWidth, contentHeight); // Render content
+      addFooter(currentPage, totalPages); // Add footer to each page
 
-        pdf.addPage(); // Add a new page
-        currentY = 60; // Reset to top of new page
+      heightLeft -= contentHeight;
+      if (heightLeft > 0) {
+        pdf.addPage();
+        currentPage++;
+        position = headerHeight; // Reset position for the next page
       }
-
-      // Add content to the PDF
-      pdf.addImage(
-        imgData,
-        "JPEG",
-        margin,
-        currentY,
-        contentWidth,
-        imgHeight
-      );
-
-      heightLeft -= pageHeight - 120; // Adjust height for next page
     }
 
-    // Add footer on the last page
-    pdf.setFontSize(10);
-    pdf.setTextColor(100);
-    pdf.text(
-      `Page ${pdf.internal.getNumberOfPages()}`,
-      pageWidth - margin,
-      pageHeight - 20
-    );
-
-    // Save the PDF
     pdf.save(`${note.title}.pdf`);
   } catch (error) {
     console.error("Error generating PDF:", error);
@@ -1361,6 +1349,7 @@ function navigateNote(direction) {
     document.body.removeChild(tempContainer);
   }
 }
+
 
 
 
