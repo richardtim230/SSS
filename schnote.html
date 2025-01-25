@@ -552,8 +552,17 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://unpkg.com/quill-better-table/dist/quill-better-table.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/quill-better-table/dist/quill-better-table.min.css">
 
   <script>
+    import BetterTable from 'quill-better-table'; // Only if using npm
+import 'quill-better-table/dist/quill-better-table.min.css';
+
+Quill.register({
+  'modules/better-table': BetterTable
+}, true);
+
 // Initialize the rich text editor for notes
 const quill = new Quill('#noteEditor', {
   theme: 'snow',
