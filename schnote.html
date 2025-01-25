@@ -553,7 +553,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://unpkg.com/quill-better-table/dist/quill-better-table.min.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/quill-better-table/dist/quill-better-table.min.css">
+<link href="https://unpkg.com/quill-better-table/dist/quill-better-table.min.css" rel="stylesheet">
 
   <script>
     import BetterTable from 'quill-better-table'; // Only if using npm
@@ -1314,7 +1314,7 @@ function navigateNote(direction) {
   const margin = 40; // Margin for content
   const headerHeight = 60; // Space reserved for header
   const footerHeight = 40; // Space reserved for footer
-  const contentHeight = pageHeight - headerHeight - footerHeight; // Available space for content per page
+  const contentHeight = pageHeight - headerHeight - footerHeight; // Usable content height
 
   // Add a styled header
   const addHeader = (currentPage) => {
@@ -1322,7 +1322,8 @@ function navigateNote(direction) {
     pdf.rect(0, 0, pageWidth, headerHeight, "F"); // Header rectangle
     pdf.setFontSize(18);
     pdf.setTextColor(255, 255, 255); // White text for header
-    pdf.text(note.title, margin, headerHeight / 2 + 6); // Centered vertically
+    const truncatedTitle = note.title.length > 50 ? `${note.title.slice(0, 47)}...` : note.title;
+    pdf.text(truncatedTitle, margin, headerHeight / 2 + 6); // Vertically centered title
   };
 
   // Add a styled footer
@@ -1332,44 +1333,43 @@ function navigateNote(direction) {
     pdf.text(`Page ${currentPage} of ${totalPages}`, margin, pageHeight - footerHeight / 2);
   };
 
-  // Temporary container for rendering the note
-  const tempContainer = document.createElement("div");
-  tempContainer.style.width = `${pageWidth - 2 * margin}px`;
-  tempContainer.style.lineHeight = "1.6";
-  tempContainer.style.fontFamily = "Arial, sans-serif";
-  tempContainer.style.padding = "10px";
-  tempContainer.innerHTML = note.text;
-  document.body.appendChild(tempContainer);
-
-  try {
-    const canvas = await html2canvas(tempContainer, { scale: 2 });
-    const imgData = canvas.toDataURL("image/jpeg", 0.8); // Compress the image
-    const imgWidth = pageWidth - 2 * margin;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-    let position = headerHeight + margin; // Start after the header
-    let heightLeft = imgHeight;
-
-    const totalPages = Math.ceil(heightLeft / contentHeight);
+  // Render the note text with word wrapping
+  const renderTextToPDF = (text) => {
+    const lines = pdf.splitTextToSize(text, pageWidth - 2 * margin); // Wrap text to fit page width
     let currentPage = 1;
+    let totalPages = Math.ceil(lines.length * 14 / contentHeight); // Estimate total pages
+    let lineHeight = 14; // Line height in points
+    let cursorY = headerHeight + margin;
 
-    while (heightLeft > 0) {
-      addHeader(currentPage); // Add header to each page
-      pdf.addImage(imgData, "JPEG", margin, position, imgWidth, contentHeight); // Render content
-      addFooter(currentPage, totalPages); // Add footer to each page
-
-      heightLeft -= contentHeight;
-      if (heightLeft > 0) {
+    for (let i = 0; i < lines.length; i++) {
+      // Check if we need a new page
+      if (cursorY + lineHeight > pageHeight - footerHeight) {
+        addFooter(currentPage, totalPages);
         pdf.addPage();
         currentPage++;
-        position = headerHeight; // Reset position for the next page
+        cursorY = headerHeight + margin;
+        addHeader(currentPage);
       }
+
+      pdf.text(lines[i], margin, cursorY);
+      cursorY += lineHeight;
     }
 
+    // Add footer for the last page
+    addFooter(currentPage, totalPages);
+  };
+
+  try {
+    pdf.addPage(); // Initialize the first page
+    addHeader(1); // Add header to the first page
+    renderTextToPDF(note.text); // Render note text with wrapping
     pdf.save(`${note.title}.pdf`);
   } catch (error) {
     console.error("Error generating PDF:", error);
     alert("Failed to generate PDF. Please try again.");
+  }
+}
+
   } finally {
     // Remove temporary container
     document.body.removeChild(tempContainer);
