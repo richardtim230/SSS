@@ -1266,7 +1266,7 @@ function navigateNote(direction) {
     window.downloadNoteWithStylingAsPDF = downloadNoteWithStylingAsPDF;
 
     async function downloadNoteWithStylingAsPDF(index) {
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  const notes = JSON.parse(localStorage.getItem("notes")) || [];
   const filteredNotes = notes.filter(note => note.category === selectedCategory);
   const note = filteredNotes[index];
 
@@ -1276,41 +1276,92 @@ function navigateNote(direction) {
   }
 
   const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({
+    orientation: "portrait",
+    unit: "pt",
+    format: "a4", // Standard page size
+  });
 
-  // Create a temporary container for rendering the note
+  // Page dimensions
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const pageHeight = pdf.internal.pageSize.getHeight();
+
+  const margin = 40; // Margin for content
+  const contentWidth = pageWidth - 2 * margin;
+
+  // Add custom header
+  pdf.setFillColor(255, 165, 0); // Orange background
+  pdf.rect(0, 0, pageWidth, 60, "F"); // Draw rectangle for header
+  pdf.setFontSize(18);
+  pdf.setTextColor(255, 255, 255); // White text
+  pdf.text(note.title, margin, 40); // Title in header
+
+  let currentY = 80; // Start content below the header
+
+  // Temporary container for rendering the note with styles
   const tempContainer = document.createElement("div");
-  tempContainer.style.width = "800px"; // Ensure consistent width
-  tempContainer.style.padding = "20px";
-  tempContainer.style.backgroundColor = "white"; // Background color for PDF
+  tempContainer.style.width = `${contentWidth}px`;
+  tempContainer.style.lineHeight = "1.6";
   tempContainer.style.fontFamily = "Arial, sans-serif";
-  tempContainer.style.lineHeight = "1.5";
-  tempContainer.innerHTML = `
-    <h2 style="text-align: center;">${note.title}</h2>
-    <div>${note.text}</div>
-  `;
+  tempContainer.style.padding = "20px";
+  tempContainer.style.backgroundColor = "white";
+  tempContainer.innerHTML = note.text;
   document.body.appendChild(tempContainer);
 
-  // Use html2canvas to capture the container as an image
+  // Use html2canvas to render content
   try {
     const canvas = await html2canvas(tempContainer, { scale: 2 });
-    const pdf = new jsPDF();
+    const imgData = canvas.toDataURL("image/jpeg", 0.8); // Compress image
 
-    // Convert the canvas to an image and add it to the PDF
-    const imgData = canvas.toDataURL("image/png");
-    const imgWidth = pdf.internal.pageSize.getWidth();
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    const imgHeight = (canvas.height * contentWidth) / canvas.width;
 
-    pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+    // Pagination for long content
+    let heightLeft = imgHeight;
+
+    while (heightLeft > 0) {
+      if (currentY + imgHeight > pageHeight - 60) {
+        // Add footer before adding a new page
+        pdf.setFontSize(10);
+        pdf.setTextColor(100);
+        pdf.text(`Page ${pdf.internal.getNumberOfPages()}`, pageWidth - margin, pageHeight - 20);
+
+        pdf.addPage(); // Add a new page
+        currentY = 60; // Reset to top of new page
+      }
+
+      // Add content to the PDF
+      pdf.addImage(
+        imgData,
+        "JPEG",
+        margin,
+        currentY,
+        contentWidth,
+        imgHeight
+      );
+
+      heightLeft -= pageHeight - 120; // Adjust height for next page
+    }
+
+    // Add footer on the last page
+    pdf.setFontSize(10);
+    pdf.setTextColor(100);
+    pdf.text(
+      `Page ${pdf.internal.getNumberOfPages()}`,
+      pageWidth - margin,
+      pageHeight - 20
+    );
+
+    // Save the PDF
     pdf.save(`${note.title}.pdf`);
-
   } catch (error) {
     console.error("Error generating PDF:", error);
     alert("Failed to generate PDF. Please try again.");
   } finally {
-    // Clean up the temporary container
+    // Remove temporary container
     document.body.removeChild(tempContainer);
   }
 }
+
 
 
     
