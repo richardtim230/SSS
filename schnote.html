@@ -519,7 +519,7 @@
     <button id="editNoteButton" onclick="editNote()">Edit</button>
     <button id="deleteNoteButton" onclick="deleteNote()">Delete</button>
     <button onclick="closeNotePopup()">Close</button>
-    <button onclick="downloadNoteAsPDF()">Download as PDF</button>
+    <button onclick="downloadNoteWithStylingAsPDF()">Download as PDF</button>
   </div>
 </div>
 
@@ -1263,6 +1263,8 @@ function navigateNote(direction) {
 
   showNotePopup(newIndex);
 }
+    window.downloadNoteWithStylingAsPDF = downloadNoteWithStylingAsPDF;
+
     async function downloadNoteWithStylingAsPDF(index) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
   const filteredNotes = notes.filter(note => note.category === selectedCategory);
@@ -1274,51 +1276,40 @@ function navigateNote(direction) {
   }
 
   const { jsPDF } = window.jspdf;
-  const pdf = new jsPDF();
 
-  // Create a temporary container for rendering the note with styles
+  // Create a temporary container for rendering the note
   const tempContainer = document.createElement("div");
-  tempContainer.style.width = "600px"; // Set width for scaling
-  tempContainer.style.padding = "10px";
+  tempContainer.style.width = "800px"; // Ensure consistent width
+  tempContainer.style.padding = "20px";
+  tempContainer.style.backgroundColor = "white"; // Background color for PDF
+  tempContainer.style.fontFamily = "Arial, sans-serif";
+  tempContainer.style.lineHeight = "1.5";
   tempContainer.innerHTML = `
-    <h2>${note.title}</h2>
+    <h2 style="text-align: center;">${note.title}</h2>
     <div>${note.text}</div>
   `;
   document.body.appendChild(tempContainer);
 
-  // Use html2canvas to capture the content as an image
-  html2canvas(tempContainer, { scale: 2 }).then(canvas => {
-    const imgData = canvas.toDataURL("image/png");
+  // Use html2canvas to capture the container as an image
+  try {
+    const canvas = await html2canvas(tempContainer, { scale: 2 });
+    const pdf = new jsPDF();
 
-    // Add the image to the PDF
+    // Convert the canvas to an image and add it to the PDF
+    const imgData = canvas.toDataURL("image/png");
     const imgWidth = pdf.internal.pageSize.getWidth();
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
-    pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
 
-    // Save the PDF
+    pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
     pdf.save(`${note.title}.pdf`);
 
-    // Clean up
+  } catch (error) {
+    console.error("Error generating PDF:", error);
+    alert("Failed to generate PDF. Please try again.");
+  } finally {
+    // Clean up the temporary container
     document.body.removeChild(tempContainer);
-  }).catch(err => {
-    console.error("Error rendering PDF:", err);
-    alert("Failed to download the note as a PDF. Please try again.");
-  });
-}
-async function downloadNoteWithStylingAsPDF(index) {
-  // Show a loading spinner
-  document.getElementById("loadingSpinner").style.display = "block";
-
-  // Existing logic...
-  html2canvas(tempContainer, { scale: 2 }).then(canvas => {
-    // Hide the spinner
-    document.getElementById("loadingSpinner").style.display = "none";
-    
-    // Continue with rendering...
-  }).catch(err => {
-    document.getElementById("loadingSpinner").style.display = "none";
-    console.error("Error rendering PDF:", err);
-  });
+  }
 }
 
 
