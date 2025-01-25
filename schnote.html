@@ -556,7 +556,13 @@
 <link rel="stylesheet" href="https://unpkg.com/quill-better-table/dist/quill-better-table.min.css">
 
   <script>
-    
+    import BetterTable from 'quill-better-table'; // Only if using npm
+import 'quill-better-table/dist/quill-better-table.min.css';
+
+Quill.register({
+  'modules/better-table': BetterTable
+}, true);
+
 // Initialize the rich text editor for notes
 const quill = new Quill('#noteEditor', {
   theme: 'snow',
@@ -581,48 +587,9 @@ const quill = new Quill('#noteEditor', {
       [{ 'table': true }], // Add table functionality
       ['clean'], // Clear formatting
     ],
-    "better-table": {
-      operationMenu: {
-        items: {
-          insertColumnRight: {
-            text: 'Insert column right',
-          },
-          insertColumnLeft: {
-            text: 'Insert column left',
-          },
-          insertRowUp: {
-            text: 'Insert row above',
-          },
-          insertRowDown: {
-            text: 'Insert row below',
-          },
-          deleteColumn: {
-            text: 'Delete column',
-          },
-          deleteRow: {
-            text: 'Delete row',
-          },
-          deleteTable: {
-            text: 'Delete table',
-          },
-        },
-      },
-    },
-    history: {
-      delay: 1000,
-      maxStack: 500,
-      userOnly: true,
-    },
+    
   },
 });
-
-    import BetterTable from 'quill-better-table'; // Only if using npm
-import 'quill-better-table/dist/quill-better-table.min.css';
-
-Quill.register({
-  'modules/better-table': BetterTable
-}, true);
-
 
 // Add a custom handler for image uploads
 quill.getModule('toolbar').addHandler('image', () => {
