@@ -874,15 +874,14 @@ function loadSavedSchedule() {
 }
 
     
-
 // Save note
 function saveNote() {
   // Show custom prompt for note title
-  document.getElementById('customPromptModal').style.display = 'block';
+  document.getElementById('customPrompt').style.display = 'flex';
 
-  const promptInput = document.getElementById('customPromptInput');
-  const promptOk = document.getElementById('customPromptOk');
-  const promptCancel = document.getElementById('customPromptCancel');
+  const promptInput = document.getElementById('promptInput');
+  const promptOk = document.getElementById('promptOk');
+  const promptCancel = document.getElementById('promptCancel');
 
   function handleSave() {
     const title = promptInput.value.trim();
@@ -923,7 +922,7 @@ function saveNote() {
     }
 
     // Hide custom prompt after saving
-    document.getElementById('customPromptModal').style.display = 'none';
+    document.getElementById('customPrompt').style.display = 'none';
     // Remove event listeners to avoid duplicate calls
     promptOk.removeEventListener('click', handleSave);
     promptCancel.removeEventListener('click', handleCancel);
@@ -931,7 +930,7 @@ function saveNote() {
 
   function handleCancel() {
     // Hide custom prompt without saving
-    document.getElementById('customPromptModal').style.display = 'none';
+    document.getElementById('customPrompt').style.display = 'none';
     // Remove event listeners to avoid duplicate calls
     promptOk.removeEventListener('click', handleSave);
     promptCancel.removeEventListener('click', handleCancel);
@@ -943,6 +942,29 @@ function saveNote() {
 }
 
 
+let currentEditingNote = -1; // Initialize currentEditingNote variable
+
+function showNotePopup(index) {
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  const filteredNotes = notes.filter(note => note.category === selectedCategory);
+  const note = filteredNotes[index];
+
+  // Display title and content
+  document.getElementById('noteTitle').textContent = note.title || "Untitled";
+  document.getElementById('noteContent').innerHTML = note.text || "No content available";
+
+  // Handle media preview
+  const mediaPreview = document.getElementById('noteMediaPreview');
+  if (note.media) {
+    mediaPreview.src = note.media;
+    mediaPreview.style.display = 'block';
+  } else {
+    mediaPreview.style.display = 'none';
+  }
+
+  currentEditingNote = index;
+  document.getElementById('notePopup').style.display = 'flex';
+}
 
 // Load notes
 
@@ -973,7 +995,6 @@ function loadNotes() {
 }
 
 
-// Generate QR Code
 function generateQRCode(index) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
   const note = notes[index];
