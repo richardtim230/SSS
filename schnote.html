@@ -547,24 +547,87 @@ const quill = new Quill('#noteEditor', {
   placeholder: 'Start typing...',
   modules: {
     toolbar: [
-      ['bold', 'italic', 'underline', 'strike'], // Basic formatting
-      [{ 'font': [] }], // Font family
-      [{ 'size': ['small', false, 'large', 'huge'] }], // Font size
-      [{ 'header': [1, 2, 3, 4, 5, 6, false] }], // Header levels
-      [{ 'align': [] }], // Alignment
-      [{ 'color': [] }, { 'background': [] }], // Text and background colors
-      [{ 'list': 'ordered' }, { 'list': 'bullet' }], // Lists
-      [{ 'indent': '-1' }, { 'indent': '+1' }], // Indentation
-      [{ 'script': 'sub' }, { 'script': 'super' }], // Subscript and superscript
-      [{ 'direction': 'rtl' }], // Text direction
-      ['link', 'image', 'video'], // Links, images, and videos
-      ['code-block', 'blockquote'], // Code block and blockquote
-      ['formula'], // Math formulas
-      ['clean'], // Clear formatting
-    ],
-  },
-});
+  // Basic Formatting
+  ['bold', 'italic', 'underline', 'strike'],
 
+  // Font Options
+  [{ 'font': [] }],
+  [{ 'size': ['small', false, 'large', 'huge'] }],
+  ['font-weight'],
+  ['font-style'],
+
+  // Header Levels
+  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+  // Alignment
+  [{ 'align': [] }, 'justify'],
+
+  // Colors
+  [{ 'color': [] }, { 'background': [] }],
+
+  // Lists
+  [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' }, { 'list': 'task' }],
+
+  // Indentation
+  [{ 'indent': '-1' }, { 'indent': '+1' }],
+
+  // Script
+  [{ 'script': 'sub' }, { 'script': 'super' }],
+
+  // Text Direction
+  [{ 'direction': 'rtl' }],
+
+  // Links, Images, and Videos
+  ['link', 'image', 'video'],
+
+  // Code and Quotes
+  ['code-block', 'blockquote'],
+
+  // Math Formulas
+  ['formula'],
+
+  // Tables
+  ['table'],
+
+  // Horizontal Line
+  ['hr'],
+
+  // Emojis, Symbols, Special Characters
+  ['emoji'],
+  ['symbol'],
+  ['special-character'],
+
+  // Mentions, Hashtags
+  ['mention'],
+  ['hashtag'],
+
+  // Undo, Redo
+  ['undo'],
+  ['redo'],
+
+  // Preview
+  ['preview'],
+
+  // Source Code
+  ['source-code'],
+
+  // Templates
+  ['template'],
+
+  // Snippets
+  ['snippet'],
+
+  // Accessibility
+  ['accessibility'],
+  
+    // Math Functions Tool
+  ['math-functions'], // This is the new button
+
+  // Clear formatting
+  ['clean'],
+], 
+    }, 
+    });
 // Add a custom handler for image uploads
 quill.getModule('toolbar').addHandler('image', () => {
   const input = document.createElement('input');
