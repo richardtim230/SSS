@@ -556,13 +556,7 @@
 <link rel="stylesheet" href="https://unpkg.com/quill-better-table/dist/quill-better-table.min.css">
 
   <script>
-    import BetterTable from 'quill-better-table'; // Only if using npm
-import 'quill-better-table/dist/quill-better-table.min.css';
-
-Quill.register({
-  'modules/better-table': BetterTable
-}, true);
-
+    
 // Initialize the rich text editor for notes
 const quill = new Quill('#noteEditor', {
   theme: 'snow',
@@ -621,6 +615,14 @@ const quill = new Quill('#noteEditor', {
     },
   },
 });
+
+    import BetterTable from 'quill-better-table'; // Only if using npm
+import 'quill-better-table/dist/quill-better-table.min.css';
+
+Quill.register({
+  'modules/better-table': BetterTable
+}, true);
+
 
 // Add a custom handler for image uploads
 quill.getModule('toolbar').addHandler('image', () => {
