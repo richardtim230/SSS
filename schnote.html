@@ -657,40 +657,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
 
- function downloadNoteWithStylingAsPDF() {
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  const filteredNotes = notes.filter(note => note.category === selectedCategory);
-  const note = filteredNotes[currentEditingNote];
-
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-
-  // Adding the title
-  doc.setFontSize(16);
-  doc.text(note.title, 10, 10);
-
-  // Adding the note content
-  const noteContent = document.createElement('div');
-  noteContent.innerHTML = note.text;
-  const noteText = noteContent.innerText || noteContent.textContent;
-
-  const splitText = doc.splitTextToSize(noteText, 180); // Adjust width for wrapping
-  doc.setFontSize(12);
-  doc.text(splitText, 10, 20);
-
-  // Handling media if exists
-  if (note.media) {
-    const img = new Image();
-    img.src = note.media;
-    img.onload = () => {
-      doc.addImage(img, 'JPEG', 10, 30, 180, 160);
-      doc.save(`${note.title}.pdf`);
-    };
-  } else {
-    doc.save(`${note.title}.pdf`);
-  }
-    }
-
+ 
 // Random weekly schedules for departments
 const departmentSchedules = {
   SCI123: [
@@ -1354,6 +1321,17 @@ function navigateNote(direction) {
     unit: "px",
     format: "a4",
   });
+
+    
+  // Helper function to strip HTML tags
+  function stripHTML(html) {
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = html;
+    return tempDiv.textContent || tempDiv.innerText || "";
+  }
+
+  const cleanText = stripHTML(note.text); // Clean up the note text
+
 
   // Header Section
   function addHeader(doc, note) {
