@@ -6,6 +6,47 @@ function debounce(func, delay) {
     timeout = setTimeout(() => func(...args), delay);
   };
 }
+// Array of image paths and URLs
+const imageSources = [
+  "cgp.jpg", "onlineg.jpg", "practice.jpg", "schepo.jpg", "arch.jpg", "classsch.jpg", "logo.png",// Local image path
+  "group-five-african-college-students-spending-time-together-campus-university-yard-black-afro-friends-sitting-grass-studying-with-laptops_627829-6069.webp"  // URL
+];
+
+// Function to preload images
+function preloadImages(sources, callback) {
+  let loadedCount = 0;
+
+  sources.forEach((source, index) => {
+    const img = new Image();
+    img.src = source;
+
+    img.onload = () => {
+      console.log(`Image ${index + 1} loaded`);
+      loadedCount++;
+
+      // Display the image after loading
+      const imgElement = document.getElementById(`image${index + 1}`);
+      if (imgElement) {
+        imgElement.src = source;
+        imgElement.style.display = "inline-block";
+      }
+
+      // Call the callback when all images are loaded
+      if (loadedCount === sources.length) {
+        callback();
+      }
+    };
+
+    img.onerror = () => {
+      console.error(`Failed to load image at ${source}`);
+    };
+  });
+}
+
+// Preload images
+preloadImages(imageSources, () => {
+  console.log("All images preloaded!");
+});
 
 function toggleMenu() {
   const sideNav = document.getElementById('sideNav');
