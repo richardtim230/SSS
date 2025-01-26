@@ -1298,8 +1298,8 @@ function navigateNote(direction) {
   const footerHeight = 40; // Space reserved for footer
   const contentHeight = pageHeight - headerHeight - footerHeight; // Usable content height
 
-  // Add a styled header
-  const addHeader = (currentPage) => {
+  // Add a styled header (only for the first page)
+  const addHeader = () => {
     pdf.setFillColor(255, 165, 0); // Orange header background
     pdf.rect(0, 0, pageWidth, headerHeight, "F"); // Header rectangle
     pdf.setFontSize(18);
@@ -1319,22 +1319,22 @@ function navigateNote(direction) {
   const renderTextToPDF = (text) => {
     const lines = pdf.splitTextToSize(text, pageWidth - 2 * margin); // Wrap text to fit page width
     let currentPage = 1;
-    let totalPages = Math.ceil(lines.length * 14 / contentHeight); // Estimate total pages
+    const totalPages = Math.ceil((lines.length * 14) / contentHeight); // Estimate total pages
     let lineHeight = 14; // Line height in points
     let cursorY = headerHeight + margin;
 
+    // Iterate over lines and render them
     for (let i = 0; i < lines.length; i++) {
       // Check if we need a new page
       if (cursorY + lineHeight > pageHeight - footerHeight) {
-        addFooter(currentPage, totalPages);
-        pdf.addPage();
-        currentPage++;
-        cursorY = headerHeight + margin;
-        addHeader(currentPage);
+        addFooter(currentPage, totalPages); // Add footer for current page
+        pdf.addPage(); // Add new page
+        currentPage++; // Increment page number
+        cursorY = margin; // Reset cursor position (no header for subsequent pages)
       }
 
-      pdf.text(lines[i], margin, cursorY);
-      cursorY += lineHeight;
+      pdf.text(lines[i], margin, cursorY); // Add the current line
+      cursorY += lineHeight; // Move cursor down
     }
 
     // Add footer for the last page
@@ -1342,82 +1342,12 @@ function navigateNote(direction) {
   };
 
   try {
-    pdf.addPage(); // Initialize the first page
-    addHeader(1); // Add header to the first page
+    addHeader(); // Add header to the first page
     renderTextToPDF(note.text); // Render note text with wrapping
-    pdf.save(`${note.title}.pdf`);
+    pdf.save(`${note.title}.pdf`); // Save the PDF
   } catch (error) {
     console.error("Error generating PDF:", error);
     alert("Failed to generate PDF. Please try again.");
-  }
-}
-function downloadNoteWithStylingAsPDF(index) {
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  const filteredNotes = notes.filter(note => note.category === selectedCategory);
-  const note = filteredNotes[index];
-
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-
-  // Page setup
-  const pageWidth = doc.internal.pageSize.getWidth();
-  const pageHeight = doc.internal.pageSize.getHeight();
-  const margin = 15; // Standard margin
-  const footerSpacing = 20; // Footer margin
-  const lineHeight = 10; // Line spacing for content
-  const maxContentHeight = pageHeight - margin - footerSpacing;
-
-  // Adding the title
-  doc.setFont('Helvetica', 'bold');
-  doc.setFontSize(20);
-  const titleWidth = doc.getTextWidth(note.title);
-  doc.text(note.title, (pageWidth - titleWidth) / 2, margin + 10); // Center the title
-
-  // Adding a horizontal line below the title
-  doc.setLineWidth(0.5);
-  doc.line(margin, margin + 20, pageWidth - margin, margin + 20);
-
-  // Content settings
-  const contentStartY = margin + 30;
-  const noteContent = document.createElement('div');
-  noteContent.innerHTML = note.text;
-  const noteText = noteContent.innerText || noteContent.textContent;
-
-  doc.setFont('normal');
-  doc.setFontSize(12);
-
-  let y = contentStartY;
-  const splitText = doc.splitTextToSize(noteText, pageWidth - margin * 2); // Word-wrap text
-
-  splitText.forEach(line => {
-    if (y + lineHeight > maxContentHeight) {
-      doc.addPage();
-      y = margin;
-    }
-    doc.text(line, margin, y);
-    y += lineHeight;
-  });
-
-  // Adding media if it exists
-  if (note.media) {
-    const img = new Image();
-    img.src = note.media;
-
-    img.onload = () => {
-      const imgWidth = pageWidth - margin * 2; // Max width for the image
-      const imgHeight = (img.height / img.width) * imgWidth; // Maintain aspect ratio
-      const imgY = y + 10;
-
-      if (imgY + imgHeight > maxContentHeight) {
-        doc.addPage();
-        y = margin;
-      }
-
-      doc.addImage(img, 'JPEG', margin, y, imgWidth, imgHeight);
-      doc.save(`${note.title}.pdf`);
-    };
-  } else {
-    doc.save(`${note.title}.pdf`);
   }
 }
 
