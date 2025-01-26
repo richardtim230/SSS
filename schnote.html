@@ -1396,6 +1396,44 @@ function navigateNote(direction) {
   }
 }
 
+async function downloadNoteWithStylingAsPDF(index) {
+  const notes = JSON.parse(localStorage.getItem("notes")) || [];
+  const filteredNotes = notes.filter(note => note.category === selectedCategory); // Use original selectedCategory
+  const note = filteredNotes[index];
+
+  if (!note || !note.title || !note.text) {
+    alert("Note not found or incomplete!");
+    return;
+  }
+
+  // Create a temporary HTML element to hold the styled note content
+  const container = document.createElement("div");
+  container.style.padding = "20px";
+  container.style.fontFamily = "Arial, sans-serif";
+  container.style.lineHeight = "1.6";
+  container.style.fontSize = "14px";
+
+  // Add a title and content
+  container.innerHTML = `
+    <h1 style="text-align: center; color: #4A90E2; margin-bottom: 20px;">${note.title}</h1>
+    <div>${note.text}</div>
+  `;
+
+  // Configure and generate the PDF
+  const options = {
+    margin: 10,
+    filename: `${note.title}.pdf`,
+    html2canvas: { scale: 2 }, // Improves quality
+    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+  };
+
+  try {
+    await html2pdf().set(options).from(container).save();
+  } catch (error) {
+    console.error("Error generating PDF:", error);
+    alert("Failed to generate PDF. Please try again.");
+  }
+}
 
 
   </script>
