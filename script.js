@@ -53,6 +53,7 @@ function toggleMenu() {
   sideNav.classList.toggle('active');
 }
 
+
 document.addEventListener('click', function(event) {
   const sideNav = document.getElementById('sideNav');
   const menuIcon = document.querySelector('.menu-icon');
@@ -314,4 +315,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 
+});
+document.getElementById('floating-btn').addEventListener('click', function() {
+    var menu = document.getElementById('floating-menu');
+    if (menu.style.display === 'none' || menu.style.display === '') {
+        menu.style.display = 'flex';
+    } else {
+        menu.style.display = 'none';
+    }
 });
