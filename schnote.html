@@ -1355,20 +1355,24 @@ function downloadNoteWithStylingAsPDF(index) {
 
   // Page setup
   const pageWidth = doc.internal.pageSize.getWidth();
-  const margin = 10;
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const margin = 15; // Standard margin
+  const footerSpacing = 20; // Footer margin
+  const lineHeight = 10; // Line spacing for content
+  const maxContentHeight = pageHeight - margin - footerSpacing;
 
   // Adding the title
   doc.setFont('Helvetica', 'bold');
-  doc.setFontSize(18);
+  doc.setFontSize(20);
   const titleWidth = doc.getTextWidth(note.title);
   doc.text(note.title, (pageWidth - titleWidth) / 2, margin + 10); // Center the title
 
   // Adding a horizontal line below the title
   doc.setLineWidth(0.5);
-  doc.line(margin, 25, pageWidth - margin, 25);
+  doc.line(margin, margin + 20, pageWidth - margin, margin + 20);
 
-  // Adding note content with word wrapping
-  const contentStartY = 35;
+  // Content settings
+  const contentStartY = margin + 30;
   const noteContent = document.createElement('div');
   noteContent.innerHTML = note.text;
   const noteText = noteContent.innerText || noteContent.textContent;
@@ -1376,13 +1380,11 @@ function downloadNoteWithStylingAsPDF(index) {
   doc.setFont('Helvetica', 'normal');
   doc.setFontSize(12);
 
-  const lineHeight = 8;
-  const maxLineWidth = pageWidth - margin * 2;
-  const splitText = doc.splitTextToSize(noteText, maxLineWidth); // Automatically wrap text
-
   let y = contentStartY;
+  const splitText = doc.splitTextToSize(noteText, pageWidth - margin * 2); // Word-wrap text
+
   splitText.forEach(line => {
-    if (y > doc.internal.pageSize.getHeight() - margin) {
+    if (y + lineHeight > maxContentHeight) {
       doc.addPage();
       y = margin;
     }
@@ -1390,21 +1392,22 @@ function downloadNoteWithStylingAsPDF(index) {
     y += lineHeight;
   });
 
-  // Handling media if it exists
+  // Adding media if it exists
   if (note.media) {
     const img = new Image();
     img.src = note.media;
+
     img.onload = () => {
-      const imgWidth = pageWidth - margin * 2;
-      const imgHeight = (img.height / img.width) * imgWidth;
+      const imgWidth = pageWidth - margin * 2; // Max width for the image
+      const imgHeight = (img.height / img.width) * imgWidth; // Maintain aspect ratio
       const imgY = y + 10;
 
-      if (imgY + imgHeight > doc.internal.pageSize.getHeight() - margin) {
+      if (imgY + imgHeight > maxContentHeight) {
         doc.addPage();
         y = margin;
       }
 
-      doc.addImage(img, 'JPEG', margin, y + 10, imgWidth, imgHeight);
+      doc.addImage(img, 'JPEG', margin, y, imgWidth, imgHeight);
       doc.save(`${note.title}.pdf`);
     };
   } else {
