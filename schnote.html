@@ -1275,81 +1275,72 @@ function navigateNote(direction) {
 
   async function downloadNoteWithStylingAsPDF(index) {
   const notes = JSON.parse(localStorage.getItem("notes")) || [];
-  const filteredNotes = notes.filter(note => note.category === selectedCategory);
+  const filteredNotes = notes.filter(note => note.category === selectedCategory); // Use existing selectedCategory
   const note = filteredNotes[index];
 
-  if (!note) {
-    alert("Note not found!");
+  if (!note || !note.title || !note.text) {
+    alert("Note not found or incomplete!");
     return;
   }
 
-  const { jsPDF } = window.jspdf;
-  const pdf = new jsPDF({
-    orientation: "portrait",
-    unit: "pt",
-    format: "a4", // Standard A4 page size
-  });
-
-  // Page dimensions and margins
-  const pageWidth = pdf.internal.pageSize.getWidth();
-  const pageHeight = pdf.internal.pageSize.getHeight();
-  const margin = 40; // Margin for content
-  const headerHeight = 60; // Space reserved for header
-  const footerHeight = 40; // Space reserved for footer
-  const contentHeight = pageHeight - headerHeight - footerHeight; // Usable content height
-
-  // Add a styled header (only for the first page)
-  const addHeader = () => {
-    pdf.setFillColor(255, 165, 0); // Orange header background
-    pdf.rect(0, 0, pageWidth, headerHeight, "F"); // Header rectangle
-    pdf.setFontSize(18);
-    pdf.setTextColor(255, 255, 255); // White text for header
-    const truncatedTitle = note.title.length > 50 ? `${note.title.slice(0, 47)}...` : note.title;
-    pdf.text(truncatedTitle, margin, headerHeight / 2 + 6); // Vertically centered title
-  };
-
-  // Add a styled footer
-  const addFooter = (currentPage, totalPages) => {
-    pdf.setFontSize(10);
-    pdf.setTextColor(100);
-    pdf.text(`Page ${currentPage} of ${totalPages}`, margin, pageHeight - footerHeight / 2);
-  };
-
-  // Render the note text with word wrapping
-  const renderTextToPDF = (text) => {
-    const lines = pdf.splitTextToSize(text, pageWidth - 2 * margin); // Wrap text to fit page width
-    let currentPage = 1;
-    const totalPages = Math.ceil((lines.length * 14) / contentHeight); // Estimate total pages
-    let lineHeight = 14; // Line height in points
-    let cursorY = headerHeight + margin;
-
-    // Iterate over lines and render them
-    for (let i = 0; i < lines.length; i++) {
-      // Check if we need a new page
-      if (cursorY + lineHeight > pageHeight - footerHeight) {
-        addFooter(currentPage, totalPages); // Add footer for current page
-        pdf.addPage(); // Add new page
-        currentPage++; // Increment page number
-        cursorY = margin; // Reset cursor position (no header for subsequent pages)
-      }
-
-      pdf.text(lines[i], margin, cursorY); // Add the current line
-      cursorY += lineHeight; // Move cursor down
-    }
-
-    // Add footer for the last page
-    addFooter(currentPage, totalPages);
-  };
-
   try {
-    addHeader(); // Add header to the first page
-    renderTextToPDF(note.text); // Render note text with wrapping
-    pdf.save(`${note.title}.pdf`); // Save the PDF
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    const margin = 40;
+    const headerHeight = 60;
+    const footerHeight = 40;
+    const contentHeight = pageHeight - headerHeight - footerHeight;
+
+    // Decode and sanitize text
+    const decodedText = decodeURIComponent(escape(note.text)); // Decode text if encoded
+    const sanitizedText = decodedText.replace(/[\u0000-\u001F\u007F-\u009F]/g, ""); // Remove control characters
+
+    const addHeader = () => {
+      pdf.setFillColor(255, 165, 0); // Orange background
+      pdf.rect(0, 0, pageWidth, headerHeight, "F");
+      pdf.setFontSize(18);
+      pdf.setTextColor(255, 255, 255); // White text
+      const truncatedTitle = note.title.length > 50 ? `${note.title.slice(0, 47)}...` : note.title;
+      pdf.text(truncatedTitle, margin, headerHeight / 2 + 9); // Adjusted vertical alignment
+    };
+
+    const addFooter = (currentPage, totalPages) => {
+      pdf.setFontSize(10);
+      pdf.setTextColor(100);
+      pdf.text(`Page ${currentPage} of ${totalPages}`, margin, pageHeight - footerHeight / 2);
+    };
+
+    const renderTextToPDF = (text) => {
+      const lines = pdf.splitTextToSize(text, pageWidth - 2 * margin);
+      let currentPage = 1;
+      const totalPages = Math.ceil((lines.length * 14) / contentHeight); // Estimate total pages
+      let cursorY = margin + headerHeight;
+
+      lines.forEach((line) => {
+        if (cursorY + 14 > pageHeight - footerHeight) {
+          addFooter(currentPage, totalPages);
+          pdf.addPage();
+          currentPage++;
+          cursorY = margin + headerHeight;
+        }
+        pdf.text(line, margin, cursorY);
+        cursorY += 14;
+      });
+
+      addFooter(currentPage, totalPages);
+    };
+
+    addHeader();
+    renderTextToPDF(sanitizedText);
+    pdf.save(`${note.title}.pdf`);
   } catch (error) {
     console.error("Error generating PDF:", error);
     alert("Failed to generate PDF. Please try again.");
   }
 }
+
 
 
 
