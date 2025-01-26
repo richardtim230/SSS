@@ -1353,30 +1353,65 @@ function downloadNoteWithStylingAsPDF(index) {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
-  // Adding the title
-  doc.setFontSize(16);
-  doc.text(note.title, 10, 10);
+  // Page setup
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const margin = 10;
 
-  // Adding the note content
+  // Adding the title
+  doc.setFont('Helvetica', 'bold');
+  doc.setFontSize(18);
+  const titleWidth = doc.getTextWidth(note.title);
+  doc.text(note.title, (pageWidth - titleWidth) / 2, margin + 10); // Center the title
+
+  // Adding a horizontal line below the title
+  doc.setLineWidth(0.5);
+  doc.line(margin, 25, pageWidth - margin, 25);
+
+  // Adding note content with word wrapping
+  const contentStartY = 35;
   const noteContent = document.createElement('div');
   noteContent.innerHTML = note.text;
   const noteText = noteContent.innerText || noteContent.textContent;
 
+  doc.setFont('Helvetica', 'normal');
   doc.setFontSize(12);
-  doc.text(noteText, 10, 20);
 
-  // Handling media if exists
+  const lineHeight = 8;
+  const maxLineWidth = pageWidth - margin * 2;
+  const splitText = doc.splitTextToSize(noteText, maxLineWidth); // Automatically wrap text
+
+  let y = contentStartY;
+  splitText.forEach(line => {
+    if (y > doc.internal.pageSize.getHeight() - margin) {
+      doc.addPage();
+      y = margin;
+    }
+    doc.text(line, margin, y);
+    y += lineHeight;
+  });
+
+  // Handling media if it exists
   if (note.media) {
     const img = new Image();
     img.src = note.media;
     img.onload = () => {
-      doc.addImage(img, 'JPEG', 10, 30, 180, 160);
+      const imgWidth = pageWidth - margin * 2;
+      const imgHeight = (img.height / img.width) * imgWidth;
+      const imgY = y + 10;
+
+      if (imgY + imgHeight > doc.internal.pageSize.getHeight() - margin) {
+        doc.addPage();
+        y = margin;
+      }
+
+      doc.addImage(img, 'JPEG', margin, y + 10, imgWidth, imgHeight);
       doc.save(`${note.title}.pdf`);
     };
   } else {
     doc.save(`${note.title}.pdf`);
   }
-  }
+}
+
 
     
   </script>
