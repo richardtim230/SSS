@@ -1182,19 +1182,34 @@ function loadCalendar() {
   document.getElementById('calendarMessage').textContent = 'Make today count!';
 }
     
-
-
-// Save note
+// Actual SaveNote
+    
 function saveNote() {
-  openCustomPrompt((title) => {
+  // Show custom prompt for note title
+  document.getElementById('customPromptModal').style.display = 'flex';
+
+  const promptInput = document.getElementById('customPromptInput');
+  const promptOk = document.getElementById('promptOk');
+  const promptCancel = document.getElementById('promptCancel');
+
+  function handleSave() {
+    const title = promptInput.value.trim();
+
     if (!title) {
-      alert("Note title is required!");
+      alert("Please enter a title for the note.");
       return;
     }
 
-    const text = quill.root.innerHTML.trim(); // Get Quill editor content
-    const mediaInput = document.getElementById('noteMedia').files[0];
     const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    const duplicateNote = notes.find(note => note.title === title);
+
+    if (duplicateNote) {
+      alert("A note with this title already exists. Please use a different title.");
+      return;
+    }
+
+    const text = quill.root.innerHTML.trim(); // Quill editor content
+    const mediaInput = document.getElementById('noteMedia').files[0];
     const reader = new FileReader();
 
     reader.onload = () => {
@@ -1214,8 +1229,51 @@ function saveNote() {
       quill.root.innerHTML = ''; // Clear editor after saving
       document.getElementById('noteMedia').value = '';
     }
-  });
+
+    // Hide custom prompt after saving
+    document.getElementById('customPromptModal').style.display = 'none';
+    // Remove event listeners to avoid duplicate calls
+    promptOk.removeEventListener('click', handleSave);
+    promptCancel.removeEventListener('click', handleCancel);
+  }
+
+  function handleCancel() {
+    // Hide custom prompt without saving
+    document.getElementById('customPromptModal').style.display = 'none';
+    // Remove event listeners to avoid duplicate calls
+    promptOk.removeEventListener('click', handleSave);
+    promptCancel.removeEventListener('click', handleCancel);
+  }
+
+  // Add event listeners for the custom prompt buttons
+  promptOk.addEventListener('click', handleSave);
+  promptCancel.addEventListener('click', handleCancel);
 }
+
+// ShowNote
+
+function showNotePopup(index) {
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  const filteredNotes = notes.filter(note => note.category === selectedCategory);
+  const note = filteredNotes[index];
+
+  // Display title and content
+  document.getElementById('noteTitle').textContent = note.title || "Untitled";
+  document.getElementById('noteContent').innerHTML = note.text || "No content available";
+
+  // Handle media preview
+  const mediaPreview = document.getElementById('noteMediaPreview');
+  if (note.media) {
+    mediaPreview.src = note.media;
+    mediaPreview.style.display = 'block';
+  } else {
+    mediaPreview.style.display = 'none';
+  }
+
+  currentEditingNote = index;
+  document.getElementById('notePopup').style.display = 'flex';
+}
+
     
 let customPromptCallback = null;
 
