@@ -346,7 +346,15 @@
   #customPromptModal button:hover {
     opacity: 0.9;
   }
-
+@media print {
+  body {
+    font-family: 'Arial', sans-serif;
+  }
+  .note-title, .note-content {
+    page-break-inside: avoid;
+    word-wrap: break-word;
+  }
+  }
 
   </style>
 </head>
@@ -1343,8 +1351,6 @@ function navigateNote(direction) {
     alert("Failed to generate PDF. Please try again.");
   }
 }
-
-
 function downloadNoteWithStylingAsPDF(index) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
   const filteredNotes = notes.filter(note => note.category === selectedCategory);
@@ -1377,7 +1383,7 @@ function downloadNoteWithStylingAsPDF(index) {
   noteContent.innerHTML = note.text;
   const noteText = noteContent.innerText || noteContent.textContent;
 
-  doc.setFont('Helvetica', 'normal');
+  doc.setFont('normal');
   doc.setFontSize(12);
 
   let y = contentStartY;
@@ -1416,7 +1422,7 @@ function downloadNoteWithStylingAsPDF(index) {
 }
 
 
-    
+
   </script>
  </body>
 </html>
