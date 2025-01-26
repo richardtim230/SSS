@@ -154,10 +154,15 @@
   z-index: 9999;
   flex-direction: column;
 }
+.popup-content {
+  text-align: initial; /* Keeps the original alignment */
+}
+
 .popup-content p {
   margin: 0;
   line-height: 1.2;
-    }
+  text-align: initial; /* Keeps the original alignment */
+}
 .welcomePopup-content, .popup-content {
   background: white;
   color: #333;
@@ -987,29 +992,6 @@ function saveNote() {
 }
 
     
-function showNotePopup(index) {
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  const filteredNotes = notes.filter(note => note.category === selectedCategory);
-  const note = filteredNotes[index];
-
-  // Display title and content
-  document.getElementById('noteTitle').textContent = note.title || "Untitled";
-  document.getElementById('noteContent').innerHTML = note.text || "No content available";
-
-  // Handle media preview
-  const mediaPreview = document.getElementById('noteMediaPreview');
-  if (note.media) {
-    mediaPreview.src = note.media;
-    mediaPreview.style.display = 'block';
-  } else {
-    mediaPreview.style.display = 'none';
-  }
-
-  currentEditingNote = index;
-  document.getElementById('notePopup').style.display = 'flex';
-}
-
-
 
 let currentEditingNote = -1; // Initialize currentEditingNote variable
 
