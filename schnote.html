@@ -1340,7 +1340,7 @@ function navigateNote(direction) {
 
   async function downloadNoteWithStylingAsPDF(index) {
   const notes = JSON.parse(localStorage.getItem("notes")) || [];
-  const filteredNotes = notes.filter(note => note.category === selectedCategory); // Use existing selectedCategory
+  const filteredNotes = notes.filter(note => note.category === selectedCategory); // Use original selectedCategory
   const note = filteredNotes[index];
 
   if (!note || !note.title || !note.text) {
@@ -1348,64 +1348,75 @@ function navigateNote(direction) {
     return;
   }
 
-  try {
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
-    const pageWidth = pdf.internal.pageSize.getWidth();
-    const pageHeight = pdf.internal.pageSize.getHeight();
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({
+    orientation: "portrait",
+    unit: "px",
+    format: "a4",
+  });
+
+  // Header Section
+  function addHeader(doc, note) {
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const headerHeight = 70;
+    doc.setFillColor("#4A90E2"); // Blue header background
+    doc.rect(0, 0, pageWidth, headerHeight, "F");
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(22);
+    doc.setTextColor("#FFFFFF");
+    doc.text("Note Title", pageWidth / 2, 30, { align: "center" });
+    doc.setFontSize(16);
+    doc.text(note.title, pageWidth / 2, 50, { align: "center" });
+  }
+
+  // Footer Section
+  function addFooter(doc, currentPage, totalPages) {
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const margin = 20;
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(12);
+    doc.setTextColor("#666");
+    doc.text(`Page ${currentPage} of ${totalPages}`, margin, pageHeight - margin);
+  }
+
+  // Content Section
+  function addContent(doc, note) {
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
     const margin = 40;
-    const headerHeight = 60;
+    const contentWidth = pageWidth - margin * 2;
+    const headerHeight = 70;
     const footerHeight = 40;
+    const lineHeight = 20;
     const contentHeight = pageHeight - headerHeight - footerHeight;
+    let yOffset = headerHeight + margin;
 
-    // Decode and sanitize text
-    const decodedText = decodeURIComponent(escape(note.text)); // Decode text if encoded
-    const sanitizedText = decodedText.replace(/[\u0000-\u001F\u007F-\u009F]/g, ""); // Remove control characters
+    const lines = doc.splitTextToSize(note.text, contentWidth);
+    const totalPages = Math.ceil((lines.length * lineHeight) / contentHeight);
+    let currentPage = 1;
 
-    const addHeader = () => {
-      pdf.setFillColor(255, 165, 0); // Orange background
-      pdf.rect(0, 0, pageWidth, headerHeight, "F");
-      pdf.setFontSize(18);
-      pdf.setTextColor(255, 255, 255); // White text
-      const truncatedTitle = note.title.length > 50 ? `${note.title.slice(0, 47)}...` : note.title;
-      pdf.text(truncatedTitle, margin, headerHeight / 2 + 9); // Adjusted vertical alignment
-    };
+    for (let i = 0; i < lines.length; i++) {
+      if (yOffset + lineHeight > pageHeight - footerHeight) {
+        addFooter(doc, currentPage, totalPages);
+        doc.addPage();
+        currentPage++;
+        yOffset = headerHeight + margin;
+      }
+      doc.text(lines[i], margin, yOffset);
+      yOffset += lineHeight;
+    }
+    addFooter(doc, currentPage, totalPages); // Footer for the last page
+  }
 
-    const addFooter = (currentPage, totalPages) => {
-      pdf.setFontSize(10);
-      pdf.setTextColor(100);
-      pdf.text(`Page ${currentPage} of ${totalPages}`, margin, pageHeight - footerHeight / 2);
-    };
-
-    const renderTextToPDF = (text) => {
-      const lines = pdf.splitTextToSize(text, pageWidth - 2 * margin);
-      let currentPage = 1;
-      const totalPages = Math.ceil((lines.length * 14) / contentHeight); // Estimate total pages
-      let cursorY = margin + headerHeight;
-
-      lines.forEach((line) => {
-        if (cursorY + 14 > pageHeight - footerHeight) {
-          addFooter(currentPage, totalPages);
-          pdf.addPage();
-          currentPage++;
-          cursorY = margin + headerHeight;
-        }
-        pdf.text(line, margin, cursorY);
-        cursorY += 14;
-      });
-
-      addFooter(currentPage, totalPages);
-    };
-
-    addHeader();
-    renderTextToPDF(sanitizedText);
-    pdf.save(`${note.title}.pdf`);
+  try {
+    addHeader(doc, note);
+    addContent(doc, note);
+    doc.save(`${note.title}.pdf`);
   } catch (error) {
     console.error("Error generating PDF:", error);
     alert("Failed to generate PDF. Please try again.");
   }
 }
-
 
 
 
