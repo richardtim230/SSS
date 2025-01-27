@@ -179,6 +179,126 @@ const questionBanks = {
     correct: 2,
     explanation: "Iodine is used to stain starch, which is a carbohydrate rather than a cell structure."
    }, 
+    {
+        text: "Which stain differentiates cytoplasm and cellulose?",
+        options: ["Iodine", "Aniline blue", "Eosin", "Methylene blue"],
+        correct: 2,
+        explanation: "Eosin is used to differentiate between cytoplasm (pink) and cellulose (red)."
+    },
+    {
+        text: "Which stain highlights both nuclei and cytoplasm?",
+        options: ["Aniline blue", "Methylene blue", "Eosin", "Safranin"],
+        correct: 3,
+        explanation: "Safranin can stain both nuclei and cytoplasm."
+    },
+    {
+        text: "If a tissue stains blue, which stains were used?",
+        options: ["Aniline blue or Eosin", "Methylene blue or Iodine", "Aniline blue or Methylene blue", "Safranin or Phoroglucinol"],
+        correct: 2,
+        explanation: "Aniline blue and Methylene blue both stain tissues blue."
+    },
+    {
+        text: "If a tissue stains red, which was *not* used?",
+        options: ["Eosin", "Phoroglucinol + HCl", "Safranin", "Aniline blue"],
+        correct: 3,
+        explanation: "Aniline blue stains tissue blue, not red."
+    },
+    {
+        text: "Which stain identifies *multiple* cell structures simultaneously?",
+        options: ["Methylene blue", "Iodine", "Safranin", "Phoroglucinol + HCl"],
+        correct: 2,
+        explanation: "Safranin is used to stain nuclei, cytoplasm, lignin, and suberin."
+    },
+    {
+        text: "What is a common property of lignin stains?",
+        options: ["They all stain yellow", "They all stain red", "They all contain hydrochloric acid", "They are all plant derived"],
+         correct: 0,
+        explanation: "Aniline HCl, Schultz's solution, and phoroglucinol all stain lignin yellow."
+    },
+     {
+        text: "Which stain is *least* useful for studying internal fungal spore structure?",
+        options: ["Aniline Blue", "Safranin", "Methylene blue", "Iodine"],
+        correct: 3,
+        explanation: "Iodine stains for starch, not cell structures."
+    },
+    {
+         text: "If a plant cell shows both pink and red, what stain was likely used?",
+         options: ["Light/Fast Green", "Iodine", "Aniline blue", "Eosin"],
+         correct: 3,
+         explanation: "Eosin stains cytoplasm pink and cellulose red."
+    },
+    {
+        text: "If an iodine-stained tissue is blue-black, what is present?",
+        options: ["Lignin", "Starch", "Cellulose", "Protein"],
+        correct: 1,
+        explanation: "Iodine stains starch a blue-black color."
+    },
+    {
+        text: "If you only need to study lignin, which stain is *least* specific?",
+        options: ["Aniline HCl or SO4", "Phoroglucinol + HCl", "Schultz’s solution", "Safranin"],
+        correct: 3,
+        explanation: "Safranin stains multiple structures, including lignin."
+    },
+    {
+        text: "Why have a variety of stains in microscopy?",
+        options: ["To make the images more colorful", "Each stain highlights different structures", "Some stains are easier to use", "Some stains are more cheaper"],
+        correct: 1,
+        explanation: "Different stains interact with different cellular components."
+    },
+   {
+        text: "If a tissue stains only red, what is present?",
+        options: ["Cellulose", "Only lignin", "Only starch", "Maybe either cytoplasm or lignin, but not both"],
+        correct: 3,
+        explanation: "Eosin stains cytoplasm and cellulose, safranin stains cytoplasm and lignin, so it may be either cytoplasm or lignin staining red."
+    },
+   {
+        text: "If Schultz’s solution stains protein, why use other stains?",
+        options: ["It doesn’t stain other structures specifically", "Other stains are brighter", "Schultz’s solution is less specific", "It is too expensive to use"],
+        correct: 2,
+        explanation: "Schultz’s solution is less specific, so other stains highlight cellular components better."
+    }, 
+    {
+    text: "How does the resolution of TEM compare to the resolution of light microscopy?",
+    options: ["Lower", "Higher", "About the same", "Varied"],
+    correct: 1,
+    explanation: "The resolution of TEM is higher than the resolution of light microscopy."
+  },
+ {
+    text: "What is the difference between specimen preparation in light vs electron microscopy?",
+    options: ["Both specimens are prepared the same", "Light microscopy focuses on thin specimens while electron on whole samples", "Light microscopy uses staining, while electron uses heavy metals", "Electron microscopy specimens are generally non-living samples, while light microscopy specimens are either living or non living"],
+    correct: 3,
+    explanation: "Light microscopy specimens can be living or non-living and are stained by coloured dyes, whereas electron microscopy specimens are non living and prepared using heavy metals."
+  },
+  {
+     text: "Why is it necessary to dehydrate specimens before embedding?",
+     options: ["To make the specimen transparent", "To make specimen more compatible with embedding medium", "To prevent damage to the specimen", "To make it more reflective"],
+      correct: 1,
+       explanation: "Dehydration makes specimens compatible with embedding mediums."
+  },
+  {
+     text: "If a researcher wants to study the movement of cells over time, which type of slide preparation would be more appropriate for light microscopy?",
+     options: ["Temporary", "Permanent", "Both are equally suitable", "Neither"],
+      correct: 0,
+       explanation: "Temporary slide preparation is better for observing movement of cells."
+  },
+ {
+    text: "Why would a sample need to be coated in gold for SEM?",
+    options: ["To make the sample shine more", "To protect the sample from electron beams", "To allow the electrons to bounce off the sample more easily", "To help the sample stick better to the grid"],
+     correct: 2,
+     explanation: "Gold coating helps electrons bounce off the sample in SEM."
+   },
+  {
+    text: "Based on the methods described, which samples can generally be viewed by light microscopy and electron microscopy?",
+    options: ["Only living samples", "Only non-living samples", "Living or non-living samples in light, but only non-living samples in electron microscopy", "Non-living samples in light, but living in electron"],
+     correct: 2,
+     explanation: "Light microscopy can use living or non-living samples, but electron microscopy can only use non-living samples."
+   },
+ {
+    text: "Considering the differences between light and electron microscopy, which would be more suitable for viewing individual living bacteria?",
+    options: ["Electron microscopy", "Light microscopy", "Either, but preparation varies", "Neither"],
+    correct: 1,
+    explanation: "Light microscopy is more suitable for viewing individual living bacteria."
+  }, 
       ], 
 
   "ZOO101-E2": [
