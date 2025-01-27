@@ -174,7 +174,7 @@ const questionBanks = {
     explanation: "Safranin, phoroglucinol + HCl, aniline HCl and schultz's solution are used to stain lignin."
   },
    {
-    text: "Which stain is *not* for cell structure?",
+    text: "Which stain is NOT for cell structure?",
     options: ["Methylene blue", "Eosin", "Iodine", "Borax carmine"],
     correct: 2,
     explanation: "Iodine is used to stain starch, which is a carbohydrate rather than a cell structure."
@@ -198,13 +198,13 @@ const questionBanks = {
         explanation: "Aniline blue and Methylene blue both stain tissues blue."
     },
     {
-        text: "If a tissue stains red, which was *not* used?",
+        text: "If a tissue stains red, which was NOT used?",
         options: ["Eosin", "Phoroglucinol + HCl", "Safranin", "Aniline blue"],
         correct: 3,
         explanation: "Aniline blue stains tissue blue, not red."
     },
     {
-        text: "Which stain identifies *multiple* cell structures simultaneously?",
+        text: "Which stain identifies MULTIPLE cell structures simultaneously?",
         options: ["Methylene blue", "Iodine", "Safranin", "Phoroglucinol + HCl"],
         correct: 2,
         explanation: "Safranin is used to stain nuclei, cytoplasm, lignin, and suberin."
@@ -216,7 +216,7 @@ const questionBanks = {
         explanation: "Aniline HCl, Schultz's solution, and phoroglucinol all stain lignin yellow."
     },
      {
-        text: "Which stain is *least* useful for studying internal fungal spore structure?",
+        text: "Which stain is LEAST useful for studying internal fungal spore structure?",
         options: ["Aniline Blue", "Safranin", "Methylene blue", "Iodine"],
         correct: 3,
         explanation: "Iodine stains for starch, not cell structures."
@@ -234,8 +234,8 @@ const questionBanks = {
         explanation: "Iodine stains starch a blue-black color."
     },
     {
-        text: "If you only need to study lignin, which stain is *least* specific?",
-        options: ["Aniline HCl or SO4", "Phoroglucinol + HCl", "Schultz’s solution", "Safranin"],
+        text: "If you only need to study lignin, which stain is LEAST specific?",
+        options: ["Aniline HCl or SO₄", "Phoroglucinol + HCl", "Schultz’s solution", "Safranin"],
         correct: 3,
         explanation: "Safranin stains multiple structures, including lignin."
     },
