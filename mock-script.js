@@ -126,7 +126,7 @@ const questionBanks = {
     explanation: "Phoroglucinol + HCl is used to stain lignin."
   },
   {
-    text: "What does aniline HCl or SO4 stain?",
+    text: "What does aniline HCl or SO₄ stain?",
     options: ["Lignin", "Cytoplasm", "Starch", "Cellulose"],
     correct: 0,
     explanation: "Aniline HCl or SO4 is used to stain lignin."
@@ -339,7 +339,7 @@ const questionBanks = {
       
     }, 
       ], 
-  "BOT101-T2": [
+  "BOT101-T211": [
     {
       
         text: "What is the radiation source for a light microscope?",
