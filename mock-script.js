@@ -15,10 +15,170 @@ let selectedCourseCode = "";
 // Predefined question banks by course codes
 const questionBanks = {
   
-  "ZOO101-E1": [
+  "BOT101-T1": [
+    
+  {
+    text: "What color does aniline blue stain?",
+    options: ["Pink", "Red", "Blue", "Green"],
+    correct: 2,
+    explanation: "Aniline blue stains tissue a blue color."
+  },
+  {
+    text: "What color does borax carmine stain?",
+    options: ["Red", "Pink", "Blue", "Yellow"],
+    correct: 1,
+    explanation: "Borax carmine stains tissue a pink color."
+  },
+  {
+    text: "What color does eosin stain?",
+    options: ["Blue", "Green", "Pink or red", "Yellow"],
+    correct: 2,
+    explanation: "Eosin stains tissue either a pink or red color."
+  },
+  {
+    text: "What color does light/fast green stain?",
+    options: ["Blue", "Green", "Pink", "Red"],
+    correct: 1,
+    explanation: "Light/fast green stains tissue a green color."
+  },
+  {
+    text: "What color does methylene blue stain?",
+    options: ["Red", "Green", "Blue", "Yellow"],
+    correct: 2,
+    explanation: "Methylene blue stains tissue a blue color."
+  },
+  {
+    text: "What color does safranin stain?",
+    options: ["Blue", "Red", "Pink", "Yellow"],
+    correct: 1,
+    explanation: "Safranin stains tissue a red color."
+  },
+  {
+    text: "What color does iodine stain?",
+     options: ["Red", "Blue-black", "Pink", "Yellow"],
+     correct: 1,
+     explanation: "Iodine stains tissue a blue-black color."
+  },
+   {
+    text: "What color does phoroglucinol + HCl stain?",
+     options: ["Yellow", "Red", "Pink", "Blue"],
+     correct: 1,
+     explanation: "Phoroglucinol + HCl stains tissue a red color."
+  },
+  {
+    text: "What color does aniline HCl or SO4 stain?",
+     options: ["Blue", "Pink", "Yellow", "Red"],
+     correct: 2,
+     explanation: "Aniline HCl or SO4 stains tissue a yellow color."
+  },
+ {
+    text: "What color does schultz's solution stain?",
+    options: ["Blue", "Yellow", "Pink", "Red"],
+    correct: 1,
+    explanation: "Schultz's solution stains tissue a yellow color."
+  },
+  {
+    text: "What does aniline blue stain?",
+    options: ["Nuclei", "Cytoplasm", "Fungal hyphae and spores", "Starch"],
+    correct: 2,
+    explanation: "Aniline blue is used to stain fungal hyphae and spores."
+  },
+  {
+     text: "What does borax carmine stain?",
+     options: ["Cytoplasm", "Nuclei", "Cellulose", "Lignin"],
+     correct: 1,
+     explanation: "Borax carmine is used to stain nuclei."
+   },
+  {
+    text: "What does eosin stain?",
+    options: ["Nuclei", "Cytoplasm and cellulose", "Lignin", "Fungal spores"],
+    correct: 1,
+    explanation: "Eosin is used to stain both cytoplasm and cellulose."
+  },
+  {
+    text: "What does light/fast green stain?",
+    options: ["Nuclei", "Cytoplasm or cellulose", "Lignin", "Starch"],
+    correct: 1,
+    explanation: "Light/fast green is used to stain either cytoplasm or cellulose."
+  },
+  {
+    text: "What does methylene blue stain?",
+    options: ["Cytoplasm", "Lignin", "Nuclei", "Starch"],
+    correct: 2,
+    explanation: "Methylene blue is used to stain nuclei."
+  },
+  {
+    text: "What does safranin stain?",
+    options: ["Fungal spores", "Starch", "Nuclei, cytoplasm, lignin and suberin", "Cellulose"],
+    correct: 2,
+     explanation: "Safranin is used to stain nuclei, cytoplasm, lignin, and suberin."
+   },
+ {
+    text: "What does iodine stain?",
+    options: ["Nuclei", "Starch", "Lignin", "Cytoplasm"],
+    correct: 1,
+    explanation: "Iodine is used to stain starch."
+  },
+  {
+    text: "What does phoroglucinol + HCl stain?",
+    options: ["Cellulose", "Nuclei", "Lignin", "Starch"],
+    correct: 2,
+    explanation: "Phoroglucinol + HCl is used to stain lignin."
+  },
+  {
+    text: "What does aniline HCl or SO4 stain?",
+    options: ["Lignin", "Cytoplasm", "Starch", "Cellulose"],
+    correct: 0,
+    explanation: "Aniline HCl or SO4 is used to stain lignin."
+  },
+  {
+    text: "What does Schultz's solution stain?",
+     options: ["Nuclei", "Cytoplasm", "Lignin, cutin, suberin, protein", "Starch"],
+     correct: 2,
+     explanation: "Schultz's solution is used to stain lignin, cutin, suberin, and protein."
+  },
+   {
+    text: "Which stain identifies fungal structures?",
+    options: ["Eosin", "Methylene blue", "Aniline blue", "Safranin"],
+    correct: 2,
+     explanation: "Aniline blue is used to identify fungal structures such as hyphae and spores."
+   },
+  {
+    text: "Which stains highlight nuclei?",
+    options: ["Safranin and Eosin", "Methylene blue and Borax carmine", "Eosin and light green", "Aniline blue and Schultz's solution"],
+    correct: 1,
+    explanation: "Methylene blue and borax carmine are primarily used to stain nuclei."
+  },
     {
-      
-    }, 
+    text: "Which stains highlight cytoplasm?",
+    options: ["Iodine and Aniline HCl", "Safranin and Eosin", "Methylene blue and Borax carmine", "Iodine and Schultz’s solution"],
+    correct: 1,
+     explanation: "Safranin and eosin are used to stain cytoplasm."
+   },
+  {
+    text: "Which stains identify cellulose?",
+    options: ["Safranin and Iodine", "Eosin and Light/fast green", "Aniline blue and Schultz’s solution", "Methylene blue and Aniline HCl"],
+    correct: 1,
+    explanation: "Eosin and light/fast green are used to stain cellulose."
+  },
+   {
+    text: "Which stain identifies starch?",
+    options: ["Safranin", "Iodine", "Aniline blue", "Phoroglucinol + HCl"],
+    correct: 1,
+    explanation: "Iodine is used to identify starch."
+   },
+  {
+    text: "Which stains identify lignin?",
+    options: ["Eosin and Light green", "Aniline blue and Methylene blue", "Safranin, Phoroglucinol, Aniline HCl and Schultz’s solution", "Iodine and Schultz’s Solution"],
+    correct: 2,
+    explanation: "Safranin, phoroglucinol + HCl, aniline HCl and schultz's solution are used to stain lignin."
+  },
+   {
+    text: "Which stain is *not* for cell structure?",
+    options: ["Methylene blue", "Eosin", "Iodine", "Borax carmine"],
+    correct: 2,
+    explanation: "Iodine is used to stain starch, which is a carbohydrate rather than a cell structure."
+   }, 
       ], 
 
   "ZOO101-E2": [
