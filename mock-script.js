@@ -299,6 +299,24 @@ const questionBanks = {
     correct: 1,
     explanation: "Light microscopy is more suitable for viewing individual living bacteria."
   }, 
+     {
+        text: "What process is done using graded series of alcohol?",
+        options: ["Embedding", "Staining", "Dehydration", "Mounting"],
+        correct: 2,
+        explanation: "A graded series of alcohol is used for dehydration of samples."
+    },
+    {
+        text: "What is the purpose of critical point drying?",
+        options: ["It is used in light microscopy", "It is used in SEM", "It is used in TEM", "It is used in fluorescence"],
+        correct: 1,
+        explanation: "Critical point drying is used in SEM techniques."
+    },
+    {
+        text: "What type of material is wax used for in microscopy?",
+        options: ["It is used for sectioning", "It is used for embedding in light microscopy", "It is used for mounting", "It is used in electron microscopy"],
+        correct: 1,
+        explanation: "Wax is used for embedding in light microscopy."
+    },
       ], 
 
   "ZOO101-E2": [
@@ -321,9 +339,140 @@ const questionBanks = {
       
     }, 
       ], 
-  "BOT101-2": [
+  "BOT101-T2": [
     {
       
+        text: "What is the radiation source for a light microscope?",
+        options: ["Electrons", "Light", "X-rays", "UV light"],
+        correct: 1,
+        explanation: "Light microscopes use light as their radiation source."
+    },
+    {
+        text: "What is the radiation source for a transmission electron microscope (TEM)?",
+        options: ["Light", "X-rays", "Electrons", "UV light"],
+        correct: 2,
+        explanation: "Transmission electron microscopes use electrons as their radiation source."
+    },
+    {
+        text: "What is the approximate wavelength range of light used in light microscopy?",
+        options: ["About 0.005 nm", "400-700 nm", "0.5 nm", "200 nm"],
+        correct: 1,
+        explanation: "The wavelength of visible light used in light microscopy is approximately 400-700 nm."
+    },
+    {
+        text: "What is the approximate wavelength of electrons in TEM?",
+        options: ["400-700 nm", "200 nm", "About 0.005 nm", "0.5 nm"],
+        correct: 2,
+        explanation: "The wavelength of electrons in TEM is approximately 0.005 nm."
+    },
+    {
+        text: "What is the maximum resolution of a light microscope?",
+        options: ["About 0.005 nm", "200 nm", "0.5 nm", "400-700nm"],
+        correct: 1,
+        explanation: "The maximum resolution of a light microscope is about 200 nm."
+    },
+    {
+        text: "What is the maximum resolution of a TEM?",
+        options: ["200 nm", "400-700 nm", "About 0.005 nm", "0.5 nm"],
+        correct: 3,
+        explanation: "The maximum resolution of a TEM is about 0.5 nm."
+    },
+    {
+        text: "What type of system is used as lenses in light microscopy?",
+        options: ["Electromagnets", "Glass lenses", "Copper grids", "Heavy metals"],
+        correct: 1,
+        explanation: "Light microscopes use glass lenses."
+    },
+    {
+        text: "What type of system is used as lenses in TEM?",
+        options: ["Glass lenses", "Copper grids", "Heavy metals", "Electromagnets"],
+        correct: 3,
+        explanation: "TEM uses electromagnets as lenses."
+    },
+    {
+        text: "What is the typical specimen state in light microscopy?",
+        options: ["Non-living and dehydrated", "Dehydrated, small and very thin", "Small and on a copper grid", "Living or non-living"],
+        correct: 3,
+        explanation: "Specimens for light microscopy can be living or non-living."
+    },
+    {
+        text: "What is the typical specimen state in TEM?",
+        options: ["Living or non-living", "Small and very thin", "Large and whole", "Non-living and dehydrated"],
+        correct: 1,
+        explanation: "TEM specimens are typically non-living, small, and very thin."
+    },
+    {
+        text: "What is the typical specimen support for light microscopy?",
+        options: ["Copper grid", "Glass slide", "Liquid suspension", "Paper mount"],
+        correct: 1,
+        explanation: "Light microscopy specimens are typically placed on a glass slide."
+    },
+    {
+        text: "What is the typical specimen support for TEM?",
+        options: ["Glass slide", "Liquid suspension", "Small copper grid", "Paper mount"],
+        correct: 2,
+        explanation: "TEM specimens are typically supported on a small copper grid."
+    },
+    {
+        text: "What do the stains used in light microscopy consist of?",
+        options: ["Heavy metals", "Glass", "Coloured dyes", "Resin"],
+        correct: 2,
+        explanation: "Light microscopy uses coloured dyes for staining."
+    },
+    {
+        text: "What do stains used in TEM contain?",
+        options: ["Coloured dyes", "Heavy metals", "Glass", "Water"],
+        correct: 1,
+        explanation: "TEM uses heavy metals in stains."
+    },
+    {
+        text: "What is the usual color of images in light microscopy?",
+        options: ["Black and white", "Greyscale", "Usually coloured", "Transparent"],
+        correct: 2,
+        explanation: "Images from light microscopy are usually coloured."
+    },
+    {
+        text: "What is the usual color of images in TEM?",
+        options: ["Usually coloured", "Black and white", "Transparent", "Greyscale"],
+        correct: 1,
+        explanation: "Images from TEM are usually black and white."
+    },
+    {
+        text: "What are the two main ways of specimen preparation for microscopy?",
+        options: ["Fixation and dehydration", "Embedding and sectioning", "Temporary and permanent slides", "Staining and mounting"],
+        correct: 2,
+        explanation: "The two main ways are preparing temporary and permanent slides."
+    },
+    {
+        text: "What does FAA stand for as used in microscopy?",
+        options: ["Formalin Alcohol Acetic", "Formalin Acetic Alcohol", "Fixation Acetic Alcohol", "Formic Alcohol Acetic"],
+        correct: 1,
+        explanation: "FAA stands for Formalin Acetic Alcohol."
+    },
+    {
+        text: "What is FAA mainly recommended for?",
+        options: ["Electron microscopy", "Light microscopy", "Dissection microscopy", "Fluorescence microscopy"],
+        correct: 1,
+        explanation: "FAA is mainly recommended for light microscopy."
+    },
+    {
+        text: "What types of fixatives are used in electron microscopy?",
+        options: ["Only FAA", "Only Osmium tetroxide", "Both FAA and Osmium Tetroxide", "Combination of primary and secondary"],
+        correct: 3,
+        explanation: "Electron microscopy uses a combination of primary and secondary fixatives, such as formaldehyde/glutaraldehyde and osmium tetroxide."
+    },
+    {
+        text: "What type of material is resin used for in microscopy?",
+options: ["It is used for sectioning", "It is used for embedding in light microscopy", "It is used for embedding in electron microscopy", "It is used for mounting"],
+        correct: 2,
+        explanation: "Resin is used for embedding in electron microscopy."
+    },
+    {
+        text: "What kind of knives are typically used for sectioning in light microscopy?",
+        options: ["Diamond knives only", "Ultramicrotome only", "Metal knives and ordinary microtomes", "Glass knives only"],
+        correct: 2,
+        explanation: "Metal knives and ordinary microtomes are used for sectioning in light microscopy"
+
     }, 
       ], 
   "BOT101-3": [
