@@ -1,17 +1,14 @@
 body {
-
     font-family: 'Arial', sans-serif;
-
     margin: 0;
-
     padding: 0;
-    overflow: hidden;
+    overflow: auto; /* Change this from hidden to auto or scroll */
     color: black;
     background-image: url('./navy-blue-tartan-frame_53876-118234.jpg');
-  width: 100%;
-  background-size: 100% 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
-  font-weight: bold;
+    width: 100%;
+    background-size: 100% 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+    font-weight: bold;
 }
 
 header.hero {
