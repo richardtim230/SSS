@@ -20,10 +20,23 @@ function throttle(func, limit) {
   };
 }
 
-// Example usage
+// Throttle the resize event
 window.addEventListener('resize', throttle(function() {
   console.log('Resized!');
 }, 1000));
+
+// Throttle the click event for toggling the menu
+document.addEventListener('click', throttle(function(event) {
+  const sideNav = document.getElementById('sideNav');
+  const menuIcon = document.querySelector('.menu-icon');
+
+  if (sideNav.classList.contains('active') &&
+      !sideNav.contains(event.target) &&
+      !menuIcon.contains(event.target)) {
+      sideNav.classList.remove('active');
+  }
+}, 500));
+
 
 
 // Array of image paths and URLs
