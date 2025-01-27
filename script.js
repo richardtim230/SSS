@@ -1,11 +1,31 @@
 // Use debounce to limit frequent state updates
-function debounce(func, delay) {
-  let timeout;
-  return (...args) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), delay);
+function throttle(func, limit) {
+  let lastFunc;
+  let lastRan;
+  return function() {
+    const context = this;
+    const args = arguments;
+    if (!lastRan) {
+      func.apply(context, args);
+      lastRan = Date.now();
+    } else {
+      clearTimeout(lastFunc);
+      lastFunc = setTimeout(function() {
+        if ((Date.now() - lastRan) >= limit) {
+          func.apply(context, args);
+          lastRan = Date.now();
+        }
+      }, limit - (Date.now() - lastRan));
+    }
   };
 }
+
+// Example usage
+window.addEventListener('resize', throttle(function() {
+  console.log('Resized!');
+}, 1000));
+
+
 // Array of image paths and URLs
 const imageSources = [
   "cgp.jpg", "onlineg.jpg", "practice.jpg", "schepo.jpg", "arch.jpg", "classsch.jpg", "logo.png",// Local image path
