@@ -1103,3 +1103,17 @@ h1 {
 .side-nav.active {
   left: 0;
 }
+* {
+  transition: none; /* or limit to specific properties */
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+    }
