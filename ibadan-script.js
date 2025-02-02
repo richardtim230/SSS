@@ -24,31 +24,45 @@ document.head.appendChild(style);
 
 
 // Use debounce to limit frequent state updates
-function debounce(func, delay) {
-  let timeout;
-  return (...args) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), delay);
+function throttle(func, limit) {
+  let lastRan = 0;
+  let lastFunc = null;
+
+  return function(...args) {
+    const context = this;
+    const now = Date.now();
+
+    if (now - lastRan >= limit) {
+      func.apply(context, args);
+      lastRan = now;
+    } else {
+      if (!lastFunc) {
+        lastFunc = setTimeout(() => {
+          func.apply(context, args);
+          lastRan = Date.now();
+          lastFunc = null;
+        }, limit);
+      }
+    }
   };
 }
+// Throttle the resize event
+window.addEventListener("resize", throttle(() => {
+  console.log("Resized!");
+}, 1000));
 
-function toggleMenu() {
-  const sideNav = document.getElementById('sideNav');
-  sideNav.classList.toggle('active');
-}
+// Throttle the click event for toggling the menu
+document.addEventListener("click", throttle((event) => {
+  const sideNav = document.getElementById("sideNav");
+  const menuIcon = document.querySelector(".menu-icon");
 
-document.addEventListener('click', function(event) {
-  const sideNav = document.getElementById('sideNav');
-  const menuIcon = document.querySelector('.menu-icon');
-
-  // Check if the click is outside the menu and not on the menu icon
-  if (sideNav.classList.contains('active') &&
+  if (sideNav.classList.contains("active") &&
       !sideNav.contains(event.target) &&
-       !menuIcon.contains(event.target)) {
-      sideNav.classList.remove('active');
-
+      !menuIcon.contains(event.target)) {
+    sideNav.classList.remove("active");
   }
-});
+}, 500));
+
 // Array of Educational Messages
 const messages = [
   "Education is the most powerful weapon to change the world.",
