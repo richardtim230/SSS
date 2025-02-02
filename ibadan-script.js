@@ -1,3 +1,28 @@
+document.addEventListener("scroll", () => {
+    requestAnimationFrame(() => {
+        document.querySelectorAll(".fix-render").forEach((element) => {
+            // Apply and remove transform to trigger a repaint
+            element.style.transform = "translateZ(0)";
+            element.style.willChange = "transform, opacity";
+        });
+    });
+});
+
+// Optional: Ensure smooth scrolling behavior
+document.documentElement.style.scrollBehavior = "smooth";
+
+// CSS to improve rendering (Include in your styles)
+const style = document.createElement("style");
+style.innerHTML = `
+  .fix-render {
+      backface-visibility: hidden;
+      transform: translate3d(0, 0, 0);
+      will-change: transform, opacity;
+  }
+`;
+document.head.appendChild(style);
+
+
 // Use debounce to limit frequent state updates
 function debounce(func, delay) {
   let timeout;
