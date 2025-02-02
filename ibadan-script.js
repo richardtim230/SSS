@@ -225,7 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const notificationWidget = document.getElementById("notificationWidget");
 
   // Display message dynamically
-  const message = "Welcome to the Obafemi Awolowo University Students Support System, a platform where all your academic questions are answered with maximum supports given!.";
+  const message = "Welcome to the University of Ibadan Students Support System, a platform where all your academic questions are answered with maximum supports given!.";
   notificationWidget.querySelector("p").textContent = message;
 });
 
@@ -274,3 +274,45 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+
+
+
+// Use debounce to limit frequent state updates
+function throttle(func, limit) {
+  let lastFunc;
+  let lastRan;
+  return function() {
+    const context = this;
+    const args = arguments;
+    if (!lastRan) {
+      func.apply(context, args);
+      lastRan = Date.now();
+    } else {
+      clearTimeout(lastFunc);
+      lastFunc = setTimeout(function() {
+        if ((Date.now() - lastRan) >= limit) {
+          func.apply(context, args);
+          lastRan = Date.now();
+        }
+      }, limit - (Date.now() - lastRan));
+    }
+  };
+}
+
+// Throttle the resize event
+window.addEventListener('resize', throttle(function() {
+  console.log('Resized!');
+}, 1000));
+
+// Throttle the click event for toggling the menu
+document.addEventListener('click', throttle(function(event) {
+  const sideNav = document.getElementById('sideNav');
+  const menuIcon = document.querySelector('.menu-icon');
+
+  if (sideNav.classList.contains('active') &&
+      !sideNav.contains(event.target) &&
+      !menuIcon.contains(event.target)) {
+      sideNav.classList.remove('active');
+  }
+}, 500));
+
