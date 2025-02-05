@@ -440,6 +440,7 @@ header h2 {
     justify-content: center;
     color: #fff;
     font-size: 24px;
+    z-index: 900;
     cursor: pointer;
     }
 
