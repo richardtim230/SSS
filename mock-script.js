@@ -2387,7 +2387,7 @@ correct: 1,
   }, 
  
       ], 
-  "ZOO101-1": [
+  "ZOO101 QUIZ 2": [
     
  {
         text: "What is a major factor causing the large size of the ovum compared to spermatozoa?",
@@ -2967,7 +2967,7 @@ correct: 1,
     },  
   ],
 
-    "PHYS-1": [
+    "PHYS-1 QUIZ 1": [
 {
   text: "An arrow is shot straight up in the air at an initial speed of 15.0 m/s. After how much time is the arrow heading downward at a speed of 8.00 m/s?",
   options: ["0.714 s", "1.24 s", "1.87 s", "2.35 s", "3.22 s"],
@@ -3445,7 +3445,7 @@ correct: 1,
         }, 
       ], 
 
-  "ZOO101-2": [
+  "ZOO101 QUIZ 1": [
     
   {
     text: "Which taxonomic rank is the most inclusive within the animal kingdom?",
