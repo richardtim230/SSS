@@ -743,20 +743,44 @@ function loadDepartmentSchedule() {
 }
 
 function renderSchedule(schedule) {
-  const predefinedScheduleBody = document.getElementById('predefinedScheduleBody');
-  predefinedScheduleBody.innerHTML = schedule.map(row => `
-    <tr>
-      <td>${row.time}</td>
-      <td>${row.Mon || ''}</td>
-      <td>${row.Tues || ''}</td>
-      <td>${row.Wed || ''}</td>
-      <td>${row.Thur || ''}</td>
-      <td>${row.Fri || ''}</td>
-      <td>${row.Sat || ''}</td>
-      <td>${row.Sun || ''}</td>
-    </tr>
-  `).join('');
-}
+    const predefinedScheduleBody = document.getElementById('predefinedScheduleBody');
+    const timeMap = {};
+
+    // Group schedule entries by time
+    schedule.forEach(entry => {
+      if (!timeMap[entry.time]) {
+        timeMap[entry.time] = {
+          time: entry.time,
+          Mon: '',
+          Tues: '',
+          Wed: '',
+          Thur: '',
+          Fri: '',
+          Sat: '',
+          Sun: ''
+        };
+      }
+      Object.keys(entry).forEach(day => {
+        if (day !== 'time') {
+          timeMap[entry.time][day] = entry[day];
+        }
+      });
+    });
+
+    // Create rows from the grouped schedule
+    predefinedScheduleBody.innerHTML = Object.values(timeMap).map(row => `
+      <tr>
+        <td>${row.time}</td>
+        <td>${row.Mon || ''}</td>
+        <td>${row.Tues || ''}</td>
+        <td>${row.Wed || ''}</td>
+        <td>${row.Thur || ''}</td>
+        <td>${row.Fri || ''}</td>
+        <td>${row.Sat || ''}</td>
+        <td>${row.Sun || ''}</td>
+      </tr>
+    `).join('');
+  }
 
 // Modified addSchedule function to add rows to the manual schedule table and save to local storage
   function addSchedule() {
@@ -770,18 +794,33 @@ function renderSchedule(schedule) {
     }
 
     const scheduleBody = document.getElementById('manualScheduleBody');
-    const newRow = document.createElement('tr');
-    newRow.innerHTML = `
-      <td>${time}</td>
-      <td>${day === 'Monday' ? subject : ''}</td>
-      <td>${day === 'Tuesday' ? subject : ''}</td>
-      <td>${day === 'Wednesday' ? subject : ''}</td>
-      <td>${day === 'Thursday' ? subject : ''}</td>
-      <td>${day === 'Friday' ? subject : ''}</td>
-      <td>${day === 'Saturday' ? subject : ''}</td>
-      <td>${day === 'Sunday' ? subject : ''}</td>
-    `;
-    scheduleBody.appendChild(newRow);
+    let existingRow = null;
+
+    // Check if a row with the same time already exists
+    scheduleBody.querySelectorAll('tr').forEach(row => {
+      if (row.cells[0].textContent === time) {
+        existingRow = row;
+      }
+    });
+
+    if (existingRow) {
+      // Update the existing row with the new subject
+      existingRow.cells[dayToColumnIndex(day)].textContent = subject;
+    } else {
+      // Create a new row if no existing row with the same time
+      const newRow = document.createElement('tr');
+      newRow.innerHTML = `
+        <td>${time}</td>
+        <td>${day === 'Monday' ? subject : ''}</td>
+        <td>${day === 'Tuesday' ? subject : ''}</td>
+        <td>${day === 'Wednesday' ? subject : ''}</td>
+        <td>${day === 'Thursday' ? subject : ''}</td>
+        <td>${day === 'Friday' ? subject : ''}</td>
+        <td>${day === 'Saturday' ? subject : ''}</td>
+        <td>${day === 'Sunday' ? subject : ''}</td>
+      `;
+      scheduleBody.appendChild(newRow);
+    }
 
     // Save to local storage
     saveManualSchedulesToLocalStorage();
@@ -791,6 +830,12 @@ function renderSchedule(schedule) {
     document.getElementById('dayInput').value = '';
     document.getElementById('subjectInput').value = '';
   }
+
+  function dayToColumnIndex(day) {
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    return days.indexOf(day) + 1;
+    }
+
 
     function switchScheduleTables() {
     const predefinedScheduleWrapper = document.getElementById('predefinedScheduleWrapper');
