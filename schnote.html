@@ -932,36 +932,6 @@ function savePredefinedToLocalStorage() {
   manualSchedules.sort((a, b) => parseTime(a.time) - parseTime(b.time));
   localStorage.setItem('manualSchedules', JSON.stringify(manualSchedules));
 }
-
-function loadManualSchedules() {
-  const manualSchedules = JSON.parse(localStorage.getItem('manualSchedules')) || [];
-  const scheduleBody = document.getElementById('manualScheduleBody');
-  scheduleBody.innerHTML = '';
-
-  if (manualSchedules.length === 0) {
-    const emptyRow = document.createElement('tr');
-    emptyRow.innerHTML = `<td colspan="8" style="text-align:center;">No schedule available</td>`;
-    scheduleBody.appendChild(emptyRow);
-    return;
-  }
-
-  manualSchedules.sort((a, b) => parseTime(a.time) - parseTime(b.time));
-  manualSchedules.forEach(schedule => {
-    const newRow = document.createElement('tr');
-    newRow.innerHTML = `
-      <td>${schedule.time}</td>
-      <td>${schedule.Mon || ''}</td>
-      <td>${schedule.Tues || ''}</td>
-      <td>${schedule.Wed || ''}</td>
-      <td>${schedule.Thur || ''}</td>
-      <td>${schedule.Fri || ''}</td>
-      <td>${schedule.Sat || ''}</td>
-      <td>${schedule.Sun || ''}</td>
-    `;
-    scheduleBody.appendChild(newRow);
-  });
-}
-
   // New function to load manually added schedules from local storage
     document.addEventListener("DOMContentLoaded", async () => {
   try {
@@ -994,6 +964,36 @@ function loadSavedSchedule() {
     renderSchedule(savedSchedules[title]);
   });
 }
+
+function loadManualSchedules() {
+  const manualSchedules = JSON.parse(localStorage.getItem('manualSchedules')) || [];
+  const scheduleBody = document.getElementById('manualScheduleBody');
+  scheduleBody.innerHTML = '';
+
+  if (manualSchedules.length === 0) {
+    const emptyRow = document.createElement('tr');
+    emptyRow.innerHTML = `<td colspan="8" style="text-align:center;">No schedule available</td>`;
+    scheduleBody.appendChild(emptyRow);
+    return;
+  }
+
+  manualSchedules.sort((a, b) => parseTime(a.time) - parseTime(b.time));
+  manualSchedules.forEach(schedule => {
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+      <td>${schedule.time}</td>
+      <td>${schedule.Mon || ''}</td>
+      <td>${schedule.Tues || ''}</td>
+      <td>${schedule.Wed || ''}</td>
+      <td>${schedule.Thur || ''}</td>
+      <td>${schedule.Fri || ''}</td>
+      <td>${schedule.Sat || ''}</td>
+      <td>${schedule.Sun || ''}</td>
+    `;
+    scheduleBody.appendChild(newRow);
+  });
+}
+
 
 
 
