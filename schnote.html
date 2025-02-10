@@ -437,6 +437,8 @@
               <th>Wed</th>
               <th>Thur</th>
               <th>Fri</th>
+              <th>Sat</th>
+              <th>Sun</th>
             </tr>
           </thead>
           <tbody id="predefinedScheduleBody"></tbody>
@@ -452,6 +454,8 @@
               <th>Wed</th>
               <th>Thur</th>
               <th>Fri</th>
+              <th>Sat</th>
+              <th>Sun</th>
             </tr>
           </thead>
           <tbody id="manualScheduleBody"></tbody>
@@ -495,6 +499,8 @@
       <option value="Wednesday">Wednesday</option>
       <option value="Thursday">Thursday</option>
       <option value="Friday">Friday</option>
+      <option value="Saturday">Saturday</option>
+      <option value="Sunday">Sunday</option>
     </select>
     <input type="text" id="subjectInput" placeholder="Subject">
     <button onclick="addSchedule()">Add</button>
@@ -746,6 +752,8 @@ function renderSchedule(schedule) {
       <td>${row.Wed || ''}</td>
       <td>${row.Thur || ''}</td>
       <td>${row.Fri || ''}</td>
+      <td>${row.Sat || ''}</td>
+      <td>${row.Sun || ''}</td>
     </tr>
   `).join('');
 }
@@ -770,6 +778,8 @@ function renderSchedule(schedule) {
       <td>${day === 'Wednesday' ? subject : ''}</td>
       <td>${day === 'Thursday' ? subject : ''}</td>
       <td>${day === 'Friday' ? subject : ''}</td>
+      <td>${day === 'Saturday' ? subject : ''}</td>
+      <td>${day === 'Sunday' ? subject : ''}</td>
     `;
     scheduleBody.appendChild(newRow);
 
@@ -833,7 +843,9 @@ function savePredefinedToLocalStorage() {
         Tues: cells[2].textContent,
         Wed: cells[3].textContent,
         Thur: cells[4].textContent,
-        Fri: cells[5].textContent
+        Fri: cells[5].textContent,
+        Sat: cells[5].textContent,
+        Sun: cells[5].textContent
       });
     });
     localStorage.setItem('manualSchedules', JSON.stringify(manualSchedules));
@@ -862,6 +874,8 @@ function savePredefinedToLocalStorage() {
         <td>${schedule.Wed || ''}</td>
         <td>${schedule.Thur || ''}</td>
         <td>${schedule.Fri || ''}</td>
+        <td>${schedule.Sat || ''}</td>
+        <td>${schedule.Sun || ''}</td>
       `;
       scheduleBody.appendChild(newRow);
     });
