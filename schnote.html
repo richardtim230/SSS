@@ -504,7 +504,9 @@
     </select>
     <input type="text" id="subjectInput" placeholder="Subject">
     <button onclick="addSchedule()">Add</button>
-
+<div>
+    <button onclick="clearSchedule()">Clear Schedule</button>
+  </div>
     <!-- Notes Section -->
     <div id="notesSection">
       <h3>Notes</h3>
@@ -899,40 +901,12 @@ function savePredefinedToLocalStorage() {
   // New function to load manually added schedules from local storage
     document.addEventListener("DOMContentLoaded", async () => {
   try {
-    await loadManualSchedules();
-    console.log('Manual schedules loaded successfully');
-  } catch (error) {
-    console.error('Error in loadManualSchedules:', error);
-  }
-});
-
-  function loadManualSchedules() {
-    const manualSchedules = JSON.parse(localStorage.getItem('manualSchedules')) || [];
-    const scheduleBody = document.getElementById('manualScheduleBody');
-    scheduleBody.innerHTML = '';
-    manualSchedules.forEach(schedule => {
-      const newRow = document.createElement('tr');
-      newRow.innerHTML = `
-        <td>${schedule.time}</td>
-        <td>${schedule.Mon || ''}</td>
-        <td>${schedule.Tues || ''}</td>
-        <td>${schedule.Wed || ''}</td>
-        <td>${schedule.Thur || ''}</td>
-        <td>${schedule.Fri || ''}</td>
-        <td>${schedule.Sat || ''}</td>
-        <td>${schedule.Sun || ''}</td>
-      `;
-      scheduleBody.appendChild(newRow);
-    });
-  }
-    
-// Load schedule from local storage
-    document.addEventListener("DOMContentLoaded", async () => {
-  try {
+    await loadCategories();
     await loadSavedSchedule();
-    console.log('Saved schedules loaded successfully');
+    await loadManualSchedules();
+    console.log('Initial data loaded successfully');
   } catch (error) {
-    console.error('Error in loadSavedSchedule:', error);
+    console.error('Error in initial data loading:', error);
   }
 });
 
@@ -941,15 +915,65 @@ function loadSavedSchedule() {
   const scheduleBody = document.getElementById('predefinedScheduleBody');
   scheduleBody.innerHTML = '';
 
+  if (Object.keys(savedSchedules).length === 0) {
+    const emptyRow = document.createElement('tr');
+    emptyRow.innerHTML = `<td colspan="8" style="text-align:center;">No schedule available</td>`;
+    scheduleBody.appendChild(emptyRow);
+    return;
+  }
+
   Object.keys(savedSchedules).forEach(title => {
     const titleRow = document.createElement('tr');
-    titleRow.innerHTML = `<td colspan="6" style="font-weight:bold; text-align:center;">${title}</td>`;
+    titleRow.innerHTML = `<td colspan="8" style="font-weight:bold; text-align:center;">${title}</td>`;
     scheduleBody.appendChild(titleRow);
 
     renderSchedule(savedSchedules[title]);
   });
 }
 
+function loadManualSchedules() {
+  const manualSchedules = JSON.parse(localStorage.getItem('manualSchedules')) || [];
+  const scheduleBody = document.getElementById('manualScheduleBody');
+  scheduleBody.innerHTML = '';
+
+  if (manualSchedules.length === 0) {
+    const emptyRow = document.createElement('tr');
+    emptyRow.innerHTML = `<td colspan="8" style="text-align:center;">No schedule available</td>`;
+    scheduleBody.appendChild(emptyRow);
+    return;
+  }
+
+  manualSchedules.forEach(schedule => {
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+      <td>${schedule.time}</td>
+      <td>${schedule.Mon || ''}</td>
+      <td>${schedule.Tues || ''}</td>
+      <td>${schedule.Wed || ''}</td>
+      <td>${schedule.Thur || ''}</td>
+      <td>${schedule.Fri || ''}</td>
+      <td>${schedule.Sat || ''}</td>
+      <td>${schedule.Sun || ''}</td>
+    `;
+    scheduleBody.appendChild(newRow);
+  });
+}
+
+    function clearSchedule() {
+  // Clear the predefined schedule table
+  const predefinedScheduleBody = document.getElementById('predefinedScheduleBody');
+  predefinedScheduleBody.innerHTML = '';
+
+  // Clear the manual schedule table
+  const manualScheduleBody = document.getElementById('manualScheduleBody');
+  manualScheduleBody.innerHTML = '';
+
+  // Clear schedules from local storage
+  localStorage.removeItem('savedSchedules');
+  localStorage.removeItem('manualSchedules');
+
+  alert('Schedules have been cleared.');
+    }
     
 // Save note
 function saveNote() {
