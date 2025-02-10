@@ -786,53 +786,86 @@ function renderSchedule(schedule) {
 
 // Modified addSchedule function to add rows to the manual schedule table and save to local storage
   function addSchedule() {
-    const time = document.getElementById('timeInput').value.trim();
-    const day = document.getElementById('dayInput').value.trim();
-    const subject = document.getElementById('subjectInput').value.trim();
+  const time = document.getElementById('timeInput').value.trim();
+  const day = document.getElementById('dayInput').value.trim();
+  const subject = document.getElementById('subjectInput').value.trim();
 
-    if (!time || !day || !subject) {
-      alert('Please fill in all fields to add a schedule.');
-      return;
-    }
-
-    const scheduleBody = document.getElementById('manualScheduleBody');
-    let existingRow = null;
-
-    // Check if a row with the same time already exists
-    scheduleBody.querySelectorAll('tr').forEach(row => {
-      if (row.cells[0].textContent === time) {
-        existingRow = row;
-      }
-    });
-
-    if (existingRow) {
-      // Update the existing row with the new subject
-      existingRow.cells[dayToColumnIndex(day)].textContent = subject;
-    } else {
-      // Create a new row if no existing row with the same time
-      const newRow = document.createElement('tr');
-      newRow.innerHTML = `
-        <td>${time}</td>
-        <td>${day === 'Monday' ? subject : ''}</td>
-        <td>${day === 'Tuesday' ? subject : ''}</td>
-        <td>${day === 'Wednesday' ? subject : ''}</td>
-        <td>${day === 'Thursday' ? subject : ''}</td>
-        <td>${day === 'Friday' ? subject : ''}</td>
-        <td>${day === 'Saturday' ? subject : ''}</td>
-        <td>${day === 'Sunday' ? subject : ''}</td>
-      `;
-      scheduleBody.appendChild(newRow);
-    }
-
-    // Save to local storage
-    saveManualSchedulesToLocalStorage();
-
-    // Clear inputs
-    document.getElementById('timeInput').value = '';
-    document.getElementById('dayInput').value = '';
-    document.getElementById('subjectInput').value = '';
+  if (!time || !day || !subject) {
+    alert('Please fill in all fields to add a schedule.');
+    return;
   }
 
+  const scheduleBody = document.getElementById('manualScheduleBody');
+  let existingRow = null;
+
+  // Check if a row with the same time already exists
+  scheduleBody.querySelectorAll('tr').forEach(row => {
+    if (row.cells[0].textContent === time) {
+      existingRow = row;
+    }
+  });
+
+  if (existingRow) {
+    // Update the existing row with the new subject
+    existingRow.cells[dayToColumnIndex(day)].textContent = subject;
+  } else {
+    // Create a new row if no existing row with the same time
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+      <td>${time}</td>
+      <td>${day === 'Monday' ? subject : ''}</td>
+      <td>${day === 'Tuesday' ? subject : ''}</td>
+      <td>${day === 'Wednesday' ? subject : ''}</td>
+      <td>${day === 'Thursday' ? subject : ''}</td>
+      <td>${day === 'Friday' ? subject : ''}</td>
+      <td>${day === 'Saturday' ? subject : ''}</td>
+      <td>${day === 'Sunday' ? subject : ''}</td>
+    `;
+    scheduleBody.appendChild(newRow);
+  }
+
+  // Sort the schedule
+  sortSchedule();
+
+  // Save to local storage
+  saveManualSchedulesToLocalStorage();
+
+  // Clear inputs
+  document.getElementById('timeInput').value = '';
+  document.getElementById('dayInput').value = '';
+  document.getElementById('subjectInput').value = '';
+}
+
+function sortSchedule() {
+  const scheduleBody = document.getElementById('manualScheduleBody');
+  const rows = Array.from(scheduleBody.querySelectorAll('tr'));
+
+  rows.sort((a, b) => {
+    const timeA = parseTime(a.cells[0].textContent);
+    const timeB = parseTime(b.cells[0].textContent);
+    return timeA - timeB;
+  });
+
+  scheduleBody.innerHTML = '';
+  rows.forEach(row => scheduleBody.appendChild(row));
+}
+
+function parseTime(timeString) {
+  const [time, period] = timeString.split(' ');
+  let [hours, minutes] = time.split(':');
+  hours = parseInt(hours, 10);
+  minutes = parseInt(minutes, 10);
+
+  if (period === 'PM' && hours !== 12) {
+    hours += 12;
+  }
+  if (period === 'AM' && hours === 12) {
+    hours = 0;
+  }
+
+  return hours * 60 + minutes;
+}
+    
   function dayToColumnIndex(day) {
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     return days.indexOf(day) + 1;
@@ -881,22 +914,53 @@ function savePredefinedToLocalStorage() {
     
   // New function to save manually added schedules to local storage
   function saveManualSchedulesToLocalStorage() {
-    const manualSchedules = [];
-    document.querySelectorAll('#manualScheduleBody tr').forEach(row => {
-      const cells = row.querySelectorAll('td');
-      manualSchedules.push({
-        time: cells[0].textContent,
-        Mon: cells[1].textContent,
-        Tues: cells[2].textContent,
-        Wed: cells[3].textContent,
-        Thur: cells[4].textContent,
-        Fri: cells[5].textContent,
-        Sat: cells[5].textContent,
-        Sun: cells[5].textContent
-      });
+  const manualSchedules = [];
+  document.querySelectorAll('#manualScheduleBody tr').forEach(row => {
+    const cells = row.querySelectorAll('td');
+    manualSchedules.push({
+      time: cells[0].textContent,
+      Mon: cells[1].textContent,
+      Tues: cells[2].textContent,
+      Wed: cells[3].textContent,
+      Thur: cells[4].textContent,
+      Fri: cells[5].textContent,
+      Sat: cells[6].textContent,
+      Sun: cells[7].textContent
     });
-    localStorage.setItem('manualSchedules', JSON.stringify(manualSchedules));
+  });
+
+  manualSchedules.sort((a, b) => parseTime(a.time) - parseTime(b.time));
+  localStorage.setItem('manualSchedules', JSON.stringify(manualSchedules));
+}
+
+function loadManualSchedules() {
+  const manualSchedules = JSON.parse(localStorage.getItem('manualSchedules')) || [];
+  const scheduleBody = document.getElementById('manualScheduleBody');
+  scheduleBody.innerHTML = '';
+
+  if (manualSchedules.length === 0) {
+    const emptyRow = document.createElement('tr');
+    emptyRow.innerHTML = `<td colspan="8" style="text-align:center;">No schedule available</td>`;
+    scheduleBody.appendChild(emptyRow);
+    return;
   }
+
+  manualSchedules.sort((a, b) => parseTime(a.time) - parseTime(b.time));
+  manualSchedules.forEach(schedule => {
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+      <td>${schedule.time}</td>
+      <td>${schedule.Mon || ''}</td>
+      <td>${schedule.Tues || ''}</td>
+      <td>${schedule.Wed || ''}</td>
+      <td>${schedule.Thur || ''}</td>
+      <td>${schedule.Fri || ''}</td>
+      <td>${schedule.Sat || ''}</td>
+      <td>${schedule.Sun || ''}</td>
+    `;
+    scheduleBody.appendChild(newRow);
+  });
+}
 
   // New function to load manually added schedules from local storage
     document.addEventListener("DOMContentLoaded", async () => {
@@ -931,33 +995,7 @@ function loadSavedSchedule() {
   });
 }
 
-function loadManualSchedules() {
-  const manualSchedules = JSON.parse(localStorage.getItem('manualSchedules')) || [];
-  const scheduleBody = document.getElementById('manualScheduleBody');
-  scheduleBody.innerHTML = '';
 
-  if (manualSchedules.length === 0) {
-    const emptyRow = document.createElement('tr');
-    emptyRow.innerHTML = `<td colspan="8" style="text-align:center;">No schedule available</td>`;
-    scheduleBody.appendChild(emptyRow);
-    return;
-  }
-
-  manualSchedules.forEach(schedule => {
-    const newRow = document.createElement('tr');
-    newRow.innerHTML = `
-      <td>${schedule.time}</td>
-      <td>${schedule.Mon || ''}</td>
-      <td>${schedule.Tues || ''}</td>
-      <td>${schedule.Wed || ''}</td>
-      <td>${schedule.Thur || ''}</td>
-      <td>${schedule.Fri || ''}</td>
-      <td>${schedule.Sat || ''}</td>
-      <td>${schedule.Sun || ''}</td>
-    `;
-    scheduleBody.appendChild(newRow);
-  });
-}
 
     function clearSchedule() {
   // Clear the predefined schedule table
