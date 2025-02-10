@@ -785,7 +785,7 @@ function renderSchedule(schedule) {
   }
 
 // Modified addSchedule function to add rows to the manual schedule table and save to local storage
-  function addSchedule() {
+function addSchedule() {
   const time = document.getElementById('timeInput').value.trim();
   const day = document.getElementById('dayInput').value.trim();
   const subject = document.getElementById('subjectInput').value.trim();
@@ -932,6 +932,7 @@ function savePredefinedToLocalStorage() {
   manualSchedules.sort((a, b) => parseTime(a.time) - parseTime(b.time));
   localStorage.setItem('manualSchedules', JSON.stringify(manualSchedules));
 }
+  
   // New function to load manually added schedules from local storage
     document.addEventListener("DOMContentLoaded", async () => {
   try {
@@ -964,7 +965,7 @@ function loadSavedSchedule() {
     renderSchedule(savedSchedules[title]);
   });
 }
-
+//Load manual 
 function loadManualSchedules() {
   const manualSchedules = JSON.parse(localStorage.getItem('manualSchedules')) || [];
   const scheduleBody = document.getElementById('manualScheduleBody');
@@ -993,7 +994,6 @@ function loadManualSchedules() {
     scheduleBody.appendChild(newRow);
   });
 }
-
 
 
 
