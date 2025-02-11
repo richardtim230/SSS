@@ -824,9 +824,6 @@ function renderSchedule(schedule) {
       scheduleBody.appendChild(newRow);
     }
 
-    
-  // ✅ Sort the table after adding a new schedule
-  sortSchedule();
 
     // Save to local storage
     saveManualSchedulesToLocalStorage();
@@ -899,7 +896,7 @@ function savePredefinedToLocalStorage() {
         Sun: cells[5].textContent
       });
     });
-    manualSchedules.sort((a, b) => parseTime(a.time) - parseTime(b.time));
+  
     localStorage.setItem('manualSchedules', JSON.stringify(manualSchedules));
   }
 
