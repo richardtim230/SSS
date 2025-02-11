@@ -339,7 +339,22 @@ button {
   }
 }
 
+/* Hide the header and set the exam section to take up the whole page */
+.exam-page header {
+  display: none;
+}
 
+.exam-page body {
+  background: none;
+}
+
+.exam-page #exam-section {
+  width: 100%;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  background: white; /* Set the background color if needed */
+        }
     #notification {
       display: none; /* Initially hidden */
       position: fixed;
@@ -848,7 +863,7 @@ main {
   border-radius: 12px;
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
   max-width: 700px;
-  width: 100%;
+  width: 95%;
   text-align: center;
 }
 
