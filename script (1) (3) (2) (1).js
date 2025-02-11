@@ -15770,6 +15770,10 @@ function startExam() {
   updateQuestion();
   startTimer();
 }
+  function showExamSection() {
+      document.body.classList.add('exam-page');
+      document.getElementById('exam-section').classList.remove('hidden');
+          }
 
 function updateQuestion() {
   const question = questions[currentQuestionIndex];
