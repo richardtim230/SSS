@@ -883,43 +883,36 @@ function savePredefinedToLocalStorage() {
   alert('Schedule saved to local storage!');
 }
     
+
   // New function to save manually added schedules to local storage
   function saveManualSchedulesToLocalStorage() {
-  const manualSchedules = [];
-  document.querySelectorAll("#manualScheduleBody tr").forEach(row => {
-    const cells = row.querySelectorAll("td");
-
-    if (cells.length >= 8) { // Ensure there are 8 columns
+    const manualSchedules = [];
+    document.querySelectorAll('#manualScheduleBody tr').forEach(row => {
+      const cells = row.querySelectorAll('td');
       manualSchedules.push({
-        time: cells[0].textContent.trim(),
-        Mon: cells[1].textContent.trim(),
-        Tues: cells[2].textContent.trim(),
-        Wed: cells[3].textContent.trim(),
-        Thur: cells[4].textContent.trim(),
-        Fri: cells[5].textContent.trim(),
-        Sat: cells[6].textContent.trim(), 
-        Sun: cells[7].textContent.trim()
+        time: cells[0].textContent,
+        Mon: cells[1].textContent,
+        Tues: cells[2].textContent,
+        Wed: cells[3].textContent,
+        Thur: cells[4].textContent,
+        Fri: cells[5].textContent,
+        Sat: cells[6].textContent,
+        Sun: cells[7].textContent
       });
-    }
-  });
-
-  // Save to local storage
-  localStorage.setItem("manualSchedules", JSON.stringify(manualSchedules));
-  alert("Manual schedule saved successfully!");
-}
-
+    });
+    localStorage.setItem('manualSchedules', JSON.stringify(manualSchedules));
+  }
 
   // New function to load manually added schedules from local storage
     document.addEventListener("DOMContentLoaded", async () => {
   try {
-    await loadCategories();
-    await loadSavedSchedule();
-    loadManualSchedules(); // Ensure manual schedules are loaded
-    console.log("All data loaded successfully.");
+    await loadManualSchedules();
+    console.log('Manual schedules loaded successfully');
   } catch (error) {
-    console.error("Error loading data:", error);
+    console.error('Error in loadManualSchedules:', error);
   }
 });
+
 
 
 function loadSavedSchedule() {
