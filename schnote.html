@@ -824,6 +824,10 @@ function renderSchedule(schedule) {
       scheduleBody.appendChild(newRow);
     }
 
+    
+  // ✅ Sort the table after adding a new schedule
+  sortSchedule();
+
     // Save to local storage
     saveManualSchedulesToLocalStorage();
 
