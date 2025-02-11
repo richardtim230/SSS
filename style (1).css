@@ -841,166 +841,136 @@ main {
 
 /* Exam Section */
 #exam-section {
-  background: #fffaf0;
-  font-size: 1.0rem;
-  padding: 7px;
-  font-weight: light;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  font-size: 1.1rem;
+  padding: 20px;
+  font-weight: 400;
+  border-radius: 12px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  width: 100%;
+  text-align: center;
 }
 
+/* Subject Title */
 #subject-title {
   margin: 0;
-  padding: 10px;
-  background: orange;
+  padding: 12px;
+  background: linear-gradient(45deg, #ff6b6b, #ff9a9e);
   color: white;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
+  border-radius: 8px;
 }
 
-
+/* Question Container */
 #question-container {
   margin: 1rem 0;
-  font-size: 1.0rem;
-  padding: 8px;
+  font-size: 1.1rem;
+  padding: 12px;
+  line-height: 1.5;
 }
 
-
-.hidden {
-  display: none;
-}
-
-#question-image {
-  max-width: 10px;
-        height: 10px;
-  margin-top: 10px;
-        }
-
-#options-container button {
-  display: block;
-  width: 100%;
-  text-align: left;
-  margin-bottom: 0.7rem;
-  padding: 0.6rem;
-  gap: 1.0rem;
-  font-size: 1rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  transition: background 0.9s, color 0.3s;
-}
-
-#options-container button:hover {
-  background: #dbeafe;
-  color: #1d4ed8;
-}
-
-#options-container button.selected {
-  background: green;
-  color: white;
-  border-color: green;
-}
-#prev-question:hover, #next-question:hover, #end-exam:hover {
-  background: #555;
-  gap: 0.5rem;
-  padding: 0.5rem 0.9rem;
-}
-
-#timer-display {
-  color: #fff;
-  background-color: yellow;
-  padding: 0.3rem 0.5rem;
-  border-radius: 5px;
-  font-weight: bold;
-  top: 20px;
-}
-
+/* Question Text */
 #questionText h3 {
-  font-size: 1.0rem;
+  font-size: 1.2rem;
   color: #333;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   text-align: center;
-  font-family: 'Arial', sans-serif;
 }
 
+/* Timer Display */
+#timer-display {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #ff4757;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Options Grid */
 #optionsContainer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
-  width: 90%;
+  width: 100%;
   margin-top: 1rem;
 }
 
-/* Individual option button */
+/* Option Buttons */
 .option-button {
   background: #007bff;
   color: white;
   border: none;
-  padding: 0.8rem;
+  padding: 14px;
   font-size: 1rem;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
-  font-family: 'Arial', sans-serif;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
 }
 
-/* Option button hover effects */
 .option-button:hover {
   background: #0056b3;
-  transform: scale(1.05);
+  transform: translateY(-3px);
 }
 
-  .option-button.selected {
-    background-color: green;
-    color: white;
-  }
+.option-button.selected {
+  background-color: #28a745;
+  color: white;
+}
 
-
-/* Progress container styling */
+/* Progress Bar */
 #progressContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
   margin: 1.5rem 0;
+  width: 100%;
 }
 
-.progress-item {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
+.progress-bar {
+  width: 80%;
+  height: 10px;
   background: #ddd;
-  transition: background 0.3s ease, transform 0.2s ease;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
 }
 
-.progress-item.current {
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
   background: #007bff;
-  transform: scale(1.2);
+  transition: width 0.4s ease-in-out;
+  border-radius: 5px;
 }
 
-.progress-item.answered {
-  background: #28a745;
-}
-
-/* Navigation buttons */
+/* Navigation Buttons */
 #prev-question, #next-question, #end-exam {
   background: #333;
   color: #fff;
   border: none;
-  padding: 0.5rem;
+  padding: 12px 20px;
   margin: 1rem;
   font-size: 1rem;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s ease;
-  gap: 0.3rem;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 #prev-question:hover, #next-question:hover, #end-exam:hover {
   background: #555;
-  gap: 0.3rem;
-  padding: 0.5rem;
+  transform: scale(1.05);
 }
+
 
 
 
