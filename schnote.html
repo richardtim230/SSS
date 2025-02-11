@@ -914,12 +914,13 @@ function savePredefinedToLocalStorage() {
   try {
     await loadCategories();
     await loadSavedSchedule();
-    await loadManualSchedules();
-    console.log('Initial data loaded successfully');
+    loadManualSchedules(); // Ensure manual schedules are loaded
+    console.log("All data loaded successfully.");
   } catch (error) {
-    console.error('Error in initial data loading:', error);
+    console.error("Error loading data:", error);
   }
 });
+
 
 function loadSavedSchedule() {
   const savedSchedules = JSON.parse(localStorage.getItem('savedSchedules')) || {};
