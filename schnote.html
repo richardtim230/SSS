@@ -886,23 +886,28 @@ function savePredefinedToLocalStorage() {
   // New function to save manually added schedules to local storage
   function saveManualSchedulesToLocalStorage() {
   const manualSchedules = [];
-  document.querySelectorAll('#manualScheduleBody tr').forEach(row => {
-    const cells = row.querySelectorAll('td');
-    manualSchedules.push({
-      time: cells[0].textContent,
-      Mon: cells[1].textContent,
-      Tues: cells[2].textContent,
-      Wed: cells[3].textContent,
-      Thur: cells[4].textContent,
-      Fri: cells[5].textContent,
-      Sat: cells[6].textContent, // Fixed Saturday
-      Sun: cells[7].textContent  // Fixed Sunday
-    });
+  document.querySelectorAll("#manualScheduleBody tr").forEach(row => {
+    const cells = row.querySelectorAll("td");
+
+    if (cells.length >= 8) { // Ensure there are 8 columns
+      manualSchedules.push({
+        time: cells[0].textContent.trim(),
+        Mon: cells[1].textContent.trim(),
+        Tues: cells[2].textContent.trim(),
+        Wed: cells[3].textContent.trim(),
+        Thur: cells[4].textContent.trim(),
+        Fri: cells[5].textContent.trim(),
+        Sat: cells[6].textContent.trim(), 
+        Sun: cells[7].textContent.trim()
+      });
+    }
   });
 
-  localStorage.setItem('manualSchedules', JSON.stringify(manualSchedules));
+  // Save to local storage
+  localStorage.setItem("manualSchedules", JSON.stringify(manualSchedules));
   alert("Manual schedule saved successfully!");
 }
+
 
   // New function to load manually added schedules from local storage
     document.addEventListener("DOMContentLoaded", async () => {
@@ -938,34 +943,35 @@ function loadSavedSchedule() {
 }
 
 function loadManualSchedules() {
-  const manualSchedules = JSON.parse(localStorage.getItem('manualSchedules')) || [];
-  const scheduleBody = document.getElementById('manualScheduleBody');
-  scheduleBody.innerHTML = ''; // Clear existing rows before loading
+  const manualSchedules = JSON.parse(localStorage.getItem("manualSchedules")) || [];
+  const scheduleBody = document.getElementById("manualScheduleBody");
+  scheduleBody.innerHTML = ""; // Clear existing rows before loading
 
   if (manualSchedules.length === 0) {
-    const emptyRow = document.createElement('tr');
+    const emptyRow = document.createElement("tr");
     emptyRow.innerHTML = `<td colspan="8" style="text-align:center;">No schedule available</td>`;
     scheduleBody.appendChild(emptyRow);
     return;
   }
 
   manualSchedules.forEach(schedule => {
-    const newRow = document.createElement('tr');
+    const newRow = document.createElement("tr");
     newRow.innerHTML = `
       <td>${schedule.time}</td>
-      <td>${schedule.Mon || ''}</td>
-      <td>${schedule.Tues || ''}</td>
-      <td>${schedule.Wed || ''}</td>
-      <td>${schedule.Thur || ''}</td>
-      <td>${schedule.Fri || ''}</td>
-      <td>${schedule.Sat || ''}</td>
-      <td>${schedule.Sun || ''}</td>
+      <td>${schedule.Mon || ""}</td>
+      <td>${schedule.Tues || ""}</td>
+      <td>${schedule.Wed || ""}</td>
+      <td>${schedule.Thur || ""}</td>
+      <td>${schedule.Fri || ""}</td>
+      <td>${schedule.Sat || ""}</td>
+      <td>${schedule.Sun || ""}</td>
     `;
     scheduleBody.appendChild(newRow);
   });
 
-  console.log("Manual schedule loaded successfully from local storage.");
-  }
+  console.log("Manual schedule loaded successfully.");
+}
+
   
     function clearSchedule() {
   // Clear the predefined schedule table
