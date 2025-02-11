@@ -927,7 +927,7 @@ function savePredefinedToLocalStorage() {
       Sun: cells[7].textContent
     });
   });
-
+manualSchedules.sort((a, b) => parseTime(a.time) - parseTime(b.time));
   localStorage.setItem('manualSchedules', JSON.stringify(manualSchedules));
 }
   
