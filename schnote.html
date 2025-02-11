@@ -798,7 +798,6 @@ function addSchedule() {
   const scheduleBody = document.getElementById('manualScheduleBody');
   let existingRow = null;
 
-  // Check if a row with the same time already exists
   scheduleBody.querySelectorAll('tr').forEach(row => {
     if (row.cells[0].textContent === time) {
       existingRow = row;
@@ -806,10 +805,8 @@ function addSchedule() {
   });
 
   if (existingRow) {
-    // Update the existing row with the new subject
     existingRow.cells[dayToColumnIndex(day)].textContent = subject;
   } else {
-    // Create a new row if no existing row with the same time
     const newRow = document.createElement('tr');
     newRow.innerHTML = `
       <td>${time}</td>
@@ -824,16 +821,18 @@ function addSchedule() {
     scheduleBody.appendChild(newRow);
   }
 
-  // Sort the schedule
+  // ✅ Sort the table after adding a new schedule
   sortSchedule();
 
-  // Save to local storage
+  // ✅ Save sorted schedules to localStorage
   saveManualSchedulesToLocalStorage();
 
-  // Clear inputs
+  // ✅ Clear input fields after saving
   document.getElementById('timeInput').value = '';
   document.getElementById('dayInput').value = '';
   document.getElementById('subjectInput').value = '';
+
+  alert('Schedule saved successfully!');
 }
 
 function sortSchedule() {
@@ -978,7 +977,9 @@ function loadManualSchedules() {
     return;
   }
 
+  // ✅ Sort schedules by time before displaying
   manualSchedules.sort((a, b) => parseTime(a.time) - parseTime(b.time));
+
   manualSchedules.forEach(schedule => {
     const newRow = document.createElement('tr');
     newRow.innerHTML = `
