@@ -824,6 +824,9 @@ function renderSchedule(schedule) {
       scheduleBody.appendChild(newRow);
     }
 
+    
+  // ✅ Sort the table after adding a new schedule
+  sortSchedule();
 
     // Save to local storage
     saveManualSchedulesToLocalStorage();
@@ -882,23 +885,24 @@ function savePredefinedToLocalStorage() {
     
   // New function to save manually added schedules to local storage
   function saveManualSchedulesToLocalStorage() {
-    const manualSchedules = [];
-    document.querySelectorAll('#manualScheduleBody tr').forEach(row => {
-      const cells = row.querySelectorAll('td');
-      manualSchedules.push({
-        time: cells[0].textContent,
-        Mon: cells[1].textContent,
-        Tues: cells[2].textContent,
-        Wed: cells[3].textContent,
-        Thur: cells[4].textContent,
-        Fri: cells[5].textContent,
-        Sat: cells[5].textContent,
-        Sun: cells[5].textContent
-      });
+  const manualSchedules = [];
+  document.querySelectorAll('#manualScheduleBody tr').forEach(row => {
+    const cells = row.querySelectorAll('td');
+    manualSchedules.push({
+      time: cells[0].textContent,
+      Mon: cells[1].textContent,
+      Tues: cells[2].textContent,
+      Wed: cells[3].textContent,
+      Thur: cells[4].textContent,
+      Fri: cells[5].textContent,
+      Sat: cells[6].textContent, // Fixed Saturday
+      Sun: cells[7].textContent  // Fixed Sunday
     });
-  
-    localStorage.setItem('manualSchedules', JSON.stringify(manualSchedules));
-  }
+  });
+
+  localStorage.setItem('manualSchedules', JSON.stringify(manualSchedules));
+  alert("Manual schedule saved successfully!");
+}
 
   // New function to load manually added schedules from local storage
     document.addEventListener("DOMContentLoaded", async () => {
@@ -936,7 +940,7 @@ function loadSavedSchedule() {
 function loadManualSchedules() {
   const manualSchedules = JSON.parse(localStorage.getItem('manualSchedules')) || [];
   const scheduleBody = document.getElementById('manualScheduleBody');
-  scheduleBody.innerHTML = '';
+  scheduleBody.innerHTML = ''; // Clear existing rows before loading
 
   if (manualSchedules.length === 0) {
     const emptyRow = document.createElement('tr');
@@ -959,8 +963,10 @@ function loadManualSchedules() {
     `;
     scheduleBody.appendChild(newRow);
   });
-}
 
+  console.log("Manual schedule loaded successfully from local storage.");
+  }
+  
     function clearSchedule() {
   // Clear the predefined schedule table
   const predefinedScheduleBody = document.getElementById('predefinedScheduleBody');
